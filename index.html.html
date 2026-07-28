@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ============================================================
-           全局基礎設定（整合原有封面 + 履歷樣式）
+           全局基礎設定
            ============================================================ */
         * {
             padding: 0;
@@ -64,19 +64,20 @@
 
         .nav-container .links {
             display: flex;
-            gap: 10px;
+            gap: 6px;
             align-items: center;
+            flex-wrap: wrap;
         }
         .nav-container .links .link a {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #fff0ff;
             text-decoration: none;
             font-weight: 500;
-            padding: 6px 16px;
+            padding: 5px 14px;
             border-radius: 30px;
             transition: 0.3s;
-            position: relative;
             display: inline-block;
+            white-space: nowrap;
         }
         .nav-container .links .link a:hover,
         .nav-container .links .link a.active-link {
@@ -118,10 +119,10 @@
         }
         .dropdown .links a {
             color: #fff0ff;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             text-decoration: none;
             font-weight: 500;
-            padding: 12px 30px;
+            padding: 10px 30px;
             border-radius: 40px;
             transition: 0.2s;
         }
@@ -269,7 +270,7 @@
             box-shadow: 0 0 30px rgba(75, 28, 113, 0.4);
         }
 
-        /* ---------- 通用卡片與履歷樣式 ---------- */
+        /* ---------- 通用卡片 ---------- */
         .section-title {
             font-size: 2.4rem;
             font-weight: 700;
@@ -379,7 +380,7 @@
             color: #b57edc;
         }
 
-        /* 教育 */
+        /* 教育背景 - 手機垂直排列修正 */
         .edu-card {
             display: flex;
             flex-wrap: wrap;
@@ -397,6 +398,17 @@
         }
         .edu-body p {
             color: #4a3e5e;
+        }
+        /* 手機：垂直排列 */
+        @media (max-width: 600px) {
+            .edu-card {
+                flex-direction: column;
+                gap: 4px;
+                align-items: flex-start;
+            }
+            .edu-year {
+                min-width: auto;
+            }
         }
 
         /* 技能 */
@@ -480,6 +492,157 @@
             grid-column: 1 / -1;
         }
 
+        /* ---------- 作品集 (Portfolio) ---------- */
+        .sub-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid rgba(201, 162, 78, 0.3);
+            padding-bottom: 12px;
+        }
+        .sub-nav-item {
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #4a3e5e;
+            background: transparent;
+            border: 1.5px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .sub-nav-item:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .sub-nav-item.active {
+            background: #7f4ca5;
+            color: #fff;
+            border-color: #7f4ca5;
+            box-shadow: 0 4px 14px rgba(127, 76, 165, 0.25);
+        }
+
+        .sub-panel {
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+        .sub-panel.active {
+            display: block;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .work-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(46, 42, 69, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .work-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(46, 42, 69, 0.18);
+        }
+
+        .work-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            flex-shrink: 0;
+            background: linear-gradient(145deg, #6a5c97, #453a6b);
+        }
+        .work-thumb .thumb-label {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 0.7rem;
+            padding: 3px 14px;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            color: #fff;
+        }
+        .work-thumb .thumb-icon {
+            font-size: 2.8rem;
+            opacity: 0.5;
+            margin-bottom: 6px;
+        }
+        .work-thumb .thumb-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 0 12px;
+        }
+
+        .work-body {
+            padding: 18px 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .work-body h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #2e2a45;
+            margin-bottom: 4px;
+        }
+        .work-body .work-meta {
+            font-size: 0.8rem;
+            color: #c9a24e;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .work-body .work-desc {
+            font-size: 0.9rem;
+            color: #4a3e5e;
+            line-height: 1.7;
+            flex: 1;
+            margin-bottom: 12px;
+        }
+        .work-body .work-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .work-body .work-tags span {
+            font-size: 0.7rem;
+            padding: 2px 12px;
+            border-radius: 30px;
+            background: #e4d9f5;
+            color: #4b1c71;
+        }
+        .work-body .work-link {
+            align-self: flex-start;
+            padding: 6px 20px;
+            border-radius: 30px;
+            background: #7f4ca5;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            border: 1px solid #7f4ca5;
+        }
+        .work-body .work-link:hover {
+            background: transparent;
+            color: #7f4ca5;
+        }
+
         /* 聯絡 */
         .contact-info {
             display: flex;
@@ -490,6 +653,31 @@
         .contact-info i {
             width: 30px;
             color: #7f4ca5;
+        }
+        .social-contact-icons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .social-contact-icons a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 3.6rem;
+            height: 3.6rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            color: #4b1c71;
+            font-size: 2rem;
+            transition: 0.3s;
+            border: 1px solid rgba(127, 76, 165, 0.2);
+            text-decoration: none;
+        }
+        .social-contact-icons a:hover {
+            transform: scale(1.15);
+            background: #7f4ca5;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(127, 76, 165, 0.4);
         }
 
         /* ============================================================
@@ -545,6 +733,10 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -575,6 +767,13 @@
                 font-size: 1.4rem;
                 padding: 10px 20px;
             }
+            .sub-nav {
+                gap: 4px;
+            }
+            .sub-nav-item {
+                font-size: 0.85rem;
+                padding: 6px 14px;
+            }
         }
     </style>
 </head>
@@ -593,6 +792,7 @@
                 <div class="link"><a href="#" data-target="education">教育</a></div>
                 <div class="link"><a href="#" data-target="skills">技能</a></div>
                 <div class="link"><a href="#" data-target="honors">榮譽</a></div>
+                <div class="link"><a href="#" data-target="portfolio">作品集</a></div>
                 <div class="link"><a href="#" data-target="contact">聯絡</a></div>
             </div>
             <i class="fa-solid fa-bars hamburg" onclick="openMenu()"></i>
@@ -608,6 +808,7 @@
                 <a href="#" data-target="education" onclick="closeMenu()">教育</a>
                 <a href="#" data-target="skills" onclick="closeMenu()">技能</a>
                 <a href="#" data-target="honors" onclick="closeMenu()">榮譽</a>
+                <a href="#" data-target="portfolio" onclick="closeMenu()">作品集</a>
                 <a href="#" data-target="contact" onclick="closeMenu()">聯絡</a>
             </div>
         </div>
@@ -624,7 +825,7 @@
             <div class="content">
                 <h1 data-aos="fade-left" data-aos-duration="1500" data-aos-delay="700">嗨 我是 <span>吳宣萱</span></h1>
                 <div class="typewriter" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="900">
-                    我是一名 <span class="typewriter-text"></span><label for="">|</label>
+                    個人關鍵詞 <span class="typewriter-text"></span><label for="">|</label>
                 </div>
                 <p data-aos="flip-down" data-aos-duration="1500" data-aos-delay="1100">
                     人生就是從一無所有到一無所有的過程，開始與結束已定，但中間的經歷是由你自己決定的。
@@ -912,6 +1113,240 @@
         </div>
     </section>
 
+    <!-- ============================================================
+    作品集 (Portfolio)
+    ============================================================ -->
+    <section class="page" id="portfolio">
+        <h2 class="section-title">作品集</h2>
+        <p class="section-desc">展示我在簡報設計、AI 生成圖像與 AI 生成影像的創作成果，點擊分類標籤切換瀏覽。</p>
+
+        <!-- 子分類導航 -->
+        <div class="sub-nav" id="subNav">
+            <button class="sub-nav-item active" data-subtab="ppt">📊 PPT 簡報</button>
+            <button class="sub-nav-item" data-subtab="ai-img">🖼️ AI 生成圖片</button>
+            <button class="sub-nav-item" data-subtab="ai-vid">🎬 AI 生成影像</button>
+        </div>
+
+        <!-- ---- PPT 作品 ---- -->
+        <div class="sub-panel active" id="sub-ppt">
+            <div class="portfolio-grid">
+                <!-- 作品 1 -->
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #4A6FA5, #2C4A7A);">
+                        <span class="thumb-label">PPT</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">📑</span>
+                            <span class="thumb-title">永續創新創業<br>競賽簡報</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>永續創新創業競賽簡報</h4>
+                        <div class="work-meta">2025 · 跨校聯合競賽</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>主導專案選題與問題定義，編製專業產品計畫簡報，規劃落地執行路徑與關鍵衡量指標。使用 PEST 分析與市場驗證，確保簡報邏輯清晰、視覺統一。
+                        </div>
+                        <div class="work-tags">
+                            <span>商業企劃</span>
+                            <span>視覺設計</span>
+                            <span>PEST 分析</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">🔗 查看簡報 (連結)</a>
+                    </div>
+                </div>
+                <!-- 作品 2 -->
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #4A6FA5, #2C4A7A);">
+                        <span class="thumb-label">PPT</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">📊</span>
+                            <span class="thumb-title">L'ORÉAL<br>Brandstorm 提案</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>L'ORÉAL Brandstorm 提案</h4>
+                        <div class="work-meta">2024 · 國際商業競賽</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>統籌跨領域專案，運用 PEST 及波特五力分析深度解構男性美妝市場痛點，轉化洞察為商業模式與行銷策略，整合團隊內容產出完整提案簡報。
+                        </div>
+                        <div class="work-tags">
+                            <span>市場分析</span>
+                            <span>品牌策略</span>
+                            <span>提案簡報</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">🔗 查看簡報 (連結)</a>
+                    </div>
+                </div>
+                <!-- 作品 3 -->
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #4A6FA5, #2C4A7A);">
+                        <span class="thumb-label">PPT</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">🏙️</span>
+                            <span class="thumb-title">TBSA 夜市改革<br>企劃</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>TBSA 夜市改革企劃</h4>
+                        <div class="work-meta">2024 · 全國優等獎</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>率領 6 人團隊執行夜市改革實地調研，將質性訪談洞察轉化為創新經營企劃書。主導企劃架構與視覺設計，協調組員分工，最終奪得優等獎。
+                        </div>
+                        <div class="work-tags">
+                            <span>實地調研</span>
+                            <span>創新企劃</span>
+                            <span>團隊領導</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">🔗 查看簡報 (連結)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ---- AI 生成圖片 ---- -->
+        <div class="sub-panel" id="sub-ai-img">
+            <div class="portfolio-grid">
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #7B5EA7, #4E3A73);">
+                        <span class="thumb-label">AI 圖片</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">🎨</span>
+                            <span class="thumb-title">商業海報設計</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>商業海報設計</h4>
+                        <div class="work-meta">2025 · Midjourney</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>使用 Midjourney 生成高質感主視覺，結合品牌調性進行後製優化。設計多個版本並根據回饋調整，最終產出符合商業需求的視覺海報。
+                        </div>
+                        <div class="work-tags">
+                            <span>Midjourney</span>
+                            <span>品牌視覺</span>
+                            <span>海報設計</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">🖼️ 查看圖片</a>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #7B5EA7, #4E3A73);">
+                        <span class="thumb-label">AI 圖片</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">📱</span>
+                            <span class="thumb-title">社群圖卡系列</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>社群圖卡系列</h4>
+                        <div class="work-meta">2024 · Canva AI</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>利用 Canva AI 快速產出多款社群圖卡，統一品牌視覺風格，優化文案與排版，提升貼文互動率。設計過程注重色彩心理學與版面平衡。
+                        </div>
+                        <div class="work-tags">
+                            <span>Canva AI</span>
+                            <span>社群行銷</span>
+                            <span>圖卡設計</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">🖼️ 查看圖片</a>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #7B5EA7, #4E3A73);">
+                        <span class="thumb-label">AI 圖片</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">💡</span>
+                            <span class="thumb-title">產品概念圖</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>產品概念圖</h4>
+                        <div class="work-meta">2024 · Stable Diffusion</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>使用 Stable Diffusion 將產品概念視覺化，快速產出多種風格方案，輔助團隊進行決策。精細調整 Prompt 以達成預期視覺效果。
+                        </div>
+                        <div class="work-tags">
+                            <span>Stable Diffusion</span>
+                            <span>概念視覺化</span>
+                            <span>產品設計</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">🖼️ 查看圖片</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ---- AI 生成影像 ---- -->
+        <div class="sub-panel" id="sub-ai-vid">
+            <div class="portfolio-grid">
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #C49B4A, #8A6A2A);">
+                        <span class="thumb-label">AI 影像</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">🎬</span>
+                            <span class="thumb-title">品牌形象短影音</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>品牌形象短影音</h4>
+                        <div class="work-meta">2025 · CapCut AI</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>使用 CapCut AI 剪輯 30 秒品牌形象影片，結合 AI 生成素材與動態特效，強化品牌記憶點。設計腳本與轉場，確保節奏流暢。
+                        </div>
+                        <div class="work-tags">
+                            <span>CapCut AI</span>
+                            <span>品牌影片</span>
+                            <span>短影音</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">▶️ 觀看影片</a>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #C49B4A, #8A6A2A);">
+                        <span class="thumb-label">AI 影像</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">📢</span>
+                            <span class="thumb-title">活動宣傳影片</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>活動宣傳影片</h4>
+                        <div class="work-meta">2024 · AI 生成素材</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>為競賽活動製作宣傳短片，結合 AI 生成影像與實拍素材，快速產出具吸引力的活動預告。負責剪輯、字幕與音效搭配。
+                        </div>
+                        <div class="work-tags">
+                            <span>AI 影像</span>
+                            <span>活動宣傳</span>
+                            <span>影片剪輯</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">▶️ 觀看影片</a>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #C49B4A, #8A6A2A);">
+                        <span class="thumb-label">AI 影像</span>
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <span class="thumb-icon">🔄</span>
+                            <span class="thumb-title">產品展示動畫</span>
+                        </div>
+                    </div>
+                    <div class="work-body">
+                        <h4>產品展示動畫</h4>
+                        <div class="work-meta">2024 · AI 動畫工具</div>
+                        <div class="work-desc">
+                            <strong>我的貢獻：</strong>使用 AI 動畫工具生成產品功能展示動畫，將複雜功能以直觀視覺方式呈現，提升溝通效率。設計動畫腳本與視覺風格。
+                        </div>
+                        <div class="work-tags">
+                            <span>AI 動畫</span>
+                            <span>產品展示</span>
+                            <span>視覺溝通</span>
+                        </div>
+                        <a href="#" class="work-link" target="_blank">▶️ 觀看影片</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 聯絡 -->
     <section class="page" id="contact">
         <h2 class="section-title">聯絡方式</h2>
@@ -923,11 +1358,15 @@
                 <div><i class="fas fa-envelope"></i> sy1615870@gmail.com</div>
                 <div><i class="fas fa-university"></i> 國立臺北商業大學 · 企業管理系</div>
             </div>
-            <div style="margin-top:24px; display:flex; gap:16px; flex-wrap:wrap;">
-                <a href="#" style="color:#4b1c71; font-size:1.6rem;"><i class="fab fa-instagram"></i></a>
-                <a href="#" style="color:#4b1c71; font-size:1.6rem;"><i class="fab fa-facebook"></i></a>
-                <a href="#" style="color:#4b1c71; font-size:1.6rem;"><i class="fab fa-line"></i></a>
-                <a href="#" style="color:#4b1c71; font-size:1.6rem;"><i class="fab fa-github"></i></a>
+            <div class="social-contact-icons">
+                <!-- Instagram 連結 -->
+                <a href="https://www.instagram.com/shelly16_61?igsh=dWlob24waDR2NGFs&utm_source=qr" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <!-- Line 連結 -->
+                <a href="https://line.me/ti/p/77XdfK83ff" target="_blank" aria-label="Line">
+                    <i class="fab fa-line"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -947,13 +1386,10 @@
         const pages = document.querySelectorAll('.page');
 
         function switchPage(targetId) {
-            // 隱藏所有頁面
             pages.forEach(p => p.classList.remove('active-page'));
-            // 顯示目標
             const target = document.getElementById(targetId);
             if (target) target.classList.add('active-page');
 
-            // 更新導航 active 樣式
             document.querySelectorAll('.nav-container .links a, .dropdown .links a').forEach(link => {
                 link.classList.remove('active-link');
                 if (link.dataset.target === targetId) {
@@ -961,19 +1397,13 @@
                 }
             });
 
-            // 觸發 AOS 重新掃描
             AOS.refresh();
-
-            // 如果是技能頁，觸發進度條動畫
             if (targetId === 'skills') {
                 setTimeout(animateSkillBars, 300);
             }
-
-            // 滾動到頂部
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 監聽導航點擊
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -982,26 +1412,25 @@
             });
         });
 
-        // 手機選單開關
         function openMenu() {
             document.getElementById('dropdownMenu').style.transform = 'translateY(0)';
         }
+
         function closeMenu() {
             document.getElementById('dropdownMenu').style.transform = 'translateY(-110%)';
         }
 
-        // 外部呼叫（按鈕）
         function navigateTo(pageId) {
             switchPage(pageId);
             closeMenu();
         }
 
-        // ---------- 打字機效果 ----------
-        const texts = ["學生", "INTJ", "鹿茸"];
+        // ---------- 打字機 ----------
+        const texts = ["INTJ 企劃人", "AI 內容賦能", "從 0 到 1 的建構者"];
         let speed = 100;
         const textElement = document.querySelector(".typewriter-text");
-        let textIndex = 0;
-        let charIndex = 0;
+        let textIndex = 0,
+            charIndex = 0;
 
         function typeWriter() {
             if (charIndex < texts[textIndex].length) {
@@ -1024,21 +1453,17 @@
             }
         }
 
-        // 啟動打字（僅在首頁，但我們在所有頁面都可見，但只會顯示一次）
         window.onload = function() {
-            // 確保首頁 active
-            // 但可能直接載入時首頁已是 active，打字機在首頁存在
             if (document.querySelector('#home .typewriter-text')) {
                 typeWriter();
             }
-            // 初次加載時，若當前頁面是技能，延遲觸發進度條
             const activePage = document.querySelector('.page.active-page');
             if (activePage && activePage.id === 'skills') {
                 setTimeout(animateSkillBars, 600);
             }
         };
 
-        // ---------- 技能進度條動畫 ----------
+        // ---------- 技能進度條 ----------
         function animateSkillBars() {
             document.querySelectorAll('.bar-fill').forEach(bar => {
                 const w = bar.getAttribute('data-width');
@@ -1049,9 +1474,31 @@
             });
         }
 
-        // 如果切換到技能頁時自動觸發（已在 switchPage 中調用）
+        // ---------- 作品集子分類切換 ----------
+        const subNavItems = document.querySelectorAll('.sub-nav-item');
+        const subPanels = {
+            ppt: document.getElementById('sub-ppt'),
+            'ai-img': document.getElementById('sub-ai-img'),
+            'ai-vid': document.getElementById('sub-ai-vid'),
+        };
 
-        // 處理手機下拉選單關閉（點擊連結後關閉）
+        if (subNavItems.length) {
+            subNavItems.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.getAttribute('data-subtab');
+                    subNavItems.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    Object.keys(subPanels).forEach(key => {
+                        const panel = subPanels[key];
+                        if (panel) {
+                            panel.classList.toggle('active', key === target);
+                        }
+                    });
+                });
+            });
+        }
+
+        // 關閉手機下拉選單
         document.querySelectorAll('.dropdown .links a').forEach(link => {
             link.addEventListener('click', closeMenu);
         });

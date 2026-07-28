@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>吳宣萱 Shelly ｜ 個人履歷</title>
+
+    <!-- 字型：中文用 Noto Serif/Sans TC，英文點綴用 Cormorant Garamond -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           設計 Token：色彩／字型／間距
+           ========================================================================== */
+        :root {
+            --ink: #2E2A45;
+            --ink-soft: #635C82;
+            --plum-deep: #352E52;
+            --plum-mid: #5B4E86;
+            --orchid: #8D7BB5;
+            --lilac: #EFE9F7;
+            --parchment: #FAF8FB;
+            --gold: #C9A24E;
+            --line: #E3DCEF;
+            --white: #FFFFFF;
+
+            --font-serif: "Noto Serif TC", "Songti TC", serif;
+            --font-sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            --font-en: "Cormorant Garamond", "Noto Serif TC", serif;
+
+            --sidebar-w: 280px;
+            --radius: 14px;
+            --shadow-card: 0 6px 24px rgba(53, 46, 82, 0.08);
+            --shadow-hover: 0 10px 30px rgba(53, 46, 82, 0.16);
+            --dur: 0.35s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font-sans);
+            color: var(--ink);
+            background: var(--parchment);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
+        ul {
+            list-style: none;
+        }
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+        }
+        a {
+            color: inherit;
+        }
+
+        /* ==========================================================================
+           整體版面：側欄 + 主內容
+           ========================================================================== */
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ---------------- 側欄（PC） ---------------- */
+        .sidebar {
+            width: var(--sidebar-w);
+            flex-shrink: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            padding: 40px 28px 28px;
+            background: linear-gradient(165deg, var(--plum-deep) 0%, var(--plum-mid) 100%);
+            color: #F3EFFA;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            z-index: 20;
+        }
+
+        .star-field {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .star-field span {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.55;
+            animation: twinkle 3.6s ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0.15;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 0.9;
+                transform: scale(1.3);
+            }
+        }
+
+        .orbit-ring {
+            position: relative;
+            width: 132px;
+            height: 132px;
+            margin-bottom: 18px;
+        }
+        .orbit-ring::before {
+            content: "";
+            position: absolute;
+            inset: -10px;
+            border: 1px solid rgba(201, 162, 78, 0.55);
+            border-radius: 50%;
+        }
+        .orbit-ring::after {
+            content: "✦";
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 12px;
+        }
+
+        .avatar {
+            position: relative;
+            width: 132px;
+            height: 132px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: linear-gradient(145deg, #6A5C97, #453A6B);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .avatar .avatar-fallback {
+            font-family: var(--font-serif);
+            font-size: 44px;
+            color: #EFE9F7;
+            letter-spacing: 2px;
+        }
+
+        .name-block {
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .name-cn {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .name-en {
+            font-family: var(--font-en);
+            font-size: 15px;
+            font-style: italic;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-top: 2px;
+        }
+        .tagline {
+            margin-top: 14px;
+            font-family: var(--font-serif);
+            font-size: 13px;
+            line-height: 1.8;
+            text-align: center;
+            color: #E7DFF5;
+            padding: 10px 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* 導覽 */
+        .nav {
+            width: 100%;
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .nav-item {
+            width: 100%;
+            text-align: left;
+            padding: 11px 16px;
+            border-radius: 10px;
+            font-size: 15px;
+            letter-spacing: 1px;
+            color: #D8CFEC;
+            transition: background var(--dur), color var(--dur), transform var(--dur);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-item .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            transition: background var(--dur), box-shadow var(--dur);
+            flex-shrink: 0;
+        }
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            transform: translateX(2px);
+        }
+        .nav-item.active {
+            background: rgba(201, 162, 78, 0.18);
+            color: #fff;
+            font-weight: 500;
+        }
+        .nav-item.active .dot {
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--gold);
+        }
+
+        .sidebar-contact {
+            margin-top: auto;
+            padding-top: 18px;
+            width: 100%;
+            font-size: 12.5px;
+            color: #C9BEDF;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .sidebar-contact div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ---------------- 主內容 ---------------- */
+        .content {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            padding: 56px 64px 80px;
+            max-width: 1000px;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeUp 0.45s ease;
+        }
+        .tab-panel.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .eyebrow {
+            font-family: var(--font-en);
+            font-style: italic;
+            color: var(--orchid);
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--plum-deep);
+            margin-bottom: 8px;
+        }
+        .section-desc {
+            color: var(--ink-soft);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 34px;
+            max-width: 640px;
+        }
+
+        /* 卡片通用樣式 */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px 26px;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
+            transition: box-shadow var(--dur), transform var(--dur);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        /* ---------------- 首頁 ---------------- */
+        .hero-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+        .hero-badge {
+            font-family: var(--font-serif);
+            font-size: 14px;
+            color: var(--plum-mid);
+            background: var(--lilac);
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+        }
+        .hero-position {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            color: var(--gold);
+            margin: 10px 0 18px;
+            font-weight: 500;
+        }
+        .hero-lead {
+            font-size: 16px;
+            line-height: 2;
+            color: var(--ink);
+            max-width: 600px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 36px;
+        }
+        .feature-card h3 {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            color: var(--plum-deep);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .feature-card h3::before {
+            content: "◆";
+            color: var(--gold);
+            font-size: 10px;
+        }
+        .feature-card p {
+            font-size: 13.5px;
+            color: var(--ink-soft);
+            line-height: 1.75;
+        }
+
+        .info-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 30px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px dashed var(--line);
+            font-size: 13.5px;
+            color: var(--ink-soft);
+        }
+        .info-strip b {
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        /* ---------------- 經歷 ---------------- */
+        .timeline {
+            position: relative;
+            margin-top: 10px;
+            padding-left: 26px;
+            border-left: 2px solid var(--line);
+        }
+        .tl-item {
+            position: relative;
+            margin-bottom: 28px;
+        }
+        .tl-item::before {
+            content: "";
+            position: absolute;
+            left: -32px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--orchid);
+        }
+        .tl-item.work::before {
+            border-color: var(--gold);
+        }
+        .tl-head {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .tl-title {
+            font-family: var(--font-serif);
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--plum-deep);
+        }
+        .tl-tag {
+            font-size: 11.5px;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .tl-tag.work {
+            background: #FBF1DC;
+            color: #93701F;
+        }
+        .tl-tag.contest {
+            background: var(--lilac);
+            color: var(--plum-mid);
+        }
+        .tl-meta {
+            font-size: 13px;
+            color: var(--ink-soft);
+            margin-bottom: 10px;
+        }
+        .tl-list li {
+            position: relative;
+            padding-left: 16px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+        .tl-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--orchid);
+        }
+
+        /* ---------------- 教育背景 ---------------- */
+        .edu-card {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+        .edu-year {
+            font-family: var(--font-en);
+            font-style: italic;
+            font-size: 15px;
+            color: var(--gold);
+            min-width: 110px;
+            padding-top: 2px;
+        }
+        .edu-body h3 {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            color: var(--plum-deep);
+            margin-bottom: 4px;
+        }
+        .edu-body p {
+            font-size: 13.5px;
+            color: var(--ink-soft);
+        }
+
+        /* ---------------- 技能特長 ---------------- */
+        .skill-section {
+            margin-bottom: 30px;
+        }
+        .skill-section>h3 {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            color: var(--plum-deep);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--line);
+        }
+        .skill-row {
+            margin-bottom: 14px;
+        }
+        .skill-row-top {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13.5px;
+            margin-bottom: 6px;
+            color: var(--ink);
+        }
+        .skill-row-top span:last-child {
+            color: var(--ink-soft);
+            font-size: 12px;
+        }
+        .bar-track {
+            width: 100%;
+            height: 7px;
+            background: var(--lilac);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--orchid), var(--plum-mid));
+            width: 0%;
+            transition: width 1s cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .chip {
+            font-size: 13px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: var(--lilac);
+            color: var(--plum-mid);
+            border: 1px solid var(--line);
+            transition: background var(--dur), color var(--dur), transform var(--dur);
+        }
+        .chip:hover {
+            background: var(--plum-mid);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ---------------- 榮譽證書 ---------------- */
+        .honor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .honor-card ul {
+            margin-top: 10px;
+        }
+        .honor-card li {
+            font-size: 14px;
+            line-height: 1.9;
+            color: var(--ink);
+            padding-left: 16px;
+            position: relative;
+        }
+        .honor-card li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 10px;
+            color: var(--gold);
+        }
+        .cert-list {
+            grid-column: 1 / -1;
+        }
+        .cert-list .chip-row .chip {
+            background: #fff;
+            border-color: var(--line);
+        }
+
+        /* ================================================================
+           作品集 (Portfolio) 專屬樣式
+           ================================================================ */
+
+        /* ---- 子分類導航 ---- */
+        .sub-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--line);
+            padding-bottom: 14px;
+        }
+        .sub-nav-item {
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--ink-soft);
+            background: transparent;
+            border: 1.5px solid transparent;
+            transition: all var(--dur);
+            letter-spacing: 0.5px;
+        }
+        .sub-nav-item:hover {
+            color: var(--plum-deep);
+            background: var(--lilac);
+            transform: translateY(-1px);
+        }
+        .sub-nav-item.active {
+            color: #fff;
+            background: var(--plum-mid);
+            border-color: var(--plum-mid);
+            box-shadow: 0 4px 12px rgba(91, 78, 134, 0.25);
+        }
+
+        /* ---- 作品展示區 ---- */
+        .sub-panel {
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+        .sub-panel.active {
+            display: block;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        /* ---- 作品卡片 ---- */
+        .work-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
+            transition: box-shadow var(--dur), transform var(--dur);
+            display: flex;
+            flex-direction: column;
+        }
+        .work-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        .work-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .work-thumb .thumb-label {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            padding: 3px 12px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.35);
+            color: #fff;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+        }
+        .work-thumb .thumb-icon {
+            font-size: 32px;
+            opacity: 0.5;
+            margin-bottom: 6px;
+        }
+        .work-thumb .thumb-title {
+            font-size: 15px;
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 0 12px;
+        }
+
+        /* 各分類縮圖配色 */
+        .thumb-ppt {
+            background: linear-gradient(145deg, #4A6FA5, #2C4A7A);
+        }
+        .thumb-ai-img {
+            background: linear-gradient(145deg, #7B5EA7, #4E3A73);
+        }
+        .thumb-ai-vid {
+            background: linear-gradient(145deg, #C49B4A, #8A6A2A);
+        }
+
+        .work-body {
+            padding: 16px 18px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .work-body h4 {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            color: var(--plum-deep);
+            margin-bottom: 4px;
+        }
+        .work-body .work-meta {
+            font-size: 12px;
+            color: var(--gold);
+            margin-bottom: 6px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        .work-body p {
+            font-size: 13px;
+            color: var(--ink-soft);
+            line-height: 1.7;
+            flex: 1;
+        }
+        .work-body .work-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+        }
+        .work-body .work-tags span {
+            font-size: 10.5px;
+            padding: 2px 10px;
+            border-radius: 999px;
+            background: var(--lilac);
+            color: var(--plum-mid);
+            border: 1px solid var(--line);
+        }
+
+        /* ==========================================================================
+           響應式：手機版側欄收合為頂部列
+           ========================================================================== */
+        .mobile-toggle {
+            display: none;
+        }
+
+        @media (max-width: 880px) {
+            .sidebar {
+                position: fixed;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 14px 18px;
+                gap: 12px;
+            }
+            .orbit-ring,
+            .avatar {
+                width: 48px;
+                height: 48px;
+            }
+            .orbit-ring {
+                margin-bottom: 0;
+            }
+            .orbit-ring::before {
+                inset: -5px;
+            }
+            .orbit-ring::after {
+                display: none;
+            }
+            .avatar .avatar-fallback {
+                font-size: 18px;
+            }
+            .name-block {
+                text-align: left;
+                margin-bottom: 0;
+            }
+            .name-cn {
+                font-size: 16px;
+            }
+            .name-en {
+                font-size: 10px;
+                letter-spacing: 2px;
+            }
+            .tagline,
+            .sidebar-contact {
+                display: none;
+            }
+            .sidebar-inner-left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .nav {
+                position: fixed;
+                top: 64px;
+                left: 0;
+                right: 0;
+                margin-top: 0;
+                flex-direction: row;
+                overflow-x: auto;
+                background: var(--plum-deep);
+                padding: 8px 12px;
+                gap: 6px;
+                z-index: 19;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            }
+            .nav-item {
+                white-space: nowrap;
+                font-size: 13.5px;
+                padding: 8px 14px;
+            }
+            .nav-item:hover {
+                transform: none;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 128px 20px 60px;
+            }
+
+            /* 作品集響應 */
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            .honor-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 24px;
+            }
+            .hero-top {
+                flex-direction: column;
+            }
+
+            .sub-nav {
+                gap: 6px;
+                padding-bottom: 10px;
+            }
+            .sub-nav-item {
+                font-size: 12.5px;
+                padding: 6px 14px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .content {
+                padding: 120px 14px 40px;
+            }
+            .work-thumb {
+                aspect-ratio: 16 / 9;
+            }
+            .sub-nav {
+                gap: 4px;
+            }
+            .sub-nav-item {
+                font-size: 11.5px;
+                padding: 5px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app">
+
+        <!-- ============ 側欄 / 手機頂部列 ============ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="star-field" id="starField"></div>
+
+            <div class="sidebar-inner-left">
+                <div class="orbit-ring">
+                    <div class="avatar" id="avatar">
+                        <span class="avatar-fallback">萱</span>
+                    </div>
+                </div>
+
+                <div class="name-block">
+                    <div class="name-cn">吳宣萱</div>
+                    <div class="name-en">SHELLY</div>
+                </div>
+            </div>
+
+            <p class="tagline">靈魂的渴望<br>是命運的先知</p>
+
+            <nav class="nav" id="nav">
+                <button class="nav-item active" data-tab="home"><span class="dot"></span>首頁</button>
+                <button class="nav-item" data-tab="experience"><span class="dot"></span>經歷</button>
+                <button class="nav-item" data-tab="education"><span class="dot"></span>教育背景</button>
+                <button class="nav-item" data-tab="skills"><span class="dot"></span>技能特長</button>
+                <button class="nav-item" data-tab="honors"><span class="dot"></span>榮譽證書</button>
+                <!-- ▼ 新增：作品集 -->
+                <button class="nav-item" data-tab="portfolio"><span class="dot"></span>作品集</button>
+            </nav>
+
+            <div class="sidebar-contact">
+                <div>📞 0913-051-530</div>
+                <div>✉️ sy1615870@gmail.com</div>
+                <div>🎓 國立臺北商業大學．企業管理系</div>
+            </div>
+        </aside>
+
+        <!-- ============ 主內容 ============ -->
+        <main class="content">
+
+            <!-- ---------- 首頁 ---------- -->
+            <section class="tab-panel active" id="home">
+                <div class="hero-top">
+                    <div>
+                        <div class="eyebrow">Welcome</div>
+                        <h1 class="section-title">吳宣萱 Shelly</h1>
+                        <div class="hero-position">AI 視覺內容企劃 ｜ AI 圖文影像設計</div>
+                    </div>
+                    <div class="hero-badge">學術表現 · 班排名前 10%</div>
+                </div>
+
+                <p class="hero-lead">
+                    商業邏輯 × AI 視覺轉化——企業管理背景賦予敏銳的商業洞察（PEST／波特五力分析），
+                    並善用 AI 工具優化 Prompt 與內容產出，快速完成高品質簡報、社群圖文與短影音，
+                    兼具視覺美感與商業轉換思維，習慣在高壓賽事中擔任組長，把想法落地成可執行的方案。
+                </p>
+
+                <div class="feature-grid">
+                    <div class="card feature-card">
+                        <h3>戰略領導力</h3>
+                        <p>擅長從 0 到 1 構建框架，具備強大的商業邏輯與市場洞察（PEST／五力分析）。</p>
+                    </div>
+                    <div class="card feature-card">
+                        <h3>跨域執行力</h3>
+                        <p>結合商業策劃、數位美編（UI／短影音）與實地調研（質性訪談）的綜合實力。</p>
+                    </div>
+                    <div class="card feature-card">
+                        <h3>卓越交付</h3>
+                        <p>學術成績維持前 Top 10，並在多項全國賽事中擔任組長，具備高壓下的專案控管能力。</p>
+                    </div>
+                </div>
+
+                <div class="info-strip">
+                    <span><b>性別：</b>女</span>
+                    <span><b>出生：</b>2005.09</span>
+                    <span><b>就讀學校：</b>國立臺北商業大學（在學中）</span>
+                    <span><b>就讀科系：</b>企業管理系</span>
+                </div>
+            </section>
+
+            <!-- ---------- 經歷 ---------- -->
+            <section class="tab-panel" id="experience">
+                <div class="eyebrow">Timeline</div>
+                <h2 class="section-title">工作與競賽經歷</h2>
+                <p class="section-desc">依時間排序，涵蓋校內工讀、美編實務工作，以及六項全國性商業／永續／科技競賽的組長與統籌經驗。</p>
+
+                <div class="timeline">
+
+                    <div class="tl-item">
+                        <div class="tl-head">
+                            <span class="tl-title">2025 永續創新與創業跨校聯合競賽</span>
+                            <span class="tl-tag contest">組長</span>
+                        </div>
+                        <div class="tl-meta">2025.09 – 2025.10</div>
+                        <ul class="tl-list">
+                            <li>主導專案選題與問題定義，運用文獻調研驗證受眾需求與推廣假設，確保方案架構聚焦核心價值。</li>
+                            <li>編製專業產品計畫簡報，並規劃落地執行路徑與關鍵衡量指標，大幅提升項目實踐之可行性。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tl-item">
+                        <div class="tl-head">
+                            <span class="tl-title">2025 第三屆程式實盤模擬交易競賽</span>
+                            <span class="tl-tag contest">參賽者</span>
+                        </div>
+                        <div class="tl-meta">2025.02 – 2025.03</div>
+                        <ul class="tl-list">
+                            <li>自主研習量化交易邏輯，運用 XQ 平台建構自動化策略，強化市場判讀與回測思維。</li>
+                            <li>克服資源限制優化程式結構，展現對金融科技的實踐力與高度數位學習敏銳度。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tl-item work">
+                        <div class="tl-head">
+                            <span class="tl-title">國立臺北商業大學－教學發展中心</span>
+                            <span class="tl-tag work">工作經驗</span>
+                        </div>
+                        <div class="tl-meta">2024 – 2025 ｜ 美編助理</div>
+                        <ul class="tl-list">
+                            <li>主導多項教育專案視覺設計，編製高質感簡報、宣傳圖卡與活動剪輯，強化中心品牌形象。</li>
+                            <li>優化內部素材管理流程，支援跨部門溝通與新媒體內容開發，確保活動推廣達成率。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tl-item">
+                        <div class="tl-head">
+                            <span class="tl-title">2025 第五屆 永續生活實驗室獎</span>
+                            <span class="tl-tag contest">組長</span>
+                        </div>
+                        <div class="tl-meta">2024.11 – 2024.12</div>
+                        <ul class="tl-list">
+                            <li>主導 SDGs 減碳 App 開發專案，獨立完成介面原型與企劃撰寫，定義產品核心願景。</li>
+                            <li>對接指導老師專業建議以優化產品邏輯，確保方案兼具使用者體驗與技術可行性。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tl-item">
+                        <div class="tl-head">
+                            <span class="tl-title">2025 L'ORÉAL Brandstorm</span>
+                            <span class="tl-tag contest">項目統籌</span>
+                        </div>
+                        <div class="tl-meta">2024.10 – 2024.12</div>
+                        <ul class="tl-list">
+                            <li>統籌跨領域專案，運用 PEST 及波特五力分析深度解構男性美妝市場痛點。</li>
+                            <li>轉化洞察為商業模式與行銷策略，整合團隊內容輸出提案簡報。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tl-item">
+                        <div class="tl-head">
+                            <span class="tl-title">第二屆 台灣尤努斯基金會「三零行動家」</span>
+                            <span class="tl-tag contest">組長</span>
+                        </div>
+                        <div class="tl-meta">2024.08</div>
+                        <ul class="tl-list">
+                            <li>執行「關愛之家」深度訪談，辨識無國籍兒童議題缺口並撰寫專題研究報告。</li>
+                            <li>倡議社會企業解方，透過實地考察資料提煉具社會影響力的行動方案。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tl-item">
+                        <div class="tl-head">
+                            <span class="tl-title">第13屆 TBSA 全國大專創新企劃競賽</span>
+                            <span class="tl-tag contest">組長 · 全國優等獎</span>
+                        </div>
+                        <div class="tl-meta">2023.11 – 2024.05</div>
+                        <ul class="tl-list">
+                            <li>率領 6 人團隊執行夜市改革實地調研，將質性訪談洞察轉化為創新經營企劃。</li>
+                            <li>協調組員分工並主導企劃書撰寫，最終於全國競賽中奪得優等獎項。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tl-item">
+                        <div class="tl-head">
+                            <span class="tl-title">2023 全國高中生英語歌唱比賽</span>
+                            <span class="tl-tag contest">組長</span>
+                        </div>
+                        <div class="tl-meta">2023.02 – 2023.03</div>
+                        <ul class="tl-list">
+                            <li>策劃原創詞曲創作，轉化複雜社會時事為具感染力的英語敘事表演。</li>
+                            <li>整合舞台視覺設計與多部合唱編排，在有限資源下優化團隊演出成效。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tl-item work">
+                        <div class="tl-head">
+                            <span class="tl-title">自家餐飲業</span>
+                            <span class="tl-tag work">工作經驗</span>
+                        </div>
+                        <div class="tl-meta">2020 – 2024 ｜ 外場工讀生</div>
+                        <ul class="tl-list">
+                            <li>精準執行第一線顧客服務與訂單管理，具備處理突發客訴與現場調度之應變能力。</li>
+                            <li>協調內外場溝通效率，透過外送安排與庶務管理確保高峰時段營運流暢。</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ---------- 教育背景 ---------- -->
+            <section class="tab-panel" id="education">
+                <div class="eyebrow">Education</div>
+                <h2 class="section-title">教育背景</h2>
+                <p class="section-desc">在學中，主修企業管理，具備扎實的商業分析與策劃訓練基礎。</p>
+
+                <div class="card" style="margin-bottom:16px;">
+                    <div class="edu-card" style="margin-bottom:0;">
+                        <div class="edu-year">2021 – 2026</div>
+                        <div class="edu-body">
+                            <h3>國立臺北商業大學（在學中）</h3>
+                            <p>五專 · 企業管理系</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="edu-card" style="margin-bottom:0;">
+                        <div class="edu-year">2018 – 2021</div>
+                        <div class="edu-body">
+                            <h3>新北市立重慶國民中學</h3>
+                            <p>國中</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ---------- 技能特長 ---------- -->
+            <section class="tab-panel" id="skills">
+                <div class="eyebrow">Skills</div>
+                <h2 class="section-title">技能特長</h2>
+                <p class="section-desc">結合商業分析、AI 生成工具與視覺設計的跨域能力，並具備多張數位辦公能力證照。</p>
+
+                <div class="skill-section">
+                    <h3>核心能力（自評熟練度）</h3>
+
+                    <div class="skill-row">
+                        <div class="skill-row-top"><span>商業分析與企劃（PEST／波特五力）</span><span>精通</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="92"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-row-top"><span>簡報視覺化與美編設計</span><span>精通</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="90"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-row-top"><span>質性訪談與實地調研</span><span>擅長</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-row-top"><span>團隊領導與專案控管</span><span>擅長</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="82"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-row-top"><span>AI 圖像／短影音生成與 Prompt 優化</span><span>熟悉</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="70"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-row-top"><span>量化交易邏輯與程式化策略（XQ 平台）</span><span>熟悉</span></div>
+                        <div class="bar-track"><div class="bar-fill" data-width="62"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-section">
+                    <h3>AI 生成與 Prompt 工程</h3>
+                    <div class="chip-row">
+                        <span class="chip">ChatGPT</span>
+                        <span class="chip">Midjourney</span>
+                        <span class="chip">Stable Diffusion</span>
+                        <span class="chip">CapCut AI</span>
+                        <span class="chip">Prompt 優化</span>
+                    </div>
+                </div>
+
+                <div class="skill-section">
+                    <h3>視覺設計與社群影音</h3>
+                    <div class="chip-row">
+                        <span class="chip">Canva AI</span>
+                        <span class="chip">UI／UX 原型</span>
+                        <span class="chip">短影音剪輯</span>
+                        <span class="chip">廣告素材設計</span>
+                        <span class="chip">簡報視覺化</span>
+                    </div>
+                </div>
+
+                <div class="skill-section">
+                    <h3>辦公室數位能力（證照支持）</h3>
+                    <div class="chip-row">
+                        <span class="chip">TQC 電腦簡報</span>
+                        <span class="chip">TQC 文書處理</span>
+                        <span class="chip">TQC 電子試算表</span>
+                        <span class="chip">TQC 雲端技術及網路服務</span>
+                        <span class="chip">TIMS 行銷專業能力認證</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ---------- 榮譽證書 ---------- -->
+            <section class="tab-panel" id="honors">
+                <div class="eyebrow">Honors &amp; Certificates</div>
+                <h2 class="section-title">榮譽與證書</h2>
+                <p class="section-desc">學術表現穩定於班排名前段，並持續獲得校外獎學金與競賽獎項肯定。</p>
+
+                <div class="honor-grid">
+                    <div class="card honor-card">
+                        <h3 style="font-family:var(--font-serif); color:var(--plum-deep); font-size:16px;">學術表現</h3>
+                        <ul>
+                            <li>班排名前 10%</li>
+                        </ul>
+                    </div>
+
+                    <div class="card honor-card">
+                        <h3 style="font-family:var(--font-serif); color:var(--plum-deep); font-size:16px;">獲獎紀錄 · 校外獎學金</h3>
+                        <ul>
+                            <li>林口觀音寺獎學金</li>
+                            <li>艋舺龍山寺獎學金</li>
+                            <li>農業部獎學金</li>
+                            <li>大龍峒保安宮獎學金</li>
+                        </ul>
+                    </div>
+
+                    <div class="card honor-card">
+                        <h3 style="font-family:var(--font-serif); color:var(--plum-deep); font-size:16px;">競賽榮譽</h3>
+                        <ul>
+                            <li>第13屆 TBSA 全國大專創新企劃競賽 － 全國優等獎</li>
+                            <li>六項全國性商業／永續／科技競賽 組長或項目統籌經驗</li>
+                        </ul>
+                    </div>
+
+                    <div class="card honor-card cert-list">
+                        <h3 style="font-family:var(--font-serif); color:var(--plum-deep); font-size:16px; margin-bottom:14px;">專業證照</h3>
+                        <div class="chip-row">
+                            <span class="chip">TQC 電腦簡報</span>
+                            <span class="chip">TQC 文書處理</span>
+                            <span class="chip">TQC 電子試算表</span>
+                            <span class="chip">TQC 雲端技術及網路服務</span>
+                            <span class="chip">TIMS 行銷專業能力認證</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+            ---------- 作品集 (Portfolio) 全新面板 ----------
+            ============================================================ -->
+            <section class="tab-panel" id="portfolio">
+                <div class="eyebrow">Portfolio</div>
+                <h2 class="section-title">作品集</h2>
+                <p class="section-desc">
+                    展示我在不同領域的創作成果，包含簡報設計、AI 生成圖像與 AI 生成影像。
+                    點擊分類標籤即可切換瀏覽。
+                </p>
+
+                <!-- 子分類導航 -->
+                <div class="sub-nav" id="subNav">
+                    <button class="sub-nav-item active" data-subtab="ppt">📊 PPT 簡報</button>
+                    <button class="sub-nav-item" data-subtab="ai-img">🖼️ AI 生成圖片</button>
+                    <button class="sub-nav-item" data-subtab="ai-vid">🎬 AI 生成影像</button>
+                </div>
+
+                <!-- ---- PPT 作品 ---- -->
+                <div class="sub-panel active" id="sub-ppt">
+                    <div class="portfolio-grid">
+                        <!-- 作品 1 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ppt">
+                                <span class="thumb-label">PPT</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">📑</span>
+                                    <span class="thumb-title">永續創新創業<br>競賽簡報</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>永續創新創業競賽簡報</h4>
+                                <div class="work-meta">2025 · 跨校聯合競賽</div>
+                                <p>主導專案選題與問題定義，編製專業產品計畫簡報，規劃落地執行路徑與關鍵衡量指標。</p>
+                                <div class="work-tags">
+                                    <span>商業企劃</span>
+                                    <span>視覺設計</span>
+                                    <span>PEST 分析</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 作品 2 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ppt">
+                                <span class="thumb-label">PPT</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">📊</span>
+                                    <span class="thumb-title">L'ORÉAL<br>Brandstorm 提案</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>L'ORÉAL Brandstorm 提案</h4>
+                                <div class="work-meta">2024 · 國際商業競賽</div>
+                                <p>運用 PEST 及波特五力分析深度解構男性美妝市場痛點，轉化洞察為商業模式與行銷策略。</p>
+                                <div class="work-tags">
+                                    <span>市場分析</span>
+                                    <span>品牌策略</span>
+                                    <span>提案簡報</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 作品 3 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ppt">
+                                <span class="thumb-label">PPT</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">🏙️</span>
+                                    <span class="thumb-title">TBSA 夜市改革<br>企劃</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>TBSA 夜市改革企劃</h4>
+                                <div class="work-meta">2024 · 全國優等獎</div>
+                                <p>率領 6 人團隊執行夜市改革實地調研，將質性訪談洞察轉化為創新經營企劃書。</p>
+                                <div class="work-tags">
+                                    <span>實地調研</span>
+                                    <span>創新企劃</span>
+                                    <span>團隊領導</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ---- AI 生成圖片 ---- -->
+                <div class="sub-panel" id="sub-ai-img">
+                    <div class="portfolio-grid">
+                        <!-- 作品 1 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ai-img">
+                                <span class="thumb-label">AI 圖片</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">🎨</span>
+                                    <span class="thumb-title">商業海報設計</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>商業海報設計</h4>
+                                <div class="work-meta">2025 · Midjourney</div>
+                                <p>為品牌活動設計視覺海報，運用 Midjourney 生成高質感主視覺，結合品牌調性進行後製優化。</p>
+                                <div class="work-tags">
+                                    <span>Midjourney</span>
+                                    <span>品牌視覺</span>
+                                    <span>海報設計</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 作品 2 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ai-img">
+                                <span class="thumb-label">AI 圖片</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">📱</span>
+                                    <span class="thumb-title">社群圖卡系列</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>社群圖卡系列</h4>
+                                <div class="work-meta">2024 · Canva AI</div>
+                                <p>為社群媒體行銷設計系列圖卡，結合 Canva AI 與品牌調性，提升貼文互動率與視覺辨識度。</p>
+                                <div class="work-tags">
+                                    <span>Canva AI</span>
+                                    <span>社群行銷</span>
+                                    <span>圖卡設計</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 作品 3 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ai-img">
+                                <span class="thumb-label">AI 圖片</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">💡</span>
+                                    <span class="thumb-title">產品概念圖</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>產品概念圖</h4>
+                                <div class="work-meta">2024 · Stable Diffusion</div>
+                                <p>使用 Stable Diffusion 將產品概念視覺化，快速產出多種風格方案，輔助團隊進行決策。</p>
+                                <div class="work-tags">
+                                    <span>Stable Diffusion</span>
+                                    <span>概念視覺化</span>
+                                    <span>產品設計</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ---- AI 生成影像 ---- -->
+                <div class="sub-panel" id="sub-ai-vid">
+                    <div class="portfolio-grid">
+                        <!-- 作品 1 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ai-vid">
+                                <span class="thumb-label">AI 影像</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">🎬</span>
+                                    <span class="thumb-title">品牌形象短影音</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>品牌形象短影音</h4>
+                                <div class="work-meta">2025 · CapCut AI</div>
+                                <p>30 秒品牌形象影片，使用 CapCut AI 剪輯，結合 AI 生成素材與動態特效，強化品牌記憶點。</p>
+                                <div class="work-tags">
+                                    <span>CapCut AI</span>
+                                    <span>品牌影片</span>
+                                    <span>短影音</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 作品 2 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ai-vid">
+                                <span class="thumb-label">AI 影像</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">📢</span>
+                                    <span class="thumb-title">活動宣傳影片</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>活動宣傳影片</h4>
+                                <div class="work-meta">2024 · AI 生成素材</div>
+                                <p>為競賽活動製作宣傳短片，結合 AI 生成影像與實拍素材，快速產出具吸引力的活動預告。</p>
+                                <div class="work-tags">
+                                    <span>AI 影像</span>
+                                    <span>活動宣傳</span>
+                                    <span>影片剪輯</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 作品 3 -->
+                        <div class="work-card">
+                            <div class="work-thumb thumb-ai-vid">
+                                <span class="thumb-label">AI 影像</span>
+                                <div style="display:flex;flex-direction:column;align-items:center;">
+                                    <span class="thumb-icon">🔄</span>
+                                    <span class="thumb-title">產品展示動畫</span>
+                                </div>
+                            </div>
+                            <div class="work-body">
+                                <h4>產品展示動畫</h4>
+                                <div class="work-meta">2024 · AI 動畫工具</div>
+                                <p>使用 AI 動畫工具生成產品功能展示動畫，將複雜功能以直觀視覺方式呈現，提升溝通效率。</p>
+                                <div class="work-tags">
+                                    <span>AI 動畫</span>
+                                    <span>產品展示</span>
+                                    <span>視覺溝通</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <!-- ========== 作品集結束 ========== -->
+
+        </main>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           1. 主分頁切換邏輯
+           ========================================================================== */
+        (function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const panels = document.querySelectorAll('.tab-panel');
+
+            navItems.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.getAttribute('data-tab');
+
+                    navItems.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    panels.forEach(p => p.classList.remove('active'));
+                    const targetPanel = document.getElementById(target);
+                    if (targetPanel) {
+                        targetPanel.classList.add('active');
+                        if (target === 'skills') animateSkillBars();
+                    }
+
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            function animateSkillBars() {
+                document.querySelectorAll('.bar-fill').forEach(bar => {
+                    const w = bar.getAttribute('data-width');
+                    bar.style.width = '0%';
+                    requestAnimationFrame(() => {
+                        setTimeout(() => { bar.style.width = w + '%'; }, 50);
+                    });
+                });
+            }
+        })();
+
+        /* ==========================================================================
+           2. 作品集子分類切換邏輯
+           ========================================================================== */
+        (function() {
+            const subNavItems = document.querySelectorAll('.sub-nav-item');
+            const subPanels = {
+                ppt: document.getElementById('sub-ppt'),
+                'ai-img': document.getElementById('sub-ai-img'),
+                'ai-vid': document.getElementById('sub-ai-vid'),
+            };
+
+            if (!subNavItems.length) return;
+
+            subNavItems.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.getAttribute('data-subtab');
+
+                    // 切換按鈕狀態
+                    subNavItems.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // 切換面板
+                    Object.keys(subPanels).forEach(key => {
+                        const panel = subPanels[key];
+                        if (panel) {
+                            panel.classList.toggle('active', key === target);
+                        }
+                    });
+                });
+            });
+        })();
+
+        /* ==========================================================================
+           3. 星軌背景：於側欄內隨機灑落閃爍星點
+           ========================================================================== */
+        (function() {
+            const field = document.getElementById('starField');
+            if (!field) return;
+            const STAR_COUNT = 18;
+            for (let i = 0; i < STAR_COUNT; i++) {
+                const s = document.createElement('span');
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.animationDelay = (Math.random() * 3.6).toFixed(2) + 's';
+                field.appendChild(s);
+            }
+        })();
+
+        /* ==========================================================================
+           4. 頭像載入：依序嘗試 avatar.png → avatar.jpg → avatar.jpeg
+           ========================================================================== */
+        (function() {
+            const avatarBox = document.getElementById('avatar');
+            const candidates = ['avatar.png', 'avatar.jpg', 'avatar.jpeg'];
+
+            function tryLoad(index) {
+                if (index >= candidates.length) return;
+                const img = new Image();
+                img.onload = function() {
+                    avatarBox.innerHTML = '';
+                    const finalImg = document.createElement('img');
+                    finalImg.src = candidates[index];
+                    finalImg.alt = '吳宣萱 大頭照';
+                    avatarBox.appendChild(finalImg);
+                };
+                img.onerror = function() {
+                    tryLoad(index + 1);
+                };
+                img.src = candidates[index];
+            }
+            tryLoad(0);
+        })();
+    </script>
+
+</body>
+</html>

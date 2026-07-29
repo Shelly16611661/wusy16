@@ -775,6 +775,81 @@
                 padding: 6px 14px;
             }
         }
+                }
+        
+        /* ============================================================
+           AI 生成圖片 - 純畫廊模式（貼在這裡！）
+           ============================================================ */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            padding: 4px 0;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 16px rgba(46, 42, 69, 0.10);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(46, 42, 69, 0.20);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 14px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+            color: #f0edf5;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+        }
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+            .gallery-caption {
+                font-size: 0.65rem;
+                padding: 6px 10px;
+                opacity: 1;
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            }
+        }
+        @media (max-width: 420px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+        }
+
+    </style>   ← 這行一定要在最後面！
+</head>
+<body>
     </style>
 </head>
 <body>
@@ -1580,86 +1655,6 @@
             </div>
         </div>
     </section>
-    /* ============================================================
-   AI 生成圖片 - 純畫廊模式
-   ============================================================ */
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-    padding: 4px 0;
-}
-
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.06);
-    box-shadow: 0 4px 16px rgba(46, 42, 69, 0.10);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    cursor: pointer;
-}
-
-.gallery-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(46, 42, 69, 0.20);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.03);
-}
-
-.gallery-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px 14px;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
-    color: #f0edf5;
-    font-size: 0.8rem;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    text-align: center;
-}
-
-.gallery-item:hover .gallery-caption {
-    opacity: 1;
-}
-
-/* 手機響應 */
-@media (max-width: 600px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 10px;
-    }
-    .gallery-caption {
-        font-size: 0.65rem;
-        padding: 6px 10px;
-        opacity: 1;
-        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-    }
-}
-
-@media (max-width: 420px) {
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-}
-
     <!-- ============ JavaScript ============ -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>

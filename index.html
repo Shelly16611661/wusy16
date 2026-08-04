@@ -204,7 +204,7 @@
             flex: 1;
         }
         .content h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 600;
         }
         .content h1 span {
@@ -212,7 +212,7 @@
             text-shadow: 0 0 15px #b57edc;
         }
         .content .typewriter {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 600;
             min-height: 4rem;
         }
@@ -910,11 +910,66 @@
                 </div>
                 <div class="btn-group">
     <button onclick="navigateTo('about')">探索更多</button>
-    <a href="https://drive.google.com/drive/folders/1yOH_R5OLjpgNuuwgPulSoXWXnp2PIGiZ?usp=sharing" class="btn" target="_blank">🎬 觀看作品集</a>
+    <a href="https://drive.google.com/drive/folders/1yOH_R5OLjpgNuuwgPulSoXWXnp2PIGiZ?usp=sharing" class="btn btn-outline" target="_blank">🎬 觀看作品集</a>
 </div>
             </div>
         </div>
     </section>
+
+    .btn-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.btn-group .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: #4b1c71;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-group .btn:hover {
+    transform: scale(1.05);
+    background: transparent;
+    border: 2px solid #4b1c71;
+    color: #4b1c71;
+    box-shadow: 0 0 30px rgba(75, 28, 113, 0.3);
+}
+
+.btn-group .btn-outline {
+    background: transparent;
+    border: 2px solid #4b1c71;
+    color: #4b1c71;
+}
+
+.btn-group .btn-outline:hover {
+    background: #4b1c71;
+    color: white;
+}
+
+/* 手機版按鈕垂直排列 */
+@media (max-width: 480px) {
+    .btn-group {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .btn-group .btn {
+        width: 80%;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+}
 
     <!-- 關於我 -->
     <section class="page" id="about">
@@ -1705,7 +1760,7 @@
     <!-- 聯絡 -->
     <section class="page" id="contact">
         <h2 class="section-title">聯絡方式</h2>
-        <p class="section-desc">歡迎透過以下管道與我聯繫，或追蹤我的社群動態。</p>
+        <p class="section-desc">歡迎透過以下管道與我聯繫。</p>
 
         <div class="card">
             <div class="contact-info">

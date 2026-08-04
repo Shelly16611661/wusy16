@@ -139,7 +139,61 @@
             font-size: 2.8rem;
             color: #fff0ff;
         }
+           .btn-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
 
+.btn-group .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: #4b1c71;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-group .btn:hover {
+    transform: scale(1.05);
+    background: transparent;
+    border: 2px solid #4b1c71;
+    color: #4b1c71;
+    box-shadow: 0 0 30px rgba(75, 28, 113, 0.3);
+}
+
+.btn-group .btn-outline {
+    background: transparent;
+    border: 2px solid #4b1c71;
+    color: #4b1c71;
+}
+
+.btn-group .btn-outline:hover {
+    background: #4b1c71;
+    color: white;
+}
+
+/* 手機版按鈕垂直排列 */
+@media (max-width: 480px) {
+    .btn-group {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .btn-group .btn {
+        width: 80%;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+}
+       
         /* ---------- 主要內容區塊 ---------- */
         .page {
             display: none;
@@ -775,19 +829,75 @@
                 padding: 6px 14px;
             }
         }
-                }
-        
+
+        /* ============================================================
+           按鈕群組樣式
+           ============================================================ */
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .btn-group .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            background: #4b1c71;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-group .btn:hover {
+            transform: scale(1.05);
+            background: transparent;
+            border: 2px solid #4b1c71;
+            color: #4b1c71;
+            box-shadow: 0 0 30px rgba(75, 28, 113, 0.3);
+        }
+
+        .btn-group .btn-outline {
+            background: transparent;
+            border: 2px solid #4b1c71;
+            color: #4b1c71;
+        }
+
+        .btn-group .btn-outline:hover {
+            background: #4b1c71;
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            .btn-group .btn {
+                width: 80%;
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+        }
+
         /* ============================================================
            AI 生成圖片 - 純畫廊模式（瀑布流）
            ============================================================ */
         .gallery-grid {
-            column-count: 4;           /* 電腦版顯示 4 列 */
+            column-count: 4;
             column-gap: 16px;
             padding: 4px 0;
         }
 
         .gallery-item {
-            break-inside: avoid;       /* 防止圖片被切成兩半 */
+            break-inside: avoid;
             margin-bottom: 16px;
             border-radius: 12px;
             overflow: hidden;
@@ -804,7 +914,7 @@
 
         .gallery-item img {
             width: 100%;
-            height: auto;              /* 高度隨寬度自動，保留原始比例 */
+            height: auto;
             display: block;
         }
 
@@ -828,7 +938,6 @@
             opacity: 1;
         }
 
-        /* 手機版改為 2 列 */
         @media (max-width: 600px) {
             .gallery-grid {
                 column-count: 2;
@@ -840,11 +949,12 @@
             .gallery-caption {
                 font-size: 0.65rem;
                 padding: 6px 10px;
-                opacity: 1;            /* 手機上直接顯示標題 */
+                opacity: 1;
                 background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
             }
         }
-    </style> 
+
+    </style>
 </head>
 <body>
 
@@ -915,63 +1025,7 @@
             </div>
         </div>
     </section>
-
-    .btn-group {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 16px;
-}
-
-.btn-group .btn {
-    display: inline-block;
-    padding: 14px 36px;
-    background: #4b1c71;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: 0.3s;
-    cursor: pointer;
-    text-align: center;
-}
-
-.btn-group .btn:hover {
-    transform: scale(1.05);
-    background: transparent;
-    border: 2px solid #4b1c71;
-    color: #4b1c71;
-    box-shadow: 0 0 30px rgba(75, 28, 113, 0.3);
-}
-
-.btn-group .btn-outline {
-    background: transparent;
-    border: 2px solid #4b1c71;
-    color: #4b1c71;
-}
-
-.btn-group .btn-outline:hover {
-    background: #4b1c71;
-    color: white;
-}
-
-/* 手機版按鈕垂直排列 */
-@media (max-width: 480px) {
-    .btn-group {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-    .btn-group .btn {
-        width: 80%;
-        padding: 12px 20px;
-        font-size: 0.95rem;
-    }
-}
-
-    <!-- 關於我 -->
+<!-- 關於我 -->
     <section class="page" id="about">
         <h2 class="section-title">關於我</h2>
         <p class="section-desc">商業邏輯 × AI 視覺轉化，兼具感性與理性的跨域學習者。</p>

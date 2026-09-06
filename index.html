@@ -1,375 +1,413 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>吳宣萱 Shelly · 個人履歷</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>吳宣萱 · 個人作品集</title>
     <!-- Font Awesome & AOS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         /* ============================================================
-           全局基礎設定
+           全域重置與色彩系統
            ============================================================ */
         * {
-            padding: 0;
             margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', 'Noto Sans TC', sans-serif;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --gold: #c9a96e;
+            --gold-light: #e8d5a3;
+            --white: #f8f6f2;
+            --gray: #2c2c2c;
+            --glass: rgba(255, 255, 255, 0.06);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         body {
-            width: 100%;
-            min-height: 100vh;
-            background: linear-gradient(145deg, #d4c8ec 0%, #b8a9d9 100%);
+            background: var(--black);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            color: #2e2a45;
+            min-height: 100vh;
+            line-height: 1.6;
         }
 
-        /* ---------- 導航 ---------- */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ============================================================
+           導航欄
+           ============================================================ */
         nav {
-            width: 100%;
-            height: 10vh;
-            min-height: 70px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(46, 42, 69, 0.75);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+            height: 72px;
+            display: flex;
+            align-items: center;
         }
 
         .nav-container {
             width: 100%;
-            height: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5%;
         }
 
         .logo {
-            color: #fff0ff;
-            font-size: 2.2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
             font-weight: 700;
+            color: var(--white);
             letter-spacing: 1px;
-            white-space: nowrap;
         }
         .logo span {
-            color: #c9a24e;
-            text-shadow: 0 0 8px #b57edc;
+            color: var(--gold);
         }
 
-        .nav-container .links {
+        .nav-links {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             align-items: center;
             flex-wrap: wrap;
         }
-        .nav-container .links .link a {
-            font-size: 1rem;
-            color: #fff0ff;
-            text-decoration: none;
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.85rem;
             font-weight: 500;
-            padding: 5px 14px;
+            padding: 6px 14px;
             border-radius: 30px;
             transition: 0.3s;
-            display: inline-block;
+            border: 1px solid transparent;
             white-space: nowrap;
         }
-        .nav-container .links .link a:hover,
-        .nav-container .links .link a.active-link {
-            background: rgba(201, 162, 78, 0.25);
-            color: #ffefc0;
-            box-shadow: 0 0 12px rgba(201, 162, 78, 0.3);
+        .nav-links a:hover,
+        .nav-links a.active-link {
+            background: rgba(201, 169, 110, 0.12);
+            color: var(--gold);
+            border-color: rgba(201, 169, 110, 0.2);
         }
 
-        .hamburg,
-        .cancel {
-            cursor: pointer;
+        .hamburg {
             display: none;
-            font-size: 2.2rem;
-            color: #fff0ff;
+            font-size: 1.8rem;
+            color: var(--white);
+            cursor: pointer;
         }
 
-        /* 下拉選單 (手機) */
         .dropdown {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(46, 42, 69, 0.96);
+            background: rgba(10, 10, 10, 0.98);
             backdrop-filter: blur(10px);
             transform: translateY(-110%);
-            transition: transform 0.35s ease;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 2000;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
+        .dropdown.open {
+            transform: translateY(0);
+        }
         .dropdown .links {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 20px;
             text-align: center;
         }
         .dropdown .links a {
-            color: #fff0ff;
+            color: #fff;
             font-size: 1.6rem;
-            text-decoration: none;
             font-weight: 500;
-            padding: 10px 30px;
+            padding: 8px 30px;
             border-radius: 40px;
             transition: 0.2s;
         }
-        .dropdown .links a:hover,
-        .dropdown .links a.active-link {
-            background: rgba(201, 162, 78, 0.3);
-            color: #ffefc0;
+        .dropdown .links a:hover {
+            background: rgba(201, 169, 110, 0.15);
+            color: var(--gold);
         }
         .dropdown .cancel {
             position: absolute;
-            top: 25px;
+            top: 24px;
             right: 30px;
-            display: block;
-            font-size: 2.8rem;
-            color: #fff0ff;
+            font-size: 2.6rem;
+            color: #fff;
+            cursor: pointer;
         }
-           .btn-group {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 16px;
-}
 
-.btn-group .btn {
-    display: inline-block;
-    padding: 14px 36px;
-    background: #4b1c71;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: 0.3s;
-    cursor: pointer;
-    text-align: center;
-}
-
-.btn-group .btn:hover {
-    transform: scale(1.05);
-    background: transparent;
-    border: 2px solid #4b1c71;
-    color: #4b1c71;
-    box-shadow: 0 0 30px rgba(75, 28, 113, 0.3);
-}
-
-.btn-group .btn-outline {
-    background: transparent;
-    border: 2px solid #4b1c71;
-    color: #4b1c71;
-}
-
-.btn-group .btn-outline:hover {
-    background: #4b1c71;
-    color: white;
-}
-
-/* 手機版按鈕垂直排列 */
-@media (max-width: 480px) {
-    .btn-group {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-    .btn-group .btn {
-        width: 80%;
-        padding: 12px 20px;
-        font-size: 0.95rem;
-    }
-}
-       
-        /* ---------- 主要內容區塊 ---------- */
+        /* ============================================================
+           頁面容器
+           ============================================================ */
         .page {
             display: none;
-            padding: 40px 5% 60px;
+            padding: 50px 5% 70px;
             max-width: 1200px;
             margin: 0 auto;
-            animation: fadeUp 0.5s ease;
+            animation: fadeUp 0.6s ease;
         }
         .page.active-page {
             display: block;
         }
 
         @keyframes fadeUp {
-            from {
+            0% {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
-            to {
+            100% {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* ---------- 首頁 (原有封面) ---------- */
+        /* ============================================================
+           首頁
+           ============================================================ */
         #home {
-            padding: 20px 5% 40px;
+            padding-top: 20px;
         }
-        .main-container {
+        .hero {
             display: flex;
-            justify-content: space-evenly;
             align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 40px;
             min-height: 70vh;
         }
-        .main-container .image {
-            width: 320px;
-            height: 320px;
+        .hero-image {
+            flex: 0 0 260px;
+            width: 260px;
+            height: 260px;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 0 50px #7f4ca5;
-            flex-shrink: 0;
-            transition: transform 0.3s;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 60px rgba(201, 169, 110, 0.15);
+            transition: 0.4s;
         }
-        .main-container .image:hover {
-            animation: animate 1.5s ease-in-out infinite;
+        .hero-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 80px rgba(201, 169, 110, 0.25);
         }
-        .main-container .image img {
+        .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        @keyframes animate {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
 
-        .main-container .content {
-            color: #2e2a45;
-            max-width: 550px;
+        .hero-content {
             flex: 1;
+            min-width: 280px;
         }
-        .content h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
         }
-        .content h1 span {
-            color: #4b1c71;
-            text-shadow: 0 0 15px #b57edc;
+        .hero-content h1 span {
+            color: var(--gold);
         }
-        .content .typewriter {
-            font-size: 2rem;
-            font-weight: 600;
+        .hero-content .typewriter {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 16px 0 20px;
             min-height: 4rem;
         }
-        .content .typewriter-text {
-            color: #4b1c71;
-            text-shadow: 0 0 10px #b57edc;
+        .hero-content .typewriter-text {
+            color: var(--gold);
         }
-        .content p {
-            font-size: 1.2rem;
-            margin: 18px 0;
-            line-height: 1.7;
+        .hero-content .cursor {
+            animation: blink 0.8s step-end infinite;
         }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .hero-content p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 500px;
+            margin-bottom: 24px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
+            transition: 0.3s;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .btn-primary {
+            background: var(--gold);
+            color: #0a0a0a;
+            border-color: var(--gold);
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--gold);
+            box-shadow: 0 0 30px rgba(201, 169, 110, 0.15);
+        }
+        .btn-outline:hover {
+            background: var(--gold);
+            color: #0a0a0a;
+            box-shadow: 0 0 30px rgba(201, 169, 110, 0.15);
+        }
+
         .social-links {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: 20px 0;
+            gap: 14px;
+            margin-top: 24px;
         }
         .social-links a {
             display: inline-flex;
-            justify-content: center;
             align-items: center;
-            width: 3.2rem;
-            height: 3.2rem;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            border: 0.2rem solid #4b1c71;
-            color: #4b1c71;
-            font-size: 1.6rem;
-            transition: 0.25s;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.4rem;
+            transition: 0.3s;
         }
         .social-links a:hover {
-            transform: scale(1.2);
-            background: #b57edc;
-            color: #fff;
-            border-color: #b57edc;
-            box-shadow: 0 0 20px #b57edc;
-        }
-        .content .btn button {
-            padding: 14px 48px;
-            background: #4b1c71;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: 0.3s;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .content .btn button:hover {
-            transform: scale(1.08);
-            background: transparent;
-            border: 2px solid #4b1c71;
-            color: #4b1c71;
-            box-shadow: 0 0 30px rgba(75, 28, 113, 0.4);
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-3px);
         }
 
-        /* ---------- 通用卡片 ---------- */
+        /* ============================================================
+           通用卡片與標題
+           ============================================================ */
         .section-title {
-            font-size: 2.4rem;
-            font-weight: 700;
-            color: #2e2a45;
-            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--white);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
         .section-title::after {
             content: '';
             flex: 1;
-            height: 3px;
-            background: linear-gradient(90deg, #c9a24e, transparent);
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), transparent);
         }
         .section-desc {
-            color: #4a3e5e;
+            color: rgba(255, 255, 255, 0.45);
             font-size: 1.05rem;
             margin-bottom: 30px;
-            max-width: 700px;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 20px;
-            padding: 26px 30px;
-            box-shadow: 0 8px 32px rgba(46, 42, 69, 0.10);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 28px 32px;
             transition: 0.3s;
+            margin-bottom: 24px;
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(46, 42, 69, 0.18);
+            border-color: rgba(201, 169, 110, 0.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .card p,
+        .card li {
+            color: rgba(255, 255, 255, 0.75);
+        }
+        .card h3 {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
 
-        /* 時間軸 */
+        .chip {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 30px;
+            background: rgba(201, 169, 110, 0.1);
+            border: 1px solid rgba(201, 169, 110, 0.15);
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.8rem;
+            margin: 4px 4px 0 0;
+            transition: 0.2s;
+        }
+        .chip:hover {
+            background: rgba(201, 169, 110, 0.2);
+        }
+
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .mt-2 {
+            margin-top: 12px;
+        }
+
+        /* ============================================================
+           時間軸 (經歷)
+           ============================================================ */
         .timeline {
             position: relative;
             padding-left: 30px;
-            border-left: 3px solid #b57edc;
+            border-left: 2px solid rgba(201, 169, 110, 0.2);
         }
         .tl-item {
             position: relative;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
             padding-left: 20px;
         }
         .tl-item::before {
@@ -377,44 +415,47 @@
             position: absolute;
             left: -38px;
             top: 6px;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            background: #fff;
-            border: 4px solid #b57edc;
+            background: var(--gold);
+            border: 3px solid #0a0a0a;
+            box-shadow: 0 0 0 3px var(--gold);
         }
         .tl-item.work::before {
-            border-color: #c9a24e;
+            border-color: #0a0a0a;
+            background: #fff;
+            box-shadow: 0 0 0 3px #fff;
         }
         .tl-head {
             display: flex;
             flex-wrap: wrap;
             align-items: baseline;
-            gap: 10px;
-            margin-bottom: 8px;
+            gap: 12px;
+            margin-bottom: 6px;
         }
         .tl-title {
             font-size: 1.2rem;
-            font-weight: 700;
-            color: #2e2a45;
+            font-weight: 600;
+            color: #fff;
         }
         .tl-tag {
             font-size: 0.7rem;
             padding: 2px 14px;
             border-radius: 30px;
-            background: #e4d9f5;
-            color: #4b1c71;
-            font-weight: 600;
+            background: rgba(201, 169, 110, 0.15);
+            color: var(--gold);
+            font-weight: 500;
             letter-spacing: 0.5px;
         }
         .tl-tag.work {
-            background: #f5edd6;
-            color: #8a6f1a;
+            background: rgba(255, 255, 255, 0.06);
+            color: #aaa;
         }
         .tl-meta {
-            font-size: 0.9rem;
-            color: #5a4e6e;
-            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 6px;
         }
         .tl-list {
             list-style: none;
@@ -424,166 +465,85 @@
             position: relative;
             padding-left: 20px;
             font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.65);
             line-height: 1.8;
-            color: #2e2a45;
         }
         .tl-list li::before {
             content: "—";
             position: absolute;
             left: 0;
-            color: #b57edc;
+            color: var(--gold);
         }
 
-        /* 教育背景 - 手機垂直排列修正 */
-        .edu-card {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px 30px;
-            align-items: baseline;
-        }
-        .edu-year {
-            font-weight: 600;
-            color: #c9a24e;
-            min-width: 100px;
-        }
-        .edu-body h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        .edu-body p {
-            color: #4a3e5e;
-        }
-        /* 手機：垂直排列 */
-        @media (max-width: 600px) {
-            .edu-card {
-                flex-direction: column;
-                gap: 4px;
-                align-items: flex-start;
-            }
-            .edu-year {
-                min-width: auto;
-            }
-        }
-
-        /* 技能 */
-        .skill-section {
-            margin-bottom: 30px;
-        }
-        .skill-section>h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2e2a45;
-            border-bottom: 2px solid rgba(201, 162, 78, 0.3);
-            padding-bottom: 6px;
-            margin-bottom: 16px;
-        }
+        /* ============================================================
+           技能 (技能)
+           ============================================================ */
         .skill-row {
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         .skill-row-top {
             display: flex;
             justify-content: space-between;
             font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.75);
         }
         .bar-track {
             width: 100%;
-            height: 8px;
-            background: #e4d9f5;
-            border-radius: 20px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
             overflow: hidden;
+            margin-top: 4px;
         }
         .bar-fill {
             height: 100%;
-            border-radius: 20px;
-            background: linear-gradient(90deg, #b57edc, #7f4ca5);
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--gold-light), var(--gold));
             width: 0%;
             transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .chip-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .chip {
-            background: rgba(255, 255, 255, 0.6);
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(181, 126, 220, 0.3);
-            color: #2e2a45;
-            transition: 0.2s;
-        }
-        .chip:hover {
-            background: #7f4ca5;
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(127, 76, 165, 0.3);
-        }
-
-        /* 榮譽 */
-        .honor-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .honor-card ul {
-            list-style: none;
-            margin-top: 10px;
-        }
-        .honor-card li {
-            position: relative;
-            padding-left: 20px;
-            line-height: 1.9;
-        }
-        .honor-card li::before {
-            content: "✦";
-            position: absolute;
-            left: 0;
-            color: #c9a24e;
-        }
-        .cert-list {
-            grid-column: 1 / -1;
-        }
-
-        /* ---------- 作品集 (Portfolio) ---------- */
+        /* ============================================================
+           作品集子分類導航
+           ============================================================ */
         .sub-nav {
             display: flex;
-            gap: 8px;
-            margin-bottom: 30px;
+            gap: 10px;
             flex-wrap: wrap;
-            border-bottom: 2px solid rgba(201, 162, 78, 0.3);
-            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+            padding-bottom: 14px;
+            margin-bottom: 30px;
         }
         .sub-nav-item {
-            padding: 8px 22px;
+            padding: 8px 24px;
             border-radius: 30px;
-            font-size: 1rem;
             font-weight: 500;
-            color: #4a3e5e;
+            font-size: 0.95rem;
             background: transparent;
-            border: 1.5px solid transparent;
-            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.5);
             cursor: pointer;
+            transition: 0.3s;
         }
         .sub-nav-item:hover {
-            background: rgba(255, 255, 255, 0.4);
+            border-color: var(--gold);
+            color: #fff;
         }
         .sub-nav-item.active {
-            background: #7f4ca5;
-            color: #fff;
-            border-color: #7f4ca5;
-            box-shadow: 0 4px 14px rgba(127, 76, 165, 0.25);
+            background: var(--gold);
+            color: #0a0a0a;
+            border-color: var(--gold);
         }
 
         .sub-panel {
             display: none;
-            animation: fadeUp 0.4s ease;
+            animation: fadeUp 0.5s ease;
         }
         .sub-panel.active {
             display: block;
         }
 
+        /* ---- 作品卡片 (PPT / 影像) ---- */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -591,53 +551,49 @@
         }
 
         .work-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 6px 24px rgba(46, 42, 69, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.5);
             transition: 0.3s;
             display: flex;
             flex-direction: column;
         }
         .work-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(46, 42, 69, 0.18);
+            border-color: rgba(201, 169, 110, 0.25);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
         .work-thumb {
-            width: 100%;
             aspect-ratio: 16 / 10;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.9);
             position: relative;
-            flex-shrink: 0;
-            background: linear-gradient(145deg, #6a5c97, #453a6b);
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            color: rgba(255, 255, 255, 0.6);
         }
         .work-thumb .thumb-label {
             position: absolute;
             top: 12px;
             right: 12px;
             font-size: 0.7rem;
-            padding: 3px 14px;
+            padding: 2px 12px;
             border-radius: 30px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--gold);
+            border: 1px solid rgba(201, 169, 110, 0.15);
         }
         .work-thumb .thumb-icon {
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             opacity: 0.5;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         .work-thumb .thumb-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
             padding: 0 12px;
         }
@@ -649,20 +605,20 @@
             flex-direction: column;
         }
         .work-body h4 {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #2e2a45;
-            margin-bottom: 4px;
+            color: #fff;
+            margin-bottom: 2px;
         }
         .work-body .work-meta {
             font-size: 0.8rem;
-            color: #c9a24e;
+            color: var(--gold);
             font-weight: 500;
             margin-bottom: 8px;
         }
         .work-body .work-desc {
             font-size: 0.9rem;
-            color: #4a3e5e;
+            color: rgba(255, 255, 255, 0.55);
             line-height: 1.7;
             flex: 1;
             margin-bottom: 12px;
@@ -677,309 +633,322 @@
             font-size: 0.7rem;
             padding: 2px 12px;
             border-radius: 30px;
-            background: #e4d9f5;
-            color: #4b1c71;
+            background: rgba(201, 169, 110, 0.08);
+            border: 1px solid rgba(201, 169, 110, 0.08);
+            color: rgba(255, 255, 255, 0.5);
         }
         .work-body .work-link {
             align-self: flex-start;
             padding: 6px 20px;
             border-radius: 30px;
-            background: #7f4ca5;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
+            background: var(--gold);
+            color: #0a0a0a;
+            font-weight: 600;
+            font-size: 0.85rem;
             transition: 0.3s;
-            border: 1px solid #7f4ca5;
+            border: 1px solid var(--gold);
         }
         .work-body .work-link:hover {
             background: transparent;
-            color: #7f4ca5;
+            color: var(--gold);
         }
 
-        /* 聯絡 */
+        /* ============================================================
+           視覺實驗室 — 動態廊道 + 3D 翻轉卡片 (預留擴充空間)
+           ============================================================ */
+        .carousel-track-wrapper {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 24px;
+            animation: scrollLeft 40s linear infinite;
+            width: max-content;
+        }
+
+        .carousel-track.paused {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollLeft {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .flip-card {
+            width: 280px;
+            min-width: 280px;
+            height: 380px;
+            perspective: 1200px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            border-radius: 16px;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            backface-visibility: hidden;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #1a1a1a;
+        }
+
+        .flip-card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            pointer-events: none;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid rgba(201, 169, 110, 0.15);
+        }
+
+        .flip-card-back .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+        .flip-card-back .sub {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 14px;
+        }
+        .flip-card-back .insight {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .flip-card-back .insight strong {
+            color: #fff;
+        }
+        .flip-card-back .tools {
+            font-size: 0.75rem;
+            color: var(--gold-light);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 12px;
+            margin-top: 8px;
+        }
+
+        /* 預留新增素材的提示區塊 */
+        .add-more-hint {
+            text-align: center;
+            padding: 30px 20px;
+            border: 2px dashed rgba(201, 169, 110, 0.2);
+            border-radius: 16px;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+        .add-more-hint:hover {
+            border-color: rgba(201, 169, 110, 0.4);
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .add-more-hint i {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
+            color: rgba(201, 169, 110, 0.3);
+        }
+
+        @media (max-width: 640px) {
+            .flip-card {
+                width: 200px;
+                min-width: 200px;
+                height: 280px;
+            }
+            .flip-card-back {
+                padding: 16px;
+            }
+            .flip-card-back .brand {
+                font-size: 1rem;
+            }
+            .flip-card-back .insight {
+                font-size: 0.75rem;
+            }
+            .flip-card-back .tools {
+                font-size: 0.65rem;
+            }
+            .add-more-hint {
+                padding: 20px 16px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ============================================================
+           聯絡
+           ============================================================ */
         .contact-info {
             display: flex;
             flex-wrap: wrap;
             gap: 20px 40px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.75);
         }
         .contact-info i {
             width: 30px;
-            color: #7f4ca5;
+            color: var(--gold);
         }
         .social-contact-icons {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             margin-top: 20px;
         }
         .social-contact-icons a {
             display: inline-flex;
-            justify-content: center;
             align-items: center;
-            width: 3.6rem;
-            height: 3.6rem;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            color: #4b1c71;
-            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.8rem;
             transition: 0.3s;
-            border: 1px solid rgba(127, 76, 165, 0.2);
-            text-decoration: none;
         }
         .social-contact-icons a:hover {
-            transform: scale(1.15);
-            background: #7f4ca5;
-            color: #fff;
-            box-shadow: 0 0 20px rgba(127, 76, 165, 0.4);
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: scale(1.06);
         }
 
         /* ============================================================
-           響應式設計
+           響應式
            ============================================================ */
-        @media (max-width: 884px) {
-            .nav-container .links {
+        @media (max-width: 900px) {
+            .nav-links {
                 display: none;
             }
             .hamburg {
                 display: block;
             }
-
-            .main-container {
+            .hero {
                 flex-direction: column;
                 text-align: center;
             }
-            .main-container .image {
-                width: 220px;
-                height: 220px;
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
             }
-            .content h1 {
-                font-size: 2.2rem;
-            }
-            .content .typewriter {
-                font-size: 1.8rem;
-                min-height: 3.5rem;
-            }
-            .content p {
-                font-size: 1rem;
-            }
-            .social-links {
+            .hero-content .btn-group {
                 justify-content: center;
             }
-            .content .btn button {
-                padding: 12px 36px;
-                font-size: 1rem;
+            .hero-content .social-links {
+                justify-content: center;
             }
-
-            .page {
-                padding: 30px 4% 50px;
+            .hero-image {
+                flex: 0 0 200px;
+                width: 200px;
+                height: 200px;
             }
             .section-title {
-                font-size: 1.8rem;
+                font-size: 2.2rem;
             }
-            .honor-grid {
-                grid-template-columns: 1fr;
-            }
-            .cert-list {
-                grid-column: 1;
-            }
-            .tl-head {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: 1fr;
+            .page {
+                padding: 30px 4% 50px;
             }
         }
 
         @media (max-width: 480px) {
             .logo {
-                font-size: 1.6rem;
-            }
-            .main-container .image {
-                width: 160px;
-                height: 160px;
-            }
-            .content h1 {
-                font-size: 1.8rem;
-            }
-            .content .typewriter {
                 font-size: 1.4rem;
-                min-height: 2.8rem;
             }
-            .content p {
-                font-size: 0.9rem;
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .hero-content .typewriter {
+                font-size: 1.4rem;
             }
             .card {
                 padding: 18px 16px;
             }
-            .section-title {
-                font-size: 1.5rem;
-            }
-            .dropdown .links a {
-                font-size: 1.4rem;
-                padding: 10px 20px;
-            }
-            .sub-nav {
-                gap: 4px;
-            }
             .sub-nav-item {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
                 padding: 6px 14px;
             }
-        }
-
-        /* ============================================================
-           按鈕群組樣式
-           ============================================================ */
-        .btn-group {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-top: 16px;
-        }
-
-        .btn-group .btn {
-            display: inline-block;
-            padding: 14px 36px;
-            background: #4b1c71;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.3s;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .btn-group .btn:hover {
-            transform: scale(1.05);
-            background: transparent;
-            border: 2px solid #4b1c71;
-            color: #4b1c71;
-            box-shadow: 0 0 30px rgba(75, 28, 113, 0.3);
-        }
-
-        .btn-group .btn-outline {
-            background: transparent;
-            border: 2px solid #4b1c71;
-            color: #4b1c71;
-        }
-
-        .btn-group .btn-outline:hover {
-            background: #4b1c71;
-            color: white;
-        }
-
-        @media (max-width: 480px) {
-            .btn-group {
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-            }
-            .btn-group .btn {
-                width: 80%;
-                padding: 12px 20px;
-                font-size: 0.95rem;
+            .portfolio-grid {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* ============================================================
-           AI 生成圖片 - 純畫廊模式（瀑布流）
-           ============================================================ */
-        .gallery-grid {
-            column-count: 4;
-            column-gap: 16px;
-            padding: 4px 0;
+        /* 其他 */
+        .text-gold {
+            color: var(--gold);
         }
-
-        .gallery-item {
-            break-inside: avoid;
-            margin-bottom: 16px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(46, 42, 69, 0.10);
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
-            cursor: pointer;
-            position: relative;
+        .text-muted {
+            color: rgba(255, 255, 255, 0.35);
         }
-
-        .gallery-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(46, 42, 69, 0.20);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 10px 14px;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
-            color: #f0edf5;
-            font-size: 0.8rem;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            text-align: center;
-        }
-
-        .gallery-item:hover .gallery-caption {
-            opacity: 1;
-        }
-
-        @media (max-width: 600px) {
-            .gallery-grid {
-                column-count: 2;
-                column-gap: 10px;
-            }
-            .gallery-item {
-                margin-bottom: 10px;
-            }
-            .gallery-caption {
-                font-size: 0.65rem;
-                padding: 6px 10px;
-                opacity: 1;
-                background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-            }
-        }
-
     </style>
 </head>
-<body>
 
-    <!-- ============ 導航欄 ============ -->
+<body>
+    <!-- ============ 導航 ============ -->
     <nav>
         <div class="nav-container">
-            <div class="logo" data-aos="zoom-in" data-aos-duration="1500">
-                Shelly <span>· 履歷</span>
+            <div class="logo">Shelly <span>· 履歷</span></div>
+            <div class="nav-links" id="navLinks">
+                <a href="#" class="active-link" data-target="home">首頁</a>
+                <a href="#" data-target="about">關於我</a>
+                <a href="#" data-target="experience">經歷</a>
+                <a href="#" data-target="education">教育</a>
+                <a href="#" data-target="skills">技能</a>
+                <a href="#" data-target="honors">榮譽</a>
+                <a href="#" data-target="portfolio">作品集</a>
+                <a href="#" data-target="contact">聯絡</a>
             </div>
-            <div class="links">
-                <div class="link"><a href="#" class="active-link" data-target="home">首頁</a></div>
-                <div class="link"><a href="#" data-target="about">關於我</a></div>
-                <div class="link"><a href="#" data-target="experience">經歷</a></div>
-                <div class="link"><a href="#" data-target="education">教育</a></div>
-                <div class="link"><a href="#" data-target="skills">技能</a></div>
-                <div class="link"><a href="#" data-target="honors">榮譽</a></div>
-                <div class="link"><a href="#" data-target="portfolio">作品集</a></div>
-                <div class="link"><a href="#" data-target="contact">聯絡</a></div>
-            </div>
-            <i class="fa-solid fa-bars hamburg" onclick="openMenu()"></i>
+            <i class="fas fa-bars hamburg" onclick="openMenu()"></i>
         </div>
 
-        <!-- 手機下拉選單 -->
+        <!-- 手機下拉 -->
         <div class="dropdown" id="dropdownMenu">
-            <i class="fa-solid fa-xmark cancel" onclick="closeMenu()"></i>
+            <i class="fas fa-times cancel" onclick="closeMenu()"></i>
             <div class="links">
                 <a href="#" data-target="home" onclick="closeMenu()">首頁</a>
                 <a href="#" data-target="about" onclick="closeMenu()">關於我</a>
@@ -993,60 +962,57 @@
         </div>
     </nav>
 
-    <!-- ============ 頁面內容 ============ -->
-
-    <!-- 首頁 -->
+    <!-- ============ 首頁 ============ -->
     <section class="page active-page" id="home">
-        <div class="main-container">
-            <div class="image" data-aos="zoom-out" data-aos-duration="3000">
-                <img src="照片/shelly.JPG" alt="Profile Image">
+        <div class="hero">
+            <div class="hero-image" data-aos="zoom-out" data-aos-duration="1500">
+                <img src="照片/shelly.JPG" alt="吳宣萱" />
             </div>
-            <div class="content">
-                <h1 data-aos="fade-left" data-aos-duration="1500" data-aos-delay="700">嗨 我是 <span>吳宣萱</span></h1>
-                <div class="typewriter" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="900">
-                    個人關鍵詞 <span class="typewriter-text"></span><label for="">|</label>
+            <div class="hero-content">
+                <h1 data-aos="fade-right" data-aos-delay="200">嗨 我是 <span>吳宣萱</span></h1>
+                <div class="typewriter" data-aos="fade-right" data-aos-delay="400">
+                    <span class="typewriter-text"></span><span class="cursor">|</span>
                 </div>
-                 <p data-aos="flip-down" data-aos-duration="1500" data-aos-delay="1300">
-                    人生就是從一無所有到一無所有的過程，開始與結束已定，<br>中間的經歷由你自己決定。
+                <p data-aos="fade-up" data-aos-delay="600">
+                    人生就是從一無所有到一無所有的過程，<br />開始與結束已定，中間的經歷由你自己決定。
                 </p>
-                <p data-aos="flip-down" data-aos-duration="1500" data-aos-delay="1400" style="color:#635C82; font-size:0.95rem;">
-                    📩 為避免誤入詐騙陷阱，暫不接聽陌生電話，<br>歡迎寫信給我，文字比聲音更長久。
+                <p data-aos="fade-up" data-aos-delay="700" style="font-size:0.9rem; color:rgba(255,255,255,0.35);">
+                    📩 歡迎寫信給我，文字比聲音更長久。
                 </p>
-                <div class="social-links">
+                <div class="btn-group" data-aos="fade-up" data-aos-delay="800">
+                    <a href="#" onclick="navigateTo('about'); return false;" class="btn btn-primary">探索更多</a>
+                    <a href="https://drive.google.com/drive/folders/1yOH_R5OLjpgNuuwgPulSoXWXnp2PIGiZ?usp=sharing" target="_blank" class="btn btn-outline">🎬 AIGC 夏が終わる前に</a>
+                </div>
+                <div class="social-links" data-aos="fade-up" data-aos-delay="1000">
                     <a href="#"><i class="fa-regular fa-face-laugh-wink"></i></a>
                     <a href="#"><i class="fa-regular fa-hand-peace"></i></a>
                     <a href="#"><i class="fa-solid fa-person-dress"></i></a>
                     <a href="#"><i class="fa-solid fa-tv"></i></a>
                 </div>
-               <div class="btn-group">
-    <a href="#" onclick="navigateTo('about'); return false;" class="btn">探索更多</a>
-    <a href="https://drive.google.com/drive/folders/1yOH_R5OLjpgNuuwgPulSoXWXnp2PIGiZ?usp=sharing" class="btn btn-outline" target="_blank">🎬AIGC夏が終わる前に</a>
-</div>
             </div>
         </div>
     </section>
-<!-- 關於我 -->
+
+    <!-- ============ 關於我 ============ -->
     <section class="page" id="about">
         <h2 class="section-title">關於我</h2>
         <p class="section-desc">商業邏輯 × AI 視覺轉化，兼具感性與理性的跨域學習者。</p>
-
-        <div class="card" style="margin-bottom:24px;">
-            <div style="display:flex; flex-wrap:wrap; gap:20px 40px; font-size:1.05rem;">
+        <div class="card">
+            <div style="display:flex; flex-wrap:wrap; gap:16px 40px; font-size:1.05rem;">
                 <div><strong>姓名：</strong>吳宣萱 Shelly</div>
                 <div><strong>性別：</strong>女</div>
                 <div><strong>出生：</strong>2005.09</div>
-                <div><strong>就讀：</strong>國立臺北商業大學 · 企業管理系 </div>
+                <div><strong>就讀：</strong>國立臺北商業大學 · 企業管理系</div>
                 <div><strong>班排名：</strong>長期保持在班級前十名</div>
             </div>
         </div>
-
         <div class="card">
             <p style="font-size:1.05rem; line-height:1.9;">
                 企業管理背景賦予敏銳的商業洞察（PEST／波特五力分析），並善用 AI 工具優化 Prompt 與內容產出，
                 快速完成高品質簡報、社群圖文與短影音。兼具視覺美感與商業轉換思維，習慣在高壓賽事中擔任組長，
                 把想法落地成可執行的方案。
             </p>
-            <div style="margin-top:20px; display:flex; flex-wrap:wrap; gap:12px;">
+            <div class="flex-wrap mt-2">
                 <span class="chip">戰略領導力</span>
                 <span class="chip">跨域執行力</span>
                 <span class="chip">卓越交付</span>
@@ -1055,13 +1021,11 @@
         </div>
     </section>
 
-    <!-- 經歷 -->
+    <!-- ============ 經歷 ============ -->
     <section class="page" id="experience">
-        <h2 class="section-title">工作與競賽經歷</h2>
+        <h2 class="section-title">經歷</h2>
         <p class="section-desc">涵蓋校內工讀、美編實務，以及六項全國性商業／永續／科技競賽的組長與統籌經驗。</p>
-
         <div class="timeline">
-            <!-- 項目標籤使用 tl-item 與 work/contest -->
             <div class="tl-item">
                 <div class="tl-head">
                     <span class="tl-title">2025 永續創新與創業跨校聯合競賽</span>
@@ -1073,7 +1037,6 @@
                     <li>編製專業產品計畫簡報，規劃落地執行路徑與關鍵衡量指標。</li>
                 </ul>
             </div>
-
             <div class="tl-item">
                 <div class="tl-head">
                     <span class="tl-title">2025 第三屆程式實盤模擬交易競賽</span>
@@ -1085,7 +1048,6 @@
                     <li>克服資源限制優化程式結構，展現金融科技實踐力。</li>
                 </ul>
             </div>
-
             <div class="tl-item work">
                 <div class="tl-head">
                     <span class="tl-title">國立臺北商業大學－教學發展中心</span>
@@ -1097,7 +1059,6 @@
                     <li>優化內部素材管理流程，支援跨部門溝通與新媒體內容開發。</li>
                 </ul>
             </div>
-
             <div class="tl-item">
                 <div class="tl-head">
                     <span class="tl-title">2025 第五屆 永續生活實驗室獎</span>
@@ -1109,7 +1070,6 @@
                     <li>對接指導老師優化產品邏輯，確保使用者體驗與技術可行性。</li>
                 </ul>
             </div>
-
             <div class="tl-item">
                 <div class="tl-head">
                     <span class="tl-title">2025 L'ORÉAL Brandstorm</span>
@@ -1121,7 +1081,6 @@
                     <li>轉化洞察為商業模式與行銷策略，整合團隊提案簡報。</li>
                 </ul>
             </div>
-
             <div class="tl-item">
                 <div class="tl-head">
                     <span class="tl-title">第二屆 台灣尤努斯基金會「三零行動家」</span>
@@ -1133,7 +1092,6 @@
                     <li>倡議社會企業解方，提煉具社會影響力的行動方案。</li>
                 </ul>
             </div>
-
             <div class="tl-item">
                 <div class="tl-head">
                     <span class="tl-title">第13屆 TBSA 全國大專創新企劃競賽</span>
@@ -1145,7 +1103,6 @@
                     <li>協調組員分工並主導企劃書撰寫，奪得全國優等獎。</li>
                 </ul>
             </div>
-
             <div class="tl-item work">
                 <div class="tl-head">
                     <span class="tl-title">自家餐飲業</span>
@@ -1160,38 +1117,24 @@
         </div>
     </section>
 
-    <!-- 教育 -->
+    <!-- ============ 教育 ============ -->
     <section class="page" id="education">
-        <h2 class="section-title">教育背景</h2>
+        <h2 class="section-title">教育</h2>
         <p class="section-desc">在學中，主修企業管理，具備扎實的商業分析與策劃訓練。</p>
-
-        <div class="card" style="margin-bottom:18px;">
-            <div class="edu-card">
-                <div class="edu-year">2021 – 2026</div>
-                <div class="edu-body">
-                    <h3>國立臺北商業大學</h3>
-                    <p>五專 · 企業管理系</p>
-                </div>
-            </div>
-        </div>
-
         <div class="card">
-            <div class="edu-card">
-                <div class="edu-year">2018 – 2021</div>
-                <div class="edu-body">
-                    <h3>新北市立重慶國民中學</h3>
-                    <p>國中</p>
-                </div>
+            <div style="display:flex; flex-wrap:wrap; gap:16px 40px;">
+                <div><strong>2021 – 2026</strong> 國立臺北商業大學 · 五專 企業管理系</div>
+                <div><strong>2018 – 2021</strong> 新北市立重慶國民中學</div>
             </div>
         </div>
     </section>
 
-    <!-- 技能 -->
+    <!-- ============ 技能 ============ -->
     <section class="page" id="skills">
-        <h2 class="section-title">技能特長</h2>
+        <h2 class="section-title">技能</h2>
         <p class="section-desc">結合商業分析、AI 生成工具與視覺設計的跨域能力，並具備多張數位辦公證照。</p>
 
-        <div class="skill-section">
+        <div class="card">
             <h3>核心能力（自評熟練度）</h3>
             <div class="skill-row">
                 <div class="skill-row-top"><span>商業分析與企劃（PEST／波特五力）</span><span>精通</span></div>
@@ -1219,603 +1162,313 @@
             </div>
         </div>
 
-        <div class="skill-section">
+        <div class="card">
             <h3>AI 生成與 Prompt 工程</h3>
-            <div class="chip-row">
-                <span class="chip">ChatGPT</span>
-                <span class="chip">Dreamina</span>
-                <span class="chip">Gemini</span>
-                <span class="chip">kimi </span>
-                <span class="chip">deepseek </span>
-                <span class="chip">CapCut AI</span>
-                <span class="chip">Lib tv </span>
-                <span class="chip">Prompt 優化</span>
+            <div class="flex-wrap">
+                <span class="chip">ChatGPT</span><span class="chip">Dreamina</span>
+                <span class="chip">Gemini</span><span class="chip">kimi</span>
+                <span class="chip">deepseek</span><span class="chip">CapCut AI</span>
+                <span class="chip">Lib tv</span><span class="chip">Prompt 優化</span>
             </div>
         </div>
 
-        <div class="skill-section">
+        <div class="card">
             <h3>視覺設計與社群影音</h3>
-            <div class="chip-row">
-                <span class="chip">Canva AI</span>
-                <span class="chip">PowerDirector</span>
-                <span class="chip">短影音剪輯</span>
-                <span class="chip">廣告素材設計</span>
+            <div class="flex-wrap">
+                <span class="chip">Canva AI</span><span class="chip">PowerDirector</span>
+                <span class="chip">短影音剪輯</span><span class="chip">廣告素材設計</span>
                 <span class="chip">簡報視覺化</span>
             </div>
         </div>
 
-        <div class="skill-section">
+        <div class="card">
             <h3>辦公室數位能力（證照支持）</h3>
-            <div class="chip-row">
-                <span class="chip">TQC 電腦簡報</span>
-                <span class="chip">TQC 文書處理</span>
-                <span class="chip">TQC 電子試算表</span>
-                <span class="chip">TQC 雲端技術及網路服務</span>
+            <div class="flex-wrap">
+                <span class="chip">TQC 電腦簡報</span><span class="chip">TQC 文書處理</span>
+                <span class="chip">TQC 電子試算表</span><span class="chip">TQC 雲端技術及網路服務</span>
                 <span class="chip">TIMS 行銷專業能力認證</span>
             </div>
         </div>
     </section>
 
-    <!-- 榮譽 -->
+    <!-- ============ 榮譽 ============ -->
     <section class="page" id="honors">
-        <h2 class="section-title">榮譽與證書</h2>
+        <h2 class="section-title">榮譽</h2>
         <p class="section-desc">學術表現穩定於班排名前段，並持續獲得校外獎學金與競賽獎項肯定。</p>
-
-        <div class="honor-grid">
-            <div class="card honor-card">
-                <h3 style="font-size:1.2rem; font-weight:600;">學術表現</h3>
-                <ul><li>班排名前 10%</li></ul>
+        <div class="card">
+            <h3>學術表現</h3>
+            <p>班排名前 10%</p>
+        </div>
+        <div class="card">
+            <h3>獲獎紀錄 · 校外獎學金</h3>
+            <div class="flex-wrap">
+                <span class="chip">林口觀音寺獎學金</span>
+                <span class="chip">艋舺龍山寺獎學金</span>
+                <span class="chip">農業部獎學金</span>
+                <span class="chip">大龍峒保安宮獎學金</span>
             </div>
-            <div class="card honor-card">
-                <h3 style="font-size:1.2rem; font-weight:600;">獲獎紀錄 · 校外獎學金</h3>
-                <ul>
-                    <li>林口觀音寺獎學金</li>
-                    <li>艋舺龍山寺獎學金</li>
-                    <li>農業部獎學金</li>
-                    <li>大龍峒保安宮獎學金</li>
-                </ul>
-            </div>
-            <div class="card honor-card">
-                <h3 style="font-size:1.2rem; font-weight:600;">競賽榮譽</h3>
-                <ul>
-                    <li>第13屆 TBSA 全國大專創新企劃競賽 － 全國優等獎</li>
-                    <li>六項全國性商業／永續／科技競賽 組長或項目統籌經驗</li>
-                </ul>
-            </div>
-            <div class="card honor-card cert-list">
-                <h3 style="font-size:1.2rem; font-weight:600; margin-bottom:12px;">專業證照</h3>
-                <div class="chip-row">
-                    <span class="chip">TQC 電腦簡報</span>
-                    <span class="chip">TQC 文書處理</span>
-                    <span class="chip">TQC 電子試算表</span>
-                    <span class="chip">TQC 雲端技術及網路服務</span>
-                    <span class="chip">TIMS 行銷專業能力認證</span>
-                </div>
+        </div>
+        <div class="card">
+            <h3>競賽榮譽</h3>
+            <ul style="list-style:none; padding-left:0; color:rgba(255,255,255,0.7);">
+                <li>✦ 第13屆 TBSA 全國大專創新企劃競賽 － 全國優等獎</li>
+                <li>✦ 六項全國性商業／永續／科技競賽 組長或項目統籌經驗</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>專業證照</h3>
+            <div class="flex-wrap">
+                <span class="chip">TQC 電腦簡報</span><span class="chip">TQC 文書處理</span>
+                <span class="chip">TQC 電子試算表</span><span class="chip">TQC 雲端技術及網路服務</span>
+                <span class="chip">TIMS 行銷專業能力認證</span>
             </div>
         </div>
     </section>
 
-    <!-- ============================================================
-    作品集 (Portfolio)
-    ============================================================ -->
+    <!-- ============ 作品集 ============ -->
     <section class="page" id="portfolio">
         <h2 class="section-title">作品集</h2>
-        <p class="section-desc">展示我在簡報設計、AI 生成圖像與 AI 生成影像的創作成果，點擊分類標籤切換瀏覽。</p>
+        <p class="section-desc">展示我在簡報設計、AI 生成圖像與 AI 生成影像的創作成果。</p>
 
         <!-- 子分類導航 -->
-        <div class="sub-nav" id="subNav">
-            <button class="sub-nav-item active" data-subtab="ppt">📊 PPT WORD PDF </button>
+        <div class="sub-nav">
+            <button class="sub-nav-item active" data-subtab="ppt">📊 PPT WORD PDF</button>
             <button class="sub-nav-item" data-subtab="ai-img">🖼️ AI 生成圖片</button>
             <button class="sub-nav-item" data-subtab="ai-vid">🎬 AI 生成影像</button>
         </div>
 
-        <!-- ---- PPT 作品 ---- -->
+        <!-- ===== 子面板：PPT ===== -->
         <div class="sub-panel active" id="sub-ppt">
             <div class="portfolio-grid">
-          <!-- 華山咖啡 卡片 -->
-            <div class="work-card">
-                <div class="work-thumb" style="background: linear-gradient(145deg, #6B4E31, #3E2C1B);">
-                    <span class="thumb-label">PPT</span>
-                    <div style="display:flex;flex-direction:column;align-items:center;">
+                <!-- 華山咖啡 -->
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #6B4E31, #3E2C1B);">
+                        <span class="thumb-label">PPT</span>
                         <span class="thumb-icon">☕</span>
-                        <span class="thumb-title">華山商圈連鎖咖啡<br>行銷研究</span>
+                        <span class="thumb-title">華山商圈連鎖咖啡行銷研究</span>
+                    </div>
+                    <div class="work-body">
+                        <h4>華山市場商圈連鎖咖啡店行銷研究</h4>
+                        <div class="work-meta">2024 · 市場調查分析</div>
+                        <div class="work-desc">主導問卷設計與統計分析，繪製品牌知覺圖與競爭策略矩陣。</div>
+                        <div class="work-tags"><span>市場調查</span><span>統計分析</span><span>行銷策略</span></div>
+                        <a href="照片/huashan_coffee.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
                     </div>
                 </div>
-                <div class="work-body">
-                    <h4>華山市場商圈連鎖咖啡店行銷研究</h4>
-                    <div class="work-meta">2024 · 市場調查分析</div>
-                    <div class="work-desc">
-                        <strong>我的貢獻：</strong>主導問卷設計與統計分析（因素分析、K-means、迴歸分析），繪製品牌知覺圖與競爭策略矩陣，針對路易莎、星巴克、cama、興波咖啡、怡客咖啡提出具體行銷建議。
-                    </div>
-                    <div class="work-tags">
-                        <span>市場調查</span>
-                        <span>統計分析</span>
-                        <span>行銷策略</span>
-                        <span>品牌定位</span>
-                    </div>
-                    <a href="照片/huashan_coffee.pdf" class="work-link" target="_blank">📄 查看簡報 (PDF)</a>
-                </div>
-            </div>
-                            <!-- 訂閱經濟 卡片 -->
-            <div class="work-card">
-                <div class="work-thumb" style="background: linear-gradient(145deg, #2C3E50, #1A252F);">
-                    <span class="thumb-label">PPT</span>
-                    <div style="display:flex;flex-direction:column;align-items:center;">
+
+                <!-- 訂閱經濟 -->
+                <div class="work-card">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #2C3E50, #1A252F);">
+                        <span class="thumb-label">PPT</span>
                         <span class="thumb-icon">📺</span>
-                        <span class="thumb-title">『閱』陷『閱』深！<br>訂閱經濟研究</span>
+                        <span class="thumb-title">『閱』陷『閱』深！訂閱經濟研究</span>
+                    </div>
+                    <div class="work-body">
+                        <h4>你今天「訂閱」了沒？</h4>
+                        <div class="work-meta">2025 · 創新經營模式</div>
+                        <div class="work-desc">解析 Netflix、moPlus、Uber One 訂閱平台，進行市場區隔與策略分析。</div>
+                        <div class="work-tags"><span>訂閱經濟</span><span>消費者行為</span><span>品牌分析</span></div>
+                        <a href="照片/subscription_economy1.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
                     </div>
                 </div>
-                <div class="work-body">
-                    <h4>『閱』陷『閱』深！你今天「訂閱」了沒？</h4>
-                    <div class="work-meta">2025 · 創新經營模式專題</div>
-                    <div class="work-desc">
-                        <strong>我的貢獻：</strong>研究 Netflix、moPlus 與 Uber One 三大訂閱平台，解析消費者訂閱動機、品牌購買意願與品牌形象之關係，運用因素分析與知覺圖進行市場區隔與策略分析。
-                    </div>
-                    <div class="work-tags">
-                        <span>訂閱經濟</span>
-                        <span>消費者行為</span>
-                        <span>品牌分析</span>
-                        <span>商業模式</span>
-                    </div>
-                    <a href="照片/subscription_economy1.pdf" class="work-link" target="_blank">📄 查看簡報 (PDF)</a>
-                </div>
-            </div>
-                <!-- 作品 3 -->
+
+                <!-- TBSA 夜市 -->
                 <div class="work-card">
                     <div class="work-thumb" style="background: linear-gradient(145deg, #4A6FA5, #2C4A7A);">
                         <span class="thumb-label">WORD</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🏙️</span>
-                            <span class="thumb-title">TBSA 夜市改革<br>企劃</span>
-                        </div>
+                        <span class="thumb-icon">🏙️</span>
+                        <span class="thumb-title">TBSA 夜市改革企劃</span>
                     </div>
                     <div class="work-body">
-                        <h4>打造永續夜市時尚新文化建立永續X時尚X文化生態圈</h4>
-                        <div class="work-meta">2024 · TBSA 全國大專創新企劃競賽 全國優等獎</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>團隊於現場進行密集討論與協作撰寫，我負責將5位組員的實地調研洞察與發散構想，即時收斂為具邏輯性的企劃架構，並主導最終簡報的視覺設計與內容統整，確保提案論述清晰且具說服力，協助團隊在全國競賽中奪得優等獎。
-                        </div>
-                        <div class="work-tags">
-                            <span>實地調研</span>
-                            <span>創新企劃</span>
-                            <span>團隊領導</span>
-                        </div>
-                        <<a href="照片/night_market_ecosystem.pdf" class="work-link" target="_blank">📄 查看報告 (PDF)</a>
+                        <h4>打造永續夜市時尚新文化</h4>
+                        <div class="work-meta">2024 · TBSA 全國優等獎</div>
+                        <div class="work-desc">實地調研、企劃架構收斂、視覺設計統整，獲全國優等獎。</div>
+                        <div class="work-tags"><span>實地調研</span><span>創新企劃</span><span>團隊領導</span></div>
+                        <a href="照片/night_market_ecosystem.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
                     </div>
                 </div>
-                <!-- 替換原有的第一個 PPT 作品卡片 -->
+
+                <!-- 拉美西斯 -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #4A6FA5, #2C4A7A);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #8B5A2B, #4A2E1A);">
                         <span class="thumb-label">PPT</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🏛️</span>
-                            <span class="thumb-title">AI 文物修復與 AR 體驗<br>拉美西斯二世</span>
-                        </div>
+                        <span class="thumb-icon">🏛️</span>
+                        <span class="thumb-title">AI 文物修復與 AR 體驗</span>
                     </div>
                     <div class="work-body">
                         <h4>《到不了的遠方，重建輝煌》</h4>
-                        <div class="work-meta"> 個人專題報告</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>獨立完成簡報企劃、視覺設計與內容撰寫。將 AI 修復技術（U-Net++、GAN）、宇宙射線成像（繆子掃描）與 AR 體驗結合，以拉美西斯二世為案例，提出數位文物保存的資訊管理策略。簡報包含完整故事線、歷史考據與技術原理圖解，並融入天文模擬與 3D 重建概念。
-                        </div>
-                        <div class="work-tags">
-                            <span>AI 修復</span>
-                            <span>AR 體驗</span>
-                            <span>資訊管理</span>
-                            <span>文化遺產</span>
-                        </div>
-                     <!-- 將 # 換成您的雲端連結 -->
-                        <a href="照片/rebuilding glory in the unreachable distance.pdf" class="work-link" target="_blank">📄 查看簡報 (PDF)</a>
+                        <div class="work-meta">個人專題報告</div>
+                        <div class="work-desc">AI 修復技術、宇宙射線成像、AR 體驗，結合拉美西斯二世案例。</div>
+                        <div class="work-tags"><span>AI 修復</span><span>AR 體驗</span><span>文化遺產</span></div>
+                        <a href="照片/rebuilding glory in the unreachable distance.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
                     </div>
                 </div>
-                                <!-- 卡片 7：環保集點行銷企劃 -->
+
+                <!-- 環保集點 -->
                 <div class="work-card">
                     <div class="work-thumb" style="background: linear-gradient(145deg, #2E7D32, #1B5E20);">
                         <span class="thumb-label">PPT</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🌿</span>
-                            <span class="thumb-title">環保集點<br>行銷企劃</span>
-                        </div>
+                        <span class="thumb-icon">🌿</span>
+                        <span class="thumb-title">環保集點行銷企劃</span>
                     </div>
                     <div class="work-body">
                         <h4>環保集點 · 綠點驅動未來</h4>
                         <div class="work-meta">2024 · 行銷策略專題</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>以「環保行動有價化」為核心，規劃環保集點 App 行銷企劃。完成 PEST 政治經濟社會科技情報分析、競爭者比較、消費者洞察，並設計 STP 市場策略、行銷戰術（數位集點、異業合作）、溝通活動（線上濾鏡、校園大使、實體推廣）及完整預算與時程表，打造「綠色消費循環」生態圈。
-                        </div>
-                        <div class="work-tags">
-                            <span>行銷企劃</span>
-                            <span>永續創新</span>
-                            <span>活動設計</span>
-                            <span>數據分析</span>
-                        </div>
-                        <a href="照片/greenpoint_marketing.pdf" class="work-link" target="_blank">📄 查看企劃 (PDF)</a>
+                        <div class="work-desc">以「環保行動有價化」為核心，規劃 App 行銷企劃與綠色消費生態圈。</div>
+                        <div class="work-tags"><span>行銷企劃</span><span>永續創新</span><span>活動設計</span></div>
+                        <a href="照片/greenpoint_marketing.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
                     </div>
                 </div>
 
-                <!-- 卡片 8：五福臨門 -->
+                <!-- 五福臨門 -->
                 <div class="work-card">
                     <div class="work-thumb" style="background: linear-gradient(145deg, #C62828, #8E0000);">
                         <span class="thumb-label">PPT</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🏮</span>
-                            <span class="thumb-title">五福臨門<br>文化策展</span>
-                        </div>
+                        <span class="thumb-icon">🏮</span>
+                        <span class="thumb-title">五福臨門文化策展</span>
                     </div>
                     <div class="work-body">
                         <h4>五福臨門 · 北宋文化與非遺工藝</h4>
                         <div class="work-meta">2024 · 文化研究報告</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>以古裝劇《五福臨門》為載體，深入考據北宋汴京市井風貌、宋制服飾（珍珠妝、包髻）、點茶文化與非遺工藝（花絲鑲嵌、刺繡紋樣）。完成「五福」人物形象設計與歷史隱喻解讀，將傳統文化元素轉化為具現代的視覺敘事，展現文化轉譯與美學分析能力。
-                        </div>
-                        <div class="work-tags">
-                            <span>文化研究</span>
-                            <span>歷史考據</span>
-                            <span>非遺傳承</span>
-                        </div>
-                        <a href="照片/five_fortune_culture.pdf" class="work-link" target="_blank">📄 查看簡報 (PDF)</a>
+                        <div class="work-desc">考據北宋市井風貌、宋制服飾與點茶文化，將傳統元素轉化為現代視覺敘事。</div>
+                        <div class="work-tags"><span>文化研究</span><span>歷史考據</span><span>非遺傳承</span></div>
+                        <a href="照片/five_fortune_culture.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
                     </div>
                 </div>
 
-                <!-- 卡片 9：連鎖超市品牌研究 -->
+                <!-- 連鎖超市 -->
                 <div class="work-card">
                     <div class="work-thumb" style="background: linear-gradient(145deg, #1565C0, #0D47A1);">
                         <span class="thumb-label">PPT</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🛒</span>
-                            <span class="thumb-title">超市品牌<br>經營策略研究</span>
-                        </div>
+                        <span class="thumb-icon">🛒</span>
+                        <span class="thumb-title">超市品牌經營策略研究</span>
                     </div>
                     <div class="work-body">
                         <h4>連鎖超市品牌經營與消費者行為研究</h4>
                         <div class="work-meta">2024 · 市場調查專題</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>針對全聯、家樂福、里仁三大超市品牌，設計完整研究架構與李克特量表問卷，涵蓋經營策略轉變、行業趨勢、品牌差異化與行銷永續影響力等四大構面。完成因素操作型定義、量表題項設計，並進行競爭格局與消費者需求分析，提出超市品牌差異化與危機應對策略。
-                        </div>
-                        <div class="work-tags">
-                            <span>市場調查</span>
-                            <span>品牌分析</span>
-                            <span>消費者行為</span>
-                            <span>問卷設計</span>
-                        </div>
-                        <a href="照片/supermarket_research.pdf" class="work-link" target="_blank">📄 查看研究 (PDF)</a>
+                        <div class="work-desc">針對全聯、家樂福、里仁設計問卷，分析品牌差異化與消費者需求。</div>
+                        <div class="work-tags"><span>市場調查</span><span>品牌分析</span><span>問卷設計</span></div>
+                        <a href="照片/supermarket_research.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
                     </div>
                 </div>
-                                <!-- 卡片 10：新光三越百貨零售管理 -->
-                <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #8B0000, #5C0000);">
-                        <span class="thumb-label">PPT</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🏬</span>
-                            <span class="thumb-title">新光三越百貨<br>零售管理分析</span>
-                        </div>
-                    </div>
-                    <div class="work-body">
-                        <h4>新光三越百貨：從零售業態到選址策略的成功方程式</h4>
-                        <div class="work-meta">2024 · 零售管理報告</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>完成新光三越百貨之零售管理分析報告，涵蓋其歷史沿革（1991年南西店開幕至2020年數位轉型）、三級會員制度（橘卡／銀卡／金卡）、產業特性（物流支撐、交通選址、商圈群聚效應）、業態定位（百貨連鎖化與複合化轉型）、經營策略（大型化×連鎖化雙軸驅動、地點至上原則）及市場規模（2024年營收956億元、年客流量1.3億人次），並深入探討電商衝擊、出國潮等外部挑戰與OMO全通路應對策略。
-                        </div>
-                        <div class="work-tags">
-                            <span>零售管理</span>
-                            <span>品牌分析</span>
-                            <span>選址策略</span>
-                            <span>市場趨勢</span>
-                            <span>百貨業態</span>
-                        </div>
-                        <a href="照片/shin_kong_mitsukoshi.pdf" class="work-link" target="_blank">📄 查看報告 (PDF)</a>
-                    </div>
-                </div>
-                                <!-- 卡片 11：時光唱片行咖啡廳 創業企劃 -->
-                <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #5D4037, #3E2723);">
-                        <span class="thumb-label">PPT</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🎵</span>
-                            <span class="thumb-title">時光唱片行-Café<br>音樂咖啡廳創業企劃</span>
-                        </div>
-                    </div>
-                    <div class="work-body">
-                        <h4>時光唱片行-Café｜音樂記憶咖啡廳創業企劃</h4>
-                        <div class="work-meta">2024 · 創業管理專題</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>獨立完成「時光唱片行-Café」完整創業企劃書，以「音樂記憶」為核心，將 1980–2025 年華語音樂年代與咖啡廳體驗結合。涵蓋：空間規劃（磁帶流線設計、一樓吧檯＋二樓沉浸式展廳＋打卡長椅區）、主題菜單與 LOGO 設計、商業模式九宮格、五力分析、會員分級策略、財務報表（資產負債表／損益表／股東權益表），以及「黑膠/卡帶造型餐具」設計專利保護策略，完整展現從品牌概念到落地執行的創業全貌。
-                        </div>
-                        <div class="work-tags">
-                            <span>創業企劃</span>
-                            <span>商業模式</span>
-                            <span>財務規劃</span>
-                            <span>空間設計</span>
-                            <span>品牌定位</span>
-                        </div>
-                        <a href="照片/time_record_cafe.pdf" class="work-link" target="_blank">📄 查看企劃 (PDF)</a>
-                    </div>
-                </div>
-
-                <!-- 卡片 12：cama café 五感體驗分析 -->
-                <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #F5A623, #C47F1A);">
-                        <span class="thumb-label">PPT</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">☕</span>
-                            <span class="thumb-title">cama café<br>五感體驗與顧客關係</span>
-                        </div>
-                    </div>
-                    <div class="work-body">
-                        <h4>cama café 五感體驗與顧客關係分析</h4>
-                        <div class="work-meta">2024 · 門市服務管理</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>深入分析 cama café 的品牌定位與五感體驗策略（視覺：黃色招牌與 Beano 吉祥物｜聽覺：輕快音樂與咖啡機聲｜嗅覺：門市現烘咖啡豆香氣｜觸覺：周邊商品陳列與溫度｜味覺：新鮮烘焙與極厚乳三層拿鐵），並針對五感各面向提出具體優化建議報告（含音樂時段搭配、香氣調配吧、空間故事牆、包裝材質多樣化、品質管理等），展現品牌分析與服務設計的完整思維。
-                        </div>
-                        <div class="work-tags">
-                            <span>品牌分析</span>
-                            <span>五感體驗</span>
-                            <span>顧客關係</span>
-                            <span>門市服務</span>
-                        </div>
-                        <a href="照片/cama_senses_analysis.pdf" class="work-link" target="_blank">📄 查看報告 (PDF)</a>
-                    </div>
-                </div>
-                            <!-- ======== 其他報告列表（不用卡片） ======== -->
-            <div style="margin-top: 40px; border-top: 2px dashed rgba(201,162,78,0.4); padding-top: 24px;">
-                <h3 style="font-size:1.2rem; font-weight:600; color:#2e2a45; margin-bottom:16px;">
-                    📁 其他完整報告（PDF）
-                </h3>
-                <ul style="list-style:none; padding-left:0; display:flex; flex-direction:column; gap:10px;">
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.5); padding:10px 16px; border-radius:12px;">
-                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.2rem;"></i>
-                        <a href="sustainability_plan.pdf" target="_blank" style="text-decoration:none; color:#2e2a45; font-weight:500; flex:1;">
-                           丹青映衣裳：宋畫中的宋代女子服飾
-                        </a>
-                        <a href="照片/song dynasty clothing.pdf" target="_blank" style="background:#7f4ca5; color:#fff; padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
+            </div>
+            <!-- 其他完整報告列表 -->
+            <div style="margin-top:40px; border-top:1px dashed rgba(201,169,110,0.15); padding-top:24px;">
+                <h3 style="font-size:1.1rem; font-weight:600; color:var(--gold); margin-bottom:16px;">📁 其他完整報告（PDF）</h3>
+                <ul style="list-style:none; padding-left:0; display:flex; flex-direction:column; gap:8px;">
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); padding:10px 16px; border-radius:12px;">
+                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.1rem;"></i>
+                        <span style="flex:1; color:rgba(255,255,255,0.7);">丹青映衣裳：宋畫中的宋代女子服飾</span>
+                        <a href="照片/song dynasty clothing.pdf" target="_blank" style="background:rgba(201,169,110,0.15); color:var(--gold); padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
                     </li>
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.5); padding:10px 16px; border-radius:12px;">
-                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.2rem;"></i>
-                        <a href="tbsa_nightmarket.pdf" target="_blank" style="text-decoration:none; color:#2e2a45; font-weight:500; flex:1;">
-                            時光唱片行-Café 主題菜單
-                        </a>
-                        <a href="照片/Café Theme Menu.pdf" target="_blank" style="background:#7f4ca5; color:#fff; padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); padding:10px 16px; border-radius:12px;">
+                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.1rem;"></i>
+                        <span style="flex:1; color:rgba(255,255,255,0.7);">時光唱片行-Café 主題菜單</span>
+                        <a href="照片/Café Theme Menu.pdf" target="_blank" style="background:rgba(201,169,110,0.15); color:var(--gold); padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
                     </li>
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.5); padding:10px 16px; border-radius:12px;">
-                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.2rem;"></i>
-                        <a href="照片/yinling_delicious_box.pdf" target="_blank" style="text-decoration:none; color:#2e2a45; font-weight:500; flex:1;">
-                           印鈴好味盒設計
-                        </a>
-                        <a href="照片/yinling_delicious_box.pdf" target="_blank" style="background:#7f4ca5; color:#fff; padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); padding:10px 16px; border-radius:12px;">
+                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.1rem;"></i>
+                        <span style="flex:1; color:rgba(255,255,255,0.7);">印鈴好味盒設計</span>
+                        <a href="照片/yinling_delicious_box.pdf" target="_blank" style="background:rgba(201,169,110,0.15); color:var(--gold); padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
                     </li>
-                    <!-- 若有更多 PDF，依此類推增加 <li> 條目 -->
                 </ul>
             </div>
-            </div>
         </div>
 
-        <!-- ---- AI 生成圖片 ---- -->
-               <!-- ---- AI 生成圖片（純畫廊模式） ---- -->
+        <!-- ===== 子面板：AI 生成圖片（視覺實驗室） ===== -->
         <div class="sub-panel" id="sub-ai-img">
-            <div class="gallery-grid">
-                <!-- 圖片 1 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/11.png" alt="咖啡廳外觀" loading="lazy">
-                    <div class="gallery-caption">咖啡廳 · 建築外觀</div>
+            <!-- 動態廊道 -->
+            <div class="carousel-track-wrapper" id="carouselWrapper">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- 由 JavaScript 動態生成 -->
                 </div>
-                <!-- 圖片 2 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/12.png" alt="咖啡廳吧檯" loading="lazy">
-                    <div class="gallery-caption">咖啡廳 · 吧檯設計</div>
-                </div>
-                <!-- 圖片 3 -->
-                <div class="gallery-item">
-                    <img src="/照片/imags/13.png" alt="咖啡廳內部設計" loading="lazy">
-                    <div class="gallery-caption">咖啡廳 · 內部空間</div>
-                </div>
-                <!-- 圖片 4 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/15.png" alt="咖啡廳餐桌" loading="lazy">
-                    <div class="gallery-caption">咖啡廳 · 餐桌設計</div>
-                </div>
-                <!-- 圖片 5 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/16.png" alt="咖啡渣製作的環保杯" loading="lazy">
-                    <div class="gallery-caption">咖啡渣環保杯</div>
-                </div>
-                <!-- 圖片 6 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/17.png" alt="眼霜" loading="lazy">
-                    <div class="gallery-caption">渲染 · 眼霜</div>
-                </div>
-                <!-- 圖片 7 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/18.PNG" alt="手作餅乾" loading="lazy">
-                    <div class="gallery-caption">手作餅乾 · 烘焙攝影</div>
-                </div>
-                <!-- 圖片 8 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/19.PNG" alt="餅乾細節" loading="lazy">
-                    <div class="gallery-caption">餅乾細節 · 微距攝影</div>
-                </div>
-                <!-- 圖片 9 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/20.jpeg" alt="磁帶咖啡廳內部設計" loading="lazy">
-                    <div class="gallery-caption">磁帶咖啡廳 · 內部空間</div>
-                </div>
-                <!-- 圖片 10 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/21.PNG" alt="餅乾細節" loading="lazy">
-                    <div class="gallery-caption">餅乾細節 · 微距攝影</div>
-                </div>
-                <!-- 圖片 11 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/22.png" alt="咖啡廳吧檯" loading="lazy">
-                    <div class="gallery-caption">咖啡廳 · 吧檯設計</div>
-                </div>
-                <!-- 圖片 12 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/23.png" alt="印尼鳳梨酥精靈宣傳故事版分鏡圖" loading="lazy">
-                    <div class="gallery-caption">印尼鳳梨酥精靈 · 宣傳故事版分鏡圖</div>
-                </div>
-                <!-- 圖片 13 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/24.png" alt="AI 生成圖片-印尼鳳梨酥精靈" loading="lazy">
-                    <div class="gallery-caption">印尼鳳梨酥精靈</div>
-                </div>
-                 <!-- 圖片 14 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/25.png" alt="餅乾細節" loading="lazy">
-                    <div class="gallery-caption">餅乾細節 · 微距攝影</div>
-                </div>
-                 <!-- 圖片 15 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/26.png" alt="餅乾細節" loading="lazy">
-                    <div class="gallery-caption">餅乾細節 · 微距攝影</div>
-                </div>
-                 <!-- 圖片 16 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/27.png" alt="復古風格女生" loading="lazy">
-                    <div class="gallery-caption">復古風格 · 人物創作</div>
-                </div>
-                 <!-- 圖片 17 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/28.png" alt="油畫風格女生" loading="lazy">
-                    <div class="gallery-caption">油畫風格 · 女性肖像</div>
-                </div>
-                 <!-- 圖片 18 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/29.png" alt="油畫風格女生" loading="lazy">
-                    <div class="gallery-caption">油畫風格 · 女性肖像</div>
-                </div>
-                 <!-- 圖片 19 -->
-                <div class="gallery-item">
-                    <img src="照片/imags/30.png" alt="古代風格女生" loading="lazy">
-                    <div class="gallery-caption">古代風格 · 藝術人像</div>
-                </div>
-                 <!-- 圖片 20-->
-                <div class="gallery-item">
-                    <img src="照片/imags/31.png" alt="古代風格女生" loading="lazy">
-                    <div class="gallery-caption">古代風格 · 藝術人像</div>
-                </div>
-                 <!-- 圖片 21-->
-                <div class="gallery-item">
-                    <img src="照片/imags/32.png" alt="古代風格女生" loading="lazy">
-                    <div class="gallery-caption">古代風格 · 藝術人像</div>
-                </div>
-                 <!-- 圖片 22-->
-                <div class="gallery-item">
-                    <img src="照片/imags/33.png" alt="古代風格女生" loading="lazy">
-                    <div class="gallery-caption">古代風格 · 藝術人像</div>
-                </div>
+            </div>
+            <p style="text-align:center; color:rgba(255,255,255,0.25); font-size:0.85rem; margin-top:12px;">
+                🖱️ 懸停圖片暫停滾動 · 再次懸停翻轉查看策略
+            </p>
+
+            <!-- ✅ 預留擴充空間：方便你隨時加入更多 AI 廣告照片 -->
+            <div class="add-more-hint">
+                <i class="fas fa-plus-circle"></i>
+                預留擴充空間 —— 未來可在此繼續加入更多 AI 生成的廣告照片<br />
+                <span style="font-size:0.8rem; color:rgba(255,255,255,0.2);">只需在下方 JavaScript 的 imageList 陣列中新增物件即可</span>
             </div>
         </div>
 
-                <!-- ---- AI 生成影像 ---- -->
+        <!-- ===== 子面板：AI 生成影像 ===== -->
         <div class="sub-panel" id="sub-ai-vid">
             <div class="portfolio-grid">
-                               <!-- 卡片：夏が終わる前に（AI 青春敘事影片） -->
+                <!-- 夏が終わる前に -->
                 <div class="work-card">
                     <div class="work-thumb" style="background: linear-gradient(145deg, #FFB7B2, #E8847A);">
                         <span class="thumb-label">AI 影像</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">☀️</span>
-                            <span class="thumb-title">夏が終わる前に<br>AI 青春敘事</span>
-                        </div>
+                        <span class="thumb-icon">☀️</span>
+                        <span class="thumb-title">夏が終わる前に</span>
                     </div>
                     <div class="work-body">
-                        <h4>《夏が終わる前に》AI 生成青春敘事短片</h4>
+                        <h4>《夏が終わる前に》AI 青春敘事短片</h4>
                         <div class="work-meta">AI 生成 · 全原創歌詞</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>獨立完成劇本、旁白歌詞創作，並規劃完整 AI 影片工作流——使用 <strong>GPT Image 2.0</strong> 進行概念視覺化與風格框架設計，<strong>Nano Banana Pro</strong> 建立角色四維圖（正面／側面／背面／特寫）確保視覺一致性錨點，最後以 <strong>Seedance 2.0</strong> 生成高品質動態影像。全片以「夏日暗戀」為主題，將「沒能說出口的喜歡」轉化為細膩的日常畫面（教室、操場、電車、夏日祭典），展現從文字到影像的完整敘事轉譯能力。
-                            <br><br>
-                            <em style="color:#7f4ca5; font-size:0.85rem;">「在空無一人的教室裡，白色的窗簾輕輕搖晃⋯⋯你從走廊的另一頭跑來，我的夏天就這樣開始了。如果夏天不會結束，我是不是就能變得勇敢一點？那句沒能說出口的喜歡，到現在還在發著光。」</em>
-                        </div>
-                        <div class="work-tags">
-                            <span>Seedance 2.0</span>
-                            <span>Nano Banana Pro</span>
-                            <span>GPT Image 2.0</span>
-                            <span>AI 影片生成</span>
-                            <span>敘事編劇</span>
-                        </div>
-                        <a href="https://drive.google.com/drive/folders/1yOH_R5OLjpgNuuwgPulSoXWXnp2PIGiZ?usp=sharing" class="work-link" target="_blank">▶️ 觀看完整影片 (連結至Google雲端硬碟)</a>
+                        <div class="work-desc">使用 GPT Image 2.0、Nano Banana Pro、Seedance 2.0 完整工作流。</div>
+                        <div class="work-tags"><span>Seedance 2.0</span><span>Nano Banana Pro</span><span>GPT Image 2.0</span></div>
+                        <a href="https://drive.google.com/drive/folders/1yOH_R5OLjpgNuuwgPulSoXWXnp2PIGiZ?usp=sharing" class="work-link" target="_blank">▶️ 觀看</a>
                     </div>
                 </div>
-                             <!-- 卡片：訂閱經濟品牌吉祥物 -->
+
+                <!-- 訂閱品牌吉祥物 -->
                 <div class="work-card">
                     <div class="work-thumb" style="background: linear-gradient(145deg, #E50914, #B20710);">
                         <span class="thumb-label">AI 影像</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🤖</span>
-                            <span class="thumb-title">訂閱品牌吉祥物<br>揮手動畫</span>
-                        </div>
+                        <span class="thumb-icon">🤖</span>
+                        <span class="thumb-title">訂閱品牌吉祥物揮手動畫</span>
                     </div>
                     <div class="work-body">
-                        <h4>Netflix / moPlus / Uber One 吉祥物 AI 動畫</h4>
+                        <h4>Netflix / moPlus / Uber One 吉祥物動畫</h4>
                         <div class="work-meta">2025 · AI 角色動畫</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>為訂閱經濟研究中的三大品牌（Netflix、moPlus、Uber One）設計專屬吉祥物角色，並使用 AI 影像生成工具製作簡潔的揮手動畫，賦予品牌生動的視覺形象，讓冰冷的商業分析報告增添趣味性與辨識度。
-                        </div>
-                        <div class="work-tags">
-                            <span>吉祥物設計</span>
-                            <span>角色動畫</span>
-                            <span>AI 生成</span>
-                            <span>品牌形象</span>
-                        </div>
-                        <a href="影片/nmo.mp4" class="work-link" target="_blank">▶️ 觀看影片 (MP4)</a>
+                        <div class="work-desc">為三大品牌設計專屬吉祥物並生成揮手動畫。</div>
+                        <div class="work-tags"><span>吉祥物設計</span><span>角色動畫</span></div>
+                        <a href="影片/nmo.mp4" class="work-link" target="_blank">▶️ 觀看</a>
                     </div>
                 </div>
 
-                <!-- 卡片：埃及 - 壁畫與博物館 -->
+                <!-- 埃及壁畫 -->
                 <div class="work-card">
                     <div class="work-thumb" style="background: linear-gradient(145deg, #D4A373, #8B5A2B);">
                         <span class="thumb-label">影像紀錄</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🏛️</span>
-                            <span class="thumb-title">拉美西斯二世<br>壁畫與博物館</span>
-                        </div>
+                        <span class="thumb-icon">🏛️</span>
+                        <span class="thumb-title">拉美西斯二世壁畫與博物館</span>
                     </div>
                     <div class="work-body">
-                        <h4>阿布辛貝神殿壁畫 × 拉美西斯二世博物館紀錄</h4>
-                        <div class="work-meta">2026 · 文化影像紀錄</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>實將阿布辛貝神殿內部的精緻壁畫、神秘象形文字，以及博物館中拉美西斯二世石像與木乃伊的真實樣貌串聯成具故事性的影像，帶領觀者穿越時空，感受古埃及文明的宏偉與細節。
-                        </div>
-                        <div class="work-tags">
-                            <span>影像紀錄</span>
-                            <span>文化遺產</span>
-                        </div>
-                        <a href="影片/egypt1.mp4" class="work-link" target="_blank">▶️ 觀看影片 (MP4)</a>
+                        <h4>阿布辛貝神殿壁畫 × 博物館紀錄</h4>
+                        <div class="work-meta">2026 · 文化影像</div>
+                        <div class="work-desc">實地拍攝剪輯，呈現古埃及文明細節。</div>
+                        <div class="work-tags"><span>影像紀錄</span><span>文化遺產</span></div>
+                        <a href="影片/egypt1.mp4" class="work-link" target="_blank">▶️ 觀看</a>
                     </div>
                 </div>
 
-                <!-- 卡片：埃及 - 全景導覽 -->
+                <!-- 埃及全景 -->
                 <div class="work-card">
                     <div class="work-thumb" style="background: linear-gradient(145deg, #C29B6A, #7A5230);">
                         <span class="thumb-label">全景影像</span>
-                        <div style="display:flex;flex-direction:column;align-items:center;">
-                            <span class="thumb-icon">🎥</span>
-                            <span class="thumb-title">阿布辛貝神殿<br>全景沉浸導覽</span>
-                        </div>
+                        <span class="thumb-icon">🎥</span>
+                        <span class="thumb-title">阿布辛貝神殿全景導覽</span>
                     </div>
                     <div class="work-body">
-                        <h4>阿布辛貝神殿 · 從外觀到內部的全景沉浸式導覽</h4>
+                        <h4>阿布辛貝神殿 · 全景沉浸式導覽</h4>
                         <div class="work-meta">2026 · 空間全景紀錄</div>
-                        <div class="work-desc">
-                            <strong>我的貢獻：</strong>以全景運鏡手法拍攝與剪輯，從神殿宏偉的拉美西斯二世巨像外部廣場，逐步推進至內部聖壇，完整呈現神殿的建築佈局、空間層次與光影變化，打造身歷其境的沉浸式觀看體驗。
-                        </div>
-                        <div class="work-tags">
-                            <span>全景拍攝</span>
-                            <span>建築導覽</span>
-                            <span>沉浸體驗</span>
-                            <span>空間敘事</span>
-                        </div>
-                        <a href="影片/egypt2.mp4" class="work-link" target="_blank">▶️ 觀看影片 (MP4)</a>
+                        <div class="work-desc">從外部巨像逐步推進至內部聖壇，呈現建築佈局與光影變化。</div>
+                        <div class="work-tags"><span>全景拍攝</span><span>建築導覽</span><span>沉浸體驗</span></div>
+                        <a href="影片/egypt2.mp4" class="work-link" target="_blank">▶️ 觀看</a>
                     </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 聯絡 -->
+    <!-- ============ 聯絡 ============ -->
     <section class="page" id="contact">
-        <h2 class="section-title">聯絡方式</h2>
+        <h2 class="section-title">聯絡</h2>
         <p class="section-desc">歡迎透過以下管道與我聯繫。</p>
-
         <div class="card">
             <div class="contact-info">
                 <div><i class="fas fa-phone-alt"></i> 0913-051-530</div>
@@ -1823,25 +1476,19 @@
                 <div><i class="fas fa-university"></i> 國立臺北商業大學 · 企業管理系</div>
             </div>
             <div class="social-contact-icons">
-                <!-- Line 連結 -->
-                <a href="https://line.me/ti/p/77XdfK83ff" target="_blank" aria-label="Line">
-                    <i class="fab fa-line"></i>
-                </a>
+                <a href="https://line.me/ti/p/77XdfK83ff" target="_blank"><i class="fab fa-line"></i></a>
             </div>
         </div>
     </section>
+
     <!-- ============ JavaScript ============ -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // 初始化 AOS
-        AOS.init({
-            offset: 0,
-            duration: 1000,
-            once: false,
-        });
+        // ---------- AOS ----------
+        AOS.init({ offset: 0, duration: 1000, once: false });
 
-        // ---------- 導航切換 ----------
-        const navLinks = document.querySelectorAll('.nav-container .links a, .dropdown .links a');
+        // ---------- 頁面切換 ----------
+        const navLinks = document.querySelectorAll('.nav-links a, .dropdown .links a');
         const pages = document.querySelectorAll('.page');
 
         function switchPage(targetId) {
@@ -1849,7 +1496,7 @@
             const target = document.getElementById(targetId);
             if (target) target.classList.add('active-page');
 
-            document.querySelectorAll('.nav-container .links a, .dropdown .links a').forEach(link => {
+            navLinks.forEach(link => {
                 link.classList.remove('active-link');
                 if (link.dataset.target === targetId) {
                     link.classList.add('active-link');
@@ -1857,9 +1504,7 @@
             });
 
             AOS.refresh();
-            if (targetId === 'skills') {
-                setTimeout(animateSkillBars, 300);
-            }
+            if (targetId === 'skills') setTimeout(animateSkillBars, 300);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1872,11 +1517,11 @@
         });
 
         function openMenu() {
-            document.getElementById('dropdownMenu').style.transform = 'translateY(0)';
+            document.getElementById('dropdownMenu').classList.add('open');
         }
 
         function closeMenu() {
-            document.getElementById('dropdownMenu').style.transform = 'translateY(-110%)';
+            document.getElementById('dropdownMenu').classList.remove('open');
         }
 
         function navigateTo(pageId) {
@@ -1913,13 +1558,10 @@
         }
 
         window.onload = function() {
-            if (document.querySelector('#home .typewriter-text')) {
-                typeWriter();
-            }
+            typeWriter();
             const activePage = document.querySelector('.page.active-page');
-            if (activePage && activePage.id === 'skills') {
-                setTimeout(animateSkillBars, 600);
-            }
+            if (activePage && activePage.id === 'skills') setTimeout(animateSkillBars, 600);
+            initCarousel();
         };
 
         // ---------- 技能進度條 ----------
@@ -1927,9 +1569,7 @@
             document.querySelectorAll('.bar-fill').forEach(bar => {
                 const w = bar.getAttribute('data-width');
                 bar.style.width = '0%';
-                setTimeout(() => {
-                    bar.style.width = w + '%';
-                }, 50);
+                setTimeout(() => { bar.style.width = w + '%'; }, 50);
             });
         }
 
@@ -1941,29 +1581,124 @@
             'ai-vid': document.getElementById('sub-ai-vid'),
         };
 
-        if (subNavItems.length) {
-            subNavItems.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const target = btn.getAttribute('data-subtab');
-                    subNavItems.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    Object.keys(subPanels).forEach(key => {
-                        const panel = subPanels[key];
-                        if (panel) {
-                            panel.classList.toggle('active', key === target);
-                        }
-                    });
+        subNavItems.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const target = this.dataset.subtab;
+                subNavItems.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                Object.keys(subPanels).forEach(key => {
+                    const panel = subPanels[key];
+                    if (panel) panel.classList.toggle('active', key === target);
                 });
+                if (target === 'ai-img') initCarousel();
+            });
+        });
+
+        // ============================================================
+        // 視覺實驗室 — 動態廊道 + 3D 翻轉卡片
+        // ✅ 此處為圖片資料庫，未來新增廣告照片請在此陣列中加入物件
+        // ============================================================
+        const imageList = [
+            // ----- 既有圖片（保留你原有的） -----
+            { src: '照片/imags/11.png', brand: '咖啡廳', sub: '建築外觀', insight: '以溫暖木質與柔和光影，營造舒適的咖啡廳氛圍。',
+            tools: 'Midjourney v6' },
+            { src: '照片/imags/12.png', brand: '咖啡廳', sub: '吧檯設計', insight: '吧檯區以開放式設計拉近顧客與咖啡師的距離。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/13.png', brand: '咖啡廳', sub: '內部空間', insight: '採用復古磁帶與音樂元素，打造沉浸式主題空間。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/15.png', brand: '咖啡廳', sub: '餐桌設計', insight: '每張餐桌融入不同年代的音樂故事，創造獨特用餐體驗。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/16.png', brand: '環保設計', sub: '咖啡渣環保杯', insight: '以咖啡渣循環再利用，傳達永續生活理念。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/17.png', brand: '渲染', sub: '眼霜', insight: '以晶瑩剔透的水珠質感，呈現保養品的輕盈與高效。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/18.PNG', brand: '烘焙', sub: '手作餅乾', insight: '溫暖手作感，傳達「手作的溫度」與食材純粹。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/19.PNG', brand: '烘焙', sub: '餅乾微距', insight: '微距攝影凸顯餅乾的酥脆紋理與金黃色澤。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/20.jpeg', brand: '咖啡廳', sub: '磁帶主題內部', insight: '以卡帶牆為視覺焦點，復刻 80 年代音樂記憶。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/21.PNG', brand: '烘焙', sub: '餅乾細節', insight: '細膩呈現手工餅乾的天然食材顆粒感。',
+            tools: 'Midjourney v6' },
+            { src: '照片/imags/22.png', brand: '咖啡廳', sub: '吧檯設計', insight: '吧檯結合黑膠唱片元素，讓音樂與咖啡交融。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/23.png', brand: '印尼鳳梨酥', sub: '宣傳故事版分鏡', insight: '以精靈角色貫穿品牌故事，強化產品記憶點。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/24.png', brand: '印尼鳳梨酥', sub: '精靈角色', insight: '可愛精靈形象傳達「來自印尼的熱情與美味」。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/25.png', brand: '烘焙', sub: '餅乾細節', insight: '手工餅乾的樸實美感，適合溫馨送禮場景。',
+            tools: 'Midjourney v6' },
+            { src: '照片/imags/26.png', brand: '烘焙', sub: '餅乾細節', insight: '每一片餅乾都是獨一無二的掌心溫度。',
+            tools: 'Midjourney v6' },
+            { src: '照片/imags/27.png', brand: '人物創作', sub: '復古風格女生', insight: '復古穿搭與柔和色調，傳達懷舊優雅氛圍。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/28.png', brand: '人物創作', sub: '油畫風格女性肖像', insight: '以油畫筆觸呈現女性的溫柔與堅毅。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/29.png', brand: '人物創作', sub: '油畫風格女性肖像', insight: '光影對比凸顯五官立體感，展現藝術性。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/30.png', brand: '人物創作', sub: '古代風格女生', insight: '古風造型結合傳統美學，傳達東方韻味。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/31.png', brand: '人物創作', sub: '古代風格女生', insight: '細膩的髮飾與服裝細節，重現古代仕女風采。',
+                tools: 'Midjourney v6' },
+            { src: '照片/imags/32.png', brand: '人物創作', sub: '古代風格女生', insight: '水墨風格背景與古典人物相得益彰。',
+            tools: 'Midjourney v6' },
+            { src: '照片/imags/33.png', brand: '人物創作', sub: '古代風格女生', insight: '以淡雅色調呈現古代女子的寧靜與從容。',
+                tools: 'Midjourney v6' },
+
+            // ============================================================
+            // ✅ 請在此下方加入你新增的 AI 廣告照片（美妝保養品牌）
+            // ============================================================
+            // 範例格式：
+            // { src: '照片/imags/你的新圖片.png', brand: '品牌名稱', sub: '品項名稱', insight: '你的視覺策略說明', tools: '使用的工具' },
+            // 複製上方格式，將路徑與文字替換為你的內容即可。
+            // ============================================================
+        ];
+
+        function initCarousel() {
+            const track = document.getElementById('carouselTrack');
+            if (!track) return;
+            track.innerHTML = '';
+            // 複製兩次以實現無縫滾動
+            const items = [...imageList, ...imageList];
+            items.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'flip-card';
+                card.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="${item.src}" alt="${item.brand}" loading="lazy" draggable="false" />
+                            <div class="watermark">© Shelly Wu</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="brand">${item.brand}</div>
+                            <div class="sub">${item.sub}</div>
+                            <div class="insight"><strong>痛點洞察</strong> ${item.insight}</div>
+                            <div class="tools">🛠️ ${item.tools}</div>
+                        </div>
+                    </div>
+                `;
+                track.appendChild(card);
+            });
+
+            // 懸停暫停 / 繼續
+            const wrapper = document.getElementById('carouselWrapper');
+            wrapper.addEventListener('mouseenter', () => {
+                track.classList.add('paused');
+            });
+            wrapper.addEventListener('mouseleave', () => {
+                track.classList.remove('paused');
+            });
+
+            // 禁用右鍵（全站）
+            document.addEventListener('contextmenu', e => e.preventDefault());
+
+            // 禁止圖片拖曳
+            document.querySelectorAll('.flip-card-front img').forEach(img => {
+                img.setAttribute('draggable', 'false');
             });
         }
 
-        // 關閉手機下拉選單
-        document.querySelectorAll('.dropdown .links a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-
-        console.log('網站整合完成！');
+        console.log('✅ 網站已更新，頁面命名保留原有方式，視覺實驗室預留擴充空間！');
     </script>
-
 </body>
 </html>

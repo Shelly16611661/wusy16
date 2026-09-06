@@ -86,7 +86,7 @@
         }
 
         /* ============================================================
-           進入畫面 (Splash Screen)
+           進入畫面 (Splash) — 融合目標網站的「品牌大字排版」
            ============================================================ */
         #splash {
             position: fixed;
@@ -100,67 +100,80 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 1s ease, visibility 1s ease;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+            text-align: center;
+            padding: 0 5%;
         }
         #splash.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
+
+        /* 主標題 — 極大、極簡、有力量 */
         #splash h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
+            font-size: clamp(3.6rem, 12vw, 8rem);
+            font-weight: 700;
+            color: var(--bright-gray);
+            letter-spacing: 0.04em;
+            line-height: 1.05;
+            margin-bottom: 16px;
+        }
+        #splash h1 .highlight {
             color: var(--wisteria);
-            text-shadow: 0 0 60px rgba(190, 174, 219, 0.3);
-            letter-spacing: 6px;
-            animation: pulseGlow 2.5s ease-in-out infinite;
-        }
-        #splash .sub {
-            color: rgba(190, 174, 219, 0.5);
-            font-size: 1rem;
-            letter-spacing: 4px;
-            margin-top: 12px;
-            font-weight: 300;
-        }
-        #splash .visitor-count {
-            position: absolute;
-            bottom: 40px;
-            right: 50px;
-            color: rgba(190, 174, 219, 0.25);
-            font-family: 'Inter', monospace;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-        #splash .enter-hint {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(190, 174, 219, 0.3);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            animation: bounceDown 2s ease-in-out infinite;
+            text-shadow: 0 0 60px rgba(190, 174, 219, 0.15);
         }
 
-        @keyframes pulseGlow {
+        /* 副標 — 輕量、細緻、有距離感 */
+        #splash .sub {
+            font-size: clamp(0.9rem, 1.4vw, 1.2rem);
+            font-weight: 300;
+            color: rgba(230, 239, 247, 0.25);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* 進入提示 — 微互動 */
+        #splash .enter-hint {
+            color: rgba(190, 174, 219, 0.15);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            animation: pulseFade 2.4s ease-in-out infinite;
+            cursor: pointer;
+            transition: color 0.3s;
+            border: 1px solid rgba(190, 174, 219, 0.04);
+            padding: 10px 28px;
+            border-radius: 50px;
+            background: rgba(190, 174, 219, 0.02);
+        }
+        #splash .enter-hint:hover {
+            color: rgba(190, 174, 219, 0.3);
+            border-color: rgba(190, 174, 219, 0.08);
+        }
+
+        @keyframes pulseFade {
             0%,
             100% {
-                text-shadow: 0 0 40px rgba(190, 174, 219, 0.2);
+                opacity: 0.3;
+                transform: scale(1);
             }
             50% {
-                text-shadow: 0 0 80px rgba(190, 174, 219, 0.5);
+                opacity: 0.8;
+                transform: scale(1.02);
             }
         }
-        @keyframes bounceDown {
-            0%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translateX(-50%) translateY(8px);
-                opacity: 0.8;
-            }
+
+        /* 角落訪客數 (JB 風格) */
+        #splash .visitor-count {
+            position: absolute;
+            bottom: 36px;
+            right: 44px;
+            color: rgba(190, 174, 219, 0.08);
+            font-family: 'Inter', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
         }
 
         /* ============================================================
@@ -172,8 +185,8 @@
             z-index: 1000;
             background: rgba(13, 6, 19, 0.85);
             backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(190, 174, 219, 0.1);
-            height: 68px;
+            border-bottom: 1px solid rgba(190, 174, 219, 0.06);
+            height: 64px;
             display: flex;
             align-items: center;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
@@ -191,14 +204,14 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--bright-gray);
             letter-spacing: 1px;
         }
         .logo span {
             color: var(--wisteria);
-            text-shadow: 0 0 20px rgba(190, 174, 219, 0.2);
+            text-shadow: 0 0 20px rgba(190, 174, 219, 0.1);
         }
 
         .nav-links {
@@ -208,10 +221,10 @@
             flex-wrap: wrap;
         }
         .nav-links a {
-            color: rgba(230, 239, 247, 0.5);
+            color: rgba(230, 239, 247, 0.4);
             font-size: 0.8rem;
             font-weight: 500;
-            padding: 6px 14px;
+            padding: 5px 14px;
             border-radius: 30px;
             transition: 0.3s;
             border: 1px solid transparent;
@@ -221,19 +234,17 @@
         .nav-links a:hover,
         .nav-links a.active-link {
             color: var(--wisteria);
-            border-color: rgba(190, 174, 219, 0.15);
-            background: rgba(190, 174, 219, 0.06);
-            box-shadow: 0 0 20px rgba(190, 174, 219, 0.05);
+            border-color: rgba(190, 174, 219, 0.08);
+            background: rgba(190, 174, 219, 0.04);
         }
 
         .hamburg {
             display: none;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--bright-gray);
             cursor: pointer;
         }
 
-        /* 手機下拉選單 */
         .dropdown {
             position: fixed;
             top: 0;
@@ -256,26 +267,26 @@
         .dropdown .links {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
             text-align: center;
         }
         .dropdown .links a {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.4rem;
             font-weight: 500;
             padding: 8px 30px;
             border-radius: 40px;
             transition: 0.2s;
         }
         .dropdown .links a:hover {
-            background: rgba(190, 174, 219, 0.1);
+            background: rgba(190, 174, 219, 0.06);
             color: var(--wisteria);
         }
         .dropdown .cancel {
             position: absolute;
             top: 24px;
             right: 30px;
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             color: #fff;
             cursor: pointer;
         }
@@ -299,7 +310,7 @@
         @keyframes fadeUp {
             0% {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(24px);
             }
             100% {
                 opacity: 1;
@@ -308,7 +319,7 @@
         }
 
         /* ============================================================
-           首頁 (Hero)
+           首頁 (Hero) — 保留你原本的個人品牌區
            ============================================================ */
         #home {
             padding-top: 20px;
@@ -322,19 +333,19 @@
             min-height: 70vh;
         }
         .hero-image {
-            flex: 0 0 250px;
-            width: 250px;
-            height: 250px;
+            flex: 0 0 230px;
+            width: 230px;
+            height: 230px;
             border-radius: 50%;
             overflow: hidden;
-            border: 2px solid rgba(190, 174, 219, 0.3);
-            box-shadow: 0 0 60px rgba(190, 174, 219, 0.1);
+            border: 2px solid rgba(190, 174, 219, 0.15);
+            box-shadow: 0 0 60px rgba(190, 174, 219, 0.04);
             transition: 0.4s;
         }
         .hero-image:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 80px rgba(190, 174, 219, 0.2);
             border-color: var(--wisteria);
+            box-shadow: 0 0 80px rgba(190, 174, 219, 0.06);
         }
         .hero-image img {
             width: 100%;
@@ -348,21 +359,21 @@
         }
         .hero-content h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 700;
             line-height: 1.2;
             color: var(--bright-gray);
         }
         .hero-content h1 span {
             color: var(--wisteria);
-            text-shadow: 0 0 30px rgba(190, 174, 219, 0.2);
+            text-shadow: 0 0 30px rgba(190, 174, 219, 0.08);
         }
         .hero-content .typewriter {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 500;
-            color: rgba(230, 239, 247, 0.8);
-            margin: 16px 0 20px;
-            min-height: 4rem;
+            color: rgba(230, 239, 247, 0.7);
+            margin: 14px 0 18px;
+            min-height: 3.6rem;
         }
         .hero-content .typewriter-text {
             color: var(--wisteria);
@@ -382,19 +393,19 @@
         }
 
         .hero-content p {
-            font-size: 1.05rem;
-            color: rgba(230, 239, 247, 0.4);
-            max-width: 500px;
-            margin-bottom: 24px;
+            font-size: 1rem;
+            color: rgba(230, 239, 247, 0.3);
+            max-width: 480px;
+            margin-bottom: 22px;
         }
 
         .btn-group {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         .btn {
-            padding: 14px 36px;
+            padding: 12px 32px;
             border-radius: 50px;
             font-weight: 600;
             border: 1px solid var(--wisteria);
@@ -402,7 +413,7 @@
             color: var(--wisteria);
             transition: 0.3s;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-align: center;
         }
         .btn-primary {
@@ -412,44 +423,43 @@
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(190, 174, 219, 0.15);
+            box-shadow: 0 0 40px rgba(190, 174, 219, 0.06);
             background: linear-gradient(135deg, var(--blue-gray), var(--jacarta-light));
         }
         .btn-outline:hover {
-            background: rgba(190, 174, 219, 0.08);
-            box-shadow: 0 0 30px rgba(190, 174, 219, 0.05);
+            background: rgba(190, 174, 219, 0.04);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.02);
         }
 
         .social-links {
             display: flex;
-            gap: 14px;
-            margin-top: 24px;
+            gap: 12px;
+            margin-top: 22px;
         }
         .social-links a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            border: 1px solid rgba(190, 174, 219, 0.1);
-            color: rgba(230, 239, 247, 0.4);
-            font-size: 1.3rem;
+            border: 1px solid rgba(190, 174, 219, 0.06);
+            color: rgba(230, 239, 247, 0.3);
+            font-size: 1.2rem;
             transition: 0.3s;
         }
         .social-links a:hover {
             border-color: var(--wisteria);
             color: var(--wisteria);
             transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(190, 174, 219, 0.05);
         }
 
         /* ============================================================
-           通用卡片與標題 (Jacarta 基底)
+           通用卡片與標題
            ============================================================ */
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.6rem;
+            font-size: 2.4rem;
             font-weight: 600;
             margin-bottom: 8px;
             color: var(--bright-gray);
@@ -460,49 +470,49 @@
         .section-title::after {
             content: '';
             flex: 1;
-            height: 2px;
+            height: 1px;
             background: linear-gradient(90deg, var(--wisteria), transparent);
-            opacity: 0.3;
+            opacity: 0.15;
         }
         .section-desc {
-            color: rgba(230, 239, 247, 0.35);
-            font-size: 1.05rem;
+            color: rgba(230, 239, 247, 0.25);
+            font-size: 1rem;
             margin-bottom: 30px;
         }
 
         .card {
             background: var(--glass);
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(190, 174, 219, 0.06);
+            border: 1px solid rgba(190, 174, 219, 0.04);
             border-radius: 20px;
-            padding: 28px 32px;
+            padding: 26px 30px;
             transition: 0.4s;
             margin-bottom: 24px;
             box-shadow: var(--shadow-glow);
         }
         .card:hover {
-            border-color: rgba(190, 174, 219, 0.12);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), var(--shadow-glow);
+            border-color: rgba(190, 174, 219, 0.08);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), var(--shadow-glow);
         }
         .card p,
         .card li {
-            color: rgba(230, 239, 247, 0.75);
+            color: rgba(230, 239, 247, 0.7);
         }
         .card h3 {
             color: var(--wisteria);
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 10px;
         }
 
         .chip {
             display: inline-block;
-            padding: 4px 16px;
+            padding: 4px 14px;
             border-radius: 30px;
-            background: rgba(63, 42, 82, 0.6);
-            border: 1px solid rgba(190, 174, 219, 0.08);
-            color: rgba(230, 239, 247, 0.7);
-            font-size: 0.8rem;
+            background: rgba(63, 42, 82, 0.5);
+            border: 1px solid rgba(190, 174, 219, 0.04);
+            color: rgba(230, 239, 247, 0.6);
+            font-size: 0.75rem;
             margin: 4px 4px 0 0;
             transition: 0.3s;
         }
@@ -516,82 +526,81 @@
         .flex-wrap {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
         .mt-2 {
             margin-top: 12px;
         }
 
         /* ============================================================
-           時間軸 (經歷) — 霓虹紫線
+           時間軸 (經歷)
            ============================================================ */
         .timeline {
             position: relative;
-            padding-left: 30px;
-            border-left: 2px solid rgba(190, 174, 219, 0.15);
-            box-shadow: inset -4px 0 20px rgba(190, 174, 219, 0.02);
+            padding-left: 28px;
+            border-left: 1px solid rgba(190, 174, 219, 0.06);
         }
         .tl-item {
             position: relative;
-            margin-bottom: 32px;
-            padding-left: 20px;
+            margin-bottom: 30px;
+            padding-left: 18px;
         }
         .tl-item::before {
             content: '';
             position: absolute;
-            left: -38px;
+            left: -36px;
             top: 6px;
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: var(--wisteria);
-            border: 3px solid var(--bg-deep);
-            box-shadow: 0 0 20px rgba(190, 174, 219, 0.3);
+            border: 2px solid var(--bg-deep);
+            box-shadow: 0 0 20px rgba(190, 174, 219, 0.1);
         }
         .tl-item.work::before {
             background: var(--blue-gray);
-            box-shadow: 0 0 20px rgba(117, 97, 157, 0.3);
+            box-shadow: 0 0 20px rgba(117, 97, 157, 0.1);
         }
         .tl-head {
             display: flex;
             flex-wrap: wrap;
             align-items: baseline;
-            gap: 12px;
-            margin-bottom: 6px;
+            gap: 10px;
+            margin-bottom: 4px;
         }
         .tl-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--bright-gray);
         }
         .tl-tag {
-            font-size: 0.7rem;
-            padding: 2px 14px;
+            font-size: 0.65rem;
+            padding: 2px 12px;
             border-radius: 30px;
-            background: rgba(190, 174, 219, 0.08);
+            background: rgba(190, 174, 219, 0.04);
             color: var(--wisteria);
             font-weight: 500;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(190, 174, 219, 0.05);
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(190, 174, 219, 0.04);
         }
         .tl-tag.work {
-            background: rgba(117, 97, 157, 0.12);
+            background: rgba(117, 97, 157, 0.06);
             color: var(--blue-gray);
         }
         .tl-meta {
-            font-size: 0.85rem;
-            color: rgba(230, 239, 247, 0.3);
-            margin-bottom: 6px;
+            font-size: 0.8rem;
+            color: rgba(230, 239, 247, 0.2);
+            margin-bottom: 4px;
         }
         .tl-list {
             list-style: none;
-            padding-left: 6px;
+            padding-left: 4px;
         }
         .tl-list li {
             position: relative;
-            padding-left: 20px;
-            font-size: 0.95rem;
-            color: rgba(230, 239, 247, 0.6);
+            padding-left: 18px;
+            font-size: 0.9rem;
+            color: rgba(230, 239, 247, 0.5);
             line-height: 1.8;
         }
         .tl-list li::before {
@@ -599,25 +608,25 @@
             position: absolute;
             left: 0;
             color: var(--wisteria);
-            opacity: 0.4;
+            opacity: 0.2;
         }
 
         /* ============================================================
-           技能 (進度條 — 紫羅蘭漸層)
+           技能 (進度條)
            ============================================================ */
         .skill-row {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .skill-row-top {
             display: flex;
             justify-content: space-between;
-            font-size: 0.95rem;
-            color: rgba(230, 239, 247, 0.7);
+            font-size: 0.9rem;
+            color: rgba(230, 239, 247, 0.6);
         }
         .bar-track {
             width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.04);
+            height: 4px;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
             overflow: hidden;
             margin-top: 4px;
@@ -628,7 +637,7 @@
             background: linear-gradient(90deg, var(--jacarta), var(--wisteria));
             width: 0%;
             transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-            box-shadow: 0 0 20px rgba(190, 174, 219, 0.1);
+            box-shadow: 0 0 20px rgba(190, 174, 219, 0.04);
         }
 
         /* ============================================================
@@ -636,20 +645,20 @@
            ============================================================ */
         .sub-nav {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
-            border-bottom: 1px solid rgba(190, 174, 219, 0.06);
-            padding-bottom: 14px;
-            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(190, 174, 219, 0.04);
+            padding-bottom: 12px;
+            margin-bottom: 28px;
         }
         .sub-nav-item {
-            padding: 8px 24px;
+            padding: 8px 22px;
             border-radius: 30px;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             background: transparent;
-            border: 1px solid rgba(190, 174, 219, 0.05);
-            color: rgba(230, 239, 247, 0.4);
+            border: 1px solid rgba(190, 174, 219, 0.04);
+            color: rgba(230, 239, 247, 0.3);
             cursor: pointer;
             transition: 0.3s;
         }
@@ -661,7 +670,7 @@
             background: var(--jacarta);
             color: var(--wisteria);
             border-color: var(--wisteria);
-            box-shadow: 0 0 30px rgba(190, 174, 219, 0.05);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.02);
         }
 
         .sub-panel {
@@ -675,14 +684,14 @@
         /* ---- 作品卡片 ---- */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 22px;
         }
 
         .work-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(190, 174, 219, 0.04);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(190, 174, 219, 0.03);
+            border-radius: 18px;
             overflow: hidden;
             transition: 0.4s;
             display: flex;
@@ -691,8 +700,8 @@
         }
         .work-card:hover {
             transform: translateY(-6px);
-            border-color: rgba(190, 174, 219, 0.12);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--shadow-glow);
+            border-color: rgba(190, 174, 219, 0.06);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), var(--shadow-glow);
         }
 
         .work-thumb {
@@ -703,104 +712,104 @@
             justify-content: center;
             position: relative;
             background: linear-gradient(145deg, var(--jacarta), var(--bg-deep));
-            color: rgba(230, 239, 247, 0.3);
+            color: rgba(230, 239, 247, 0.15);
         }
         .work-thumb .thumb-label {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            font-size: 0.7rem;
-            padding: 2px 12px;
+            top: 10px;
+            right: 10px;
+            font-size: 0.6rem;
+            padding: 2px 10px;
             border-radius: 30px;
             background: rgba(0, 0, 0, 0.5);
             color: var(--wisteria);
-            border: 1px solid rgba(190, 174, 219, 0.05);
+            border: 1px solid rgba(190, 174, 219, 0.04);
         }
         .work-thumb .thumb-icon {
-            font-size: 2.6rem;
-            opacity: 0.4;
+            font-size: 2.4rem;
+            opacity: 0.3;
             margin-bottom: 4px;
         }
         .work-thumb .thumb-title {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
             text-align: center;
             padding: 0 12px;
-            color: rgba(230, 239, 247, 0.6);
+            color: rgba(230, 239, 247, 0.4);
         }
 
         .work-body {
-            padding: 18px 20px 20px;
+            padding: 16px 18px 18px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
         .work-body h4 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--bright-gray);
             margin-bottom: 2px;
         }
         .work-body .work-meta {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--wisteria);
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .work-body .work-desc {
-            font-size: 0.9rem;
-            color: rgba(230, 239, 247, 0.5);
+            font-size: 0.85rem;
+            color: rgba(230, 239, 247, 0.4);
             line-height: 1.7;
             flex: 1;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .work-body .work-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 14px;
+            gap: 4px;
+            margin-bottom: 12px;
         }
         .work-body .work-tags span {
-            font-size: 0.7rem;
-            padding: 2px 12px;
+            font-size: 0.65rem;
+            padding: 2px 10px;
             border-radius: 30px;
-            background: rgba(190, 174, 219, 0.04);
-            border: 1px solid rgba(190, 174, 219, 0.04);
-            color: rgba(230, 239, 247, 0.4);
+            background: rgba(190, 174, 219, 0.03);
+            border: 1px solid rgba(190, 174, 219, 0.03);
+            color: rgba(230, 239, 247, 0.3);
         }
         .work-body .work-link {
             align-self: flex-start;
-            padding: 6px 20px;
+            padding: 5px 18px;
             border-radius: 30px;
             background: var(--jacarta);
             color: var(--wisteria);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: 0.3s;
-            border: 1px solid rgba(190, 174, 219, 0.05);
+            border: 1px solid rgba(190, 174, 219, 0.04);
         }
         .work-body .work-link:hover {
             background: var(--wisteria);
             color: var(--bg-deep);
-            box-shadow: 0 0 30px rgba(190, 174, 219, 0.1);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.04);
         }
 
         /* ============================================================
-           視覺實驗室 — 動態廊道 + 3D 翻轉 (霓虹紫版)
+           視覺實驗室 — 動態廊道 + 3D 翻轉
            ============================================================ */
         .carousel-track-wrapper {
             overflow: hidden;
             position: relative;
             width: 100%;
-            padding: 10px 0;
+            padding: 8px 0;
             border-radius: 16px;
-            background: rgba(13, 6, 19, 0.4);
-            border: 1px solid rgba(190, 174, 219, 0.03);
+            background: rgba(13, 6, 19, 0.3);
+            border: 1px solid rgba(190, 174, 219, 0.02);
         }
 
         .carousel-track {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             animation: scrollLeft 40s linear infinite;
             width: max-content;
         }
@@ -819,9 +828,9 @@
         }
 
         .flip-card {
-            width: 280px;
-            min-width: 280px;
-            height: 380px;
+            width: 260px;
+            min-width: 260px;
+            height: 360px;
             perspective: 1200px;
             flex-shrink: 0;
             cursor: pointer;
@@ -833,7 +842,7 @@
             height: 100%;
             transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
             transform-style: preserve-3d;
-            border-radius: 16px;
+            border-radius: 14px;
         }
 
         .flip-card:hover .flip-card-inner {
@@ -845,10 +854,10 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            border-radius: 16px;
+            border-radius: 14px;
             backface-visibility: hidden;
             overflow: hidden;
-            border: 1px solid rgba(190, 174, 219, 0.04);
+            border: 1px solid rgba(190, 174, 219, 0.03);
             background: var(--jacarta);
         }
 
@@ -861,10 +870,10 @@
 
         .watermark {
             position: absolute;
-            bottom: 12px;
-            right: 12px;
-            color: rgba(190, 174, 219, 0.12);
-            font-size: 0.7rem;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(190, 174, 219, 0.08);
+            font-size: 0.65rem;
             font-weight: 300;
             letter-spacing: 1px;
             pointer-events: none;
@@ -874,29 +883,29 @@
         .flip-card-back {
             transform: rotateY(180deg);
             background: linear-gradient(145deg, var(--jacarta), var(--bg-deep));
-            padding: 24px 20px;
+            padding: 22px 18px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            border: 1px solid rgba(190, 174, 219, 0.08);
+            border: 1px solid rgba(190, 174, 219, 0.04);
         }
 
         .flip-card-back .brand {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--wisteria);
             margin-bottom: 4px;
-            text-shadow: 0 0 20px rgba(190, 174, 219, 0.05);
+            text-shadow: 0 0 20px rgba(190, 174, 219, 0.02);
         }
         .flip-card-back .sub {
-            font-size: 0.8rem;
-            color: rgba(230, 239, 247, 0.3);
-            margin-bottom: 14px;
+            font-size: 0.75rem;
+            color: rgba(230, 239, 247, 0.2);
+            margin-bottom: 12px;
         }
         .flip-card-back .insight {
-            font-size: 0.85rem;
-            color: rgba(230, 239, 247, 0.6);
+            font-size: 0.8rem;
+            color: rgba(230, 239, 247, 0.5);
             margin-bottom: 10px;
             line-height: 1.5;
         }
@@ -904,52 +913,51 @@
             color: var(--bright-gray);
         }
         .flip-card-back .tools {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--blue-gray);
-            border-top: 1px solid rgba(190, 174, 219, 0.04);
-            padding-top: 12px;
-            margin-top: 8px;
+            border-top: 1px solid rgba(190, 174, 219, 0.03);
+            padding-top: 10px;
+            margin-top: 6px;
         }
 
-        /* 預留擴充提示 */
         .add-more-hint {
             text-align: center;
-            padding: 30px 20px;
-            border: 2px dashed rgba(190, 174, 219, 0.05);
+            padding: 28px 20px;
+            border: 2px dashed rgba(190, 174, 219, 0.03);
             border-radius: 16px;
-            margin-top: 30px;
-            color: rgba(230, 239, 247, 0.15);
-            font-size: 0.9rem;
+            margin-top: 28px;
+            color: rgba(230, 239, 247, 0.08);
+            font-size: 0.85rem;
             transition: 0.3s;
         }
         .add-more-hint:hover {
-            border-color: rgba(190, 174, 219, 0.12);
-            color: rgba(230, 239, 247, 0.25);
+            border-color: rgba(190, 174, 219, 0.06);
+            color: rgba(230, 239, 247, 0.15);
         }
         .add-more-hint i {
-            font-size: 2rem;
+            font-size: 1.8rem;
             display: block;
-            margin-bottom: 10px;
-            color: rgba(190, 174, 219, 0.1);
+            margin-bottom: 8px;
+            color: rgba(190, 174, 219, 0.04);
         }
 
         @media (max-width: 640px) {
             .flip-card {
-                width: 200px;
-                min-width: 200px;
-                height: 280px;
+                width: 180px;
+                min-width: 180px;
+                height: 260px;
             }
             .flip-card-back {
-                padding: 16px;
+                padding: 14px;
             }
             .flip-card-back .brand {
                 font-size: 1rem;
             }
             .flip-card-back .insight {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
             }
             .flip-card-back .tools {
-                font-size: 0.65rem;
+                font-size: 0.6rem;
             }
         }
 
@@ -959,37 +967,37 @@
         .contact-info {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px 40px;
-            font-size: 1.05rem;
-            color: rgba(230, 239, 247, 0.7);
+            gap: 18px 36px;
+            font-size: 1rem;
+            color: rgba(230, 239, 247, 0.6);
         }
         .contact-info i {
-            width: 30px;
+            width: 28px;
             color: var(--wisteria);
         }
         .social-contact-icons {
             display: flex;
-            gap: 16px;
-            margin-top: 20px;
+            gap: 14px;
+            margin-top: 18px;
         }
         .social-contact-icons a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 52px;
-            height: 52px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: rgba(63, 42, 82, 0.3);
-            border: 1px solid rgba(190, 174, 219, 0.04);
-            color: rgba(230, 239, 247, 0.4);
-            font-size: 1.8rem;
+            background: rgba(63, 42, 82, 0.2);
+            border: 1px solid rgba(190, 174, 219, 0.03);
+            color: rgba(230, 239, 247, 0.3);
+            font-size: 1.6rem;
             transition: 0.3s;
         }
         .social-contact-icons a:hover {
             border-color: var(--wisteria);
             color: var(--wisteria);
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(190, 174, 219, 0.05);
+            transform: scale(1.04);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.02);
         }
 
         /* ============================================================
@@ -1017,60 +1025,72 @@
                 justify-content: center;
             }
             .hero-image {
-                flex: 0 0 180px;
-                width: 180px;
-                height: 180px;
+                flex: 0 0 170px;
+                width: 170px;
+                height: 170px;
             }
             .section-title {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             .page {
-                padding: 30px 4% 50px;
+                padding: 28px 4% 50px;
             }
             #splash h1 {
-                font-size: 3rem;
+                font-size: clamp(2.8rem, 10vw, 4.5rem);
+            }
+            #splash .visitor-count {
+                bottom: 24px;
+                right: 24px;
+                font-size: 0.65rem;
             }
         }
 
         @media (max-width: 480px) {
             .logo {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
             .hero-content h1 {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
             }
             .hero-content .typewriter {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
             .card {
-                padding: 18px 16px;
+                padding: 16px 14px;
             }
             .sub-nav-item {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
                 padding: 6px 14px;
             }
             .portfolio-grid {
                 grid-template-columns: 1fr;
             }
             #splash h1 {
-                font-size: 2.2rem;
-                letter-spacing: 3px;
+                font-size: clamp(2.2rem, 8vw, 3.2rem);
             }
             #splash .sub {
-                font-size: 0.8rem;
+                font-size: 0.7rem;
+                letter-spacing: 0.15em;
+            }
+            #splash .enter-hint {
+                font-size: 0.65rem;
+                padding: 8px 20px;
+            }
+            #splash .visitor-count {
+                bottom: 16px;
+                right: 16px;
+                font-size: 0.55rem;
             }
         }
 
-        /* 輔助 */
         .text-wisteria {
             color: var(--wisteria);
         }
         .text-muted {
-            color: rgba(230, 239, 247, 0.25);
+            color: rgba(230, 239, 247, 0.15);
         }
     </style>
 </head>
-
 <body>
 
     <!-- ============ 游標光暈 ============ -->
@@ -1079,12 +1099,19 @@
     <!-- ============ 粒子背景 ============ -->
     <canvas id="particles-canvas"></canvas>
 
-    <!-- ============ 進入畫面 (Splash) ============ -->
+    <!-- ============ 進入畫面 (Splash) — 融合目標網站的品牌大字排版 ============ -->
     <div id="splash" onclick="dismissSplash()">
-        <h1>ENTER THE LAB</h1>
+        <!-- 主標題：極大、極簡、有力量 -->
+        <h1>
+            ENTER<br />
+            <span class="highlight">THE LAB</span>
+        </h1>
+        <!-- 副標：輕量、細緻 -->
         <div class="sub">吳宣萱 · 企劃人實驗室</div>
-        <div class="visitor-count">⚡ Lab Visitors: <span id="splashVisitors">1,024</span></div>
+        <!-- 進入提示：微互動 -->
         <div class="enter-hint">▼ 點擊進入</div>
+        <!-- 角落訪客數 (Justin Bieber 風格) -->
+        <div class="visitor-count">⚡ Lab Visitors: <span id="splashVisitors">1,024</span></div>
     </div>
 
     <!-- ============ 導航 ============ -->
@@ -1154,7 +1181,7 @@
         <h2 class="section-title">關於我</h2>
         <p class="section-desc">商業邏輯 × AI 視覺轉化，兼具感性與理性的跨域學習者。</p>
         <div class="card">
-            <div style="display:flex; flex-wrap:wrap; gap:16px 40px; font-size:1.05rem;">
+            <div style="display:flex; flex-wrap:wrap; gap:14px 36px; font-size:1rem;">
                 <div><strong>姓名：</strong>吳宣萱 Shelly</div>
                 <div><strong>性別：</strong>女</div>
                 <div><strong>出生：</strong>2005.09</div>
@@ -1163,7 +1190,7 @@
             </div>
         </div>
         <div class="card">
-            <p style="font-size:1.05rem; line-height:1.9;">
+            <p style="font-size:1rem; line-height:1.9;">
                 企業管理背景賦予敏銳的商業洞察（PEST／波特五力分析），並善用 AI 工具優化 Prompt 與內容產出，
                 快速完成高品質簡報、社群圖文與短影音。兼具視覺美感與商業轉換思維，習慣在高壓賽事中擔任組長，
                 把想法落地成可執行的方案。
@@ -1278,7 +1305,7 @@
         <h2 class="section-title">教育</h2>
         <p class="section-desc">在學中，主修企業管理，具備扎實的商業分析與策劃訓練。</p>
         <div class="card">
-            <div style="display:flex; flex-wrap:wrap; gap:16px 40px;">
+            <div style="display:flex; flex-wrap:wrap; gap:14px 36px;">
                 <div><strong>2021 – 2026</strong> 國立臺北商業大學 · 五專 企業管理系</div>
                 <div><strong>2018 – 2021</strong> 新北市立重慶國民中學</div>
             </div>
@@ -1366,7 +1393,7 @@
         </div>
         <div class="card">
             <h3>競賽榮譽</h3>
-            <ul style="list-style:none; padding-left:0; color:rgba(230,239,247,0.7);">
+            <ul style="list-style:none; padding-left:0; color:rgba(230,239,247,0.6);">
                 <li>✦ 第13屆 TBSA 全國大專創新企劃競賽 － 全國優等獎</li>
                 <li>✦ 六項全國性商業／永續／科技競賽 組長或項目統籌經驗</li>
             </ul>
@@ -1386,13 +1413,14 @@
         <h2 class="section-title">作品集</h2>
         <p class="section-desc">展示我在簡報設計、AI 生成圖像與 AI 生成影像的創作成果。</p>
 
+        <!-- 三個分類標籤 -->
         <div class="sub-nav">
-            <button class="sub-nav-item active" data-subtab="ppt">📊 PPT WORD PDF</button>
+            <button class="sub-nav-item active" data-subtab="ppt">📊 簡報</button>
             <button class="sub-nav-item" data-subtab="ai-img">🖼️ AI 生成圖片</button>
             <button class="sub-nav-item" data-subtab="ai-vid">🎬 AI 生成影像</button>
         </div>
 
-        <!-- ===== 子面板：PPT ===== -->
+        <!-- ===== 子面板：簡報 ===== -->
         <div class="sub-panel active" id="sub-ppt">
             <div class="portfolio-grid">
                 <div class="work-card">
@@ -1456,23 +1484,23 @@
                 </div>
             </div>
 
-            <div style="margin-top:40px; border-top:1px dashed rgba(190,174,219,0.04); padding-top:24px;">
-                <h3 style="font-size:1.1rem; font-weight:600; color:var(--wisteria); margin-bottom:16px;">📁 其他完整報告（PDF）</h3>
-                <ul style="list-style:none; padding-left:0; display:flex; flex-direction:column; gap:8px;">
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.02); padding:10px 16px; border-radius:12px; border:1px solid rgba(190,174,219,0.02);">
-                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1.1rem;"></i>
-                        <span style="flex:1; color:rgba(230,239,247,0.6);">丹青映衣裳：宋畫中的宋代女子服飾</span>
-                        <a href="照片/song dynasty clothing.pdf" target="_blank" style="background:rgba(190,174,219,0.04); color:var(--wisteria); padding:4px 14px; border-radius:30px; font-size:0.8rem;">查看</a>
+            <div style="margin-top:36px; border-top:1px dashed rgba(190,174,219,0.03); padding-top:20px;">
+                <h3 style="font-size:1rem; font-weight:600; color:var(--wisteria); margin-bottom:14px;">📁 其他完整報告（PDF）</h3>
+                <ul style="list-style:none; padding-left:0; display:flex; flex-direction:column; gap:6px;">
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.015); padding:8px 14px; border-radius:10px; border:1px solid rgba(190,174,219,0.02);">
+                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1rem;"></i>
+                        <span style="flex:1; color:rgba(230,239,247,0.5); font-size:0.9rem;">丹青映衣裳：宋畫中的宋代女子服飾</span>
+                        <a href="照片/song dynasty clothing.pdf" target="_blank" style="background:rgba(190,174,219,0.03); color:var(--wisteria); padding:3px 12px; border-radius:30px; font-size:0.75rem;">查看</a>
                     </li>
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.02); padding:10px 16px; border-radius:12px; border:1px solid rgba(190,174,219,0.02);">
-                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1.1rem;"></i>
-                        <span style="flex:1; color:rgba(230,239,247,0.6);">時光唱片行-Café 主題菜單</span>
-                        <a href="照片/Café Theme Menu.pdf" target="_blank" style="background:rgba(190,174,219,0.04); color:var(--wisteria); padding:4px 14px; border-radius:30px; font-size:0.8rem;">查看</a>
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.015); padding:8px 14px; border-radius:10px; border:1px solid rgba(190,174,219,0.02);">
+                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1rem;"></i>
+                        <span style="flex:1; color:rgba(230,239,247,0.5); font-size:0.9rem;">時光唱片行-Café 主題菜單</span>
+                        <a href="照片/Café Theme Menu.pdf" target="_blank" style="background:rgba(190,174,219,0.03); color:var(--wisteria); padding:3px 12px; border-radius:30px; font-size:0.75rem;">查看</a>
                     </li>
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.02); padding:10px 16px; border-radius:12px; border:1px solid rgba(190,174,219,0.02);">
-                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1.1rem;"></i>
-                        <span style="flex:1; color:rgba(230,239,247,0.6);">印鈴好味盒設計</span>
-                        <a href="照片/yinling_delicious_box.pdf" target="_blank" style="background:rgba(190,174,219,0.04); color:var(--wisteria); padding:4px 14px; border-radius:30px; font-size:0.8rem;">查看</a>
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.015); padding:8px 14px; border-radius:10px; border:1px solid rgba(190,174,219,0.02);">
+                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1rem;"></i>
+                        <span style="flex:1; color:rgba(230,239,247,0.5); font-size:0.9rem;">印鈴好味盒設計</span>
+                        <a href="照片/yinling_delicious_box.pdf" target="_blank" style="background:rgba(190,174,219,0.03); color:var(--wisteria); padding:3px 12px; border-radius:30px; font-size:0.75rem;">查看</a>
                     </li>
                 </ul>
             </div>
@@ -1485,14 +1513,13 @@
                     <!-- JavaScript 動態生成 -->
                 </div>
             </div>
-            <p style="text-align:center; color:rgba(230,239,247,0.15); font-size:0.85rem; margin-top:12px;">
+            <p style="text-align:center; color:rgba(230,239,247,0.08); font-size:0.8rem; margin-top:10px;">
                 🖱️ 懸停暫停滾動 · 再次懸停翻轉查看策略
             </p>
 
             <div class="add-more-hint">
                 <i class="fas fa-plus-circle"></i>
-                預留擴充空間 —— 未來可在此繼續加入更多 AI 生成的廣告照片<br />
-                <span style="font-size:0.8rem; color:rgba(230,239,247,0.08);">只需在 JavaScript 的 imageList 陣列中新增物件即可</span>
+                預留擴充空間 —— 未來可在此繼續加入更多 AI 生成的廣告照片
             </div>
         </div>
 
@@ -1593,7 +1620,7 @@
             document.getElementById('splash').classList.add('hidden');
         }
 
-        // 訪客數字動態（模擬）
+        // 訪客數字動態
         function randomVisitor() {
             const el = document.getElementById('splashVisitors');
             if (el) {
@@ -1690,7 +1717,7 @@
         }
 
         // ============================================================
-        // 6. 作品集子分類切換
+        // 6. 作品集子分類切換 (三個分類功能正常運作)
         // ============================================================
         const subNavItems = document.querySelectorAll('.sub-nav-item');
         const subPanels = {
@@ -1713,11 +1740,10 @@
         });
 
         // ============================================================
-        // 7. 視覺實驗室 — 動態廊道 + 3D 翻轉 (深紫羅蘭版)
+        // 7. 視覺實驗室 — 動態廊道 + 3D 翻轉
         // ============================================================
         // ✅ 圖片資料庫：在此加入你的 AI 廣告照片
         const imageList = [
-            // ----- 既有圖片 -----
             { src: '照片/imags/11.png', brand: '咖啡廳', sub: '建築外觀', insight: '以溫暖木質與柔和光影，營造舒適的咖啡廳氛圍。',
                 tools: 'Midjourney v6' },
             { src: '照片/imags/12.png', brand: '咖啡廳', sub: '吧檯設計', insight: '吧檯區以開放式設計拉近顧客與咖啡師的距離。',
@@ -1763,11 +1789,8 @@
             { src: '照片/imags/33.png', brand: '人物創作', sub: '古代風格女生', insight: '以淡雅色調呈現古代女子的寧靜與從容。',
                 tools: 'Midjourney v6' },
 
-            // ============================================================
             // ✅ 在此加入你新增的 AI 廣告照片（美妝保養品牌）
-            // 範例：
             // { src: '照片/imags/你的圖片.png', brand: '品牌名稱', sub: '品項名稱', insight: '視覺策略說明', tools: '使用工具' },
-            // ============================================================
         ];
 
         function initCarousel() {
@@ -1817,7 +1840,7 @@
             const ctx = canvas.getContext('2d');
             let w, h;
             const particles = [];
-            const count = 50;
+            const count = 40;
 
             function resize() {
                 w = canvas.width = window.innerWidth;
@@ -1830,10 +1853,10 @@
                 constructor() {
                     this.x = Math.random() * w;
                     this.y = Math.random() * h;
-                    this.size = Math.random() * 2 + 0.5;
-                    this.speedX = (Math.random() - 0.5) * 0.3;
-                    this.speedY = (Math.random() - 0.5) * 0.3;
-                    this.opacity = Math.random() * 0.3 + 0.1;
+                    this.size = Math.random() * 1.8 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.25;
+                    this.speedY = (Math.random() - 0.5) * 0.25;
+                    this.opacity = Math.random() * 0.2 + 0.05;
                 }
                 update() {
                     this.x += this.speedX;
@@ -1859,17 +1882,16 @@
                     p.update();
                     p.draw();
                 });
-                // 畫連線
                 for (let i = 0; i < particles.length; i++) {
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x;
                         const dy = particles[i].y - particles[j].y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 160) {
+                        if (dist < 140) {
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(190, 174, 219, ${0.04 * (1 - dist / 160)})`;
+                            ctx.strokeStyle = `rgba(190, 174, 219, ${0.02 * (1 - dist / 140)})`;
                             ctx.lineWidth = 0.5;
                             ctx.stroke();
                         }
@@ -1881,7 +1903,7 @@
         })();
 
         // ============================================================
-        // 9. 游標光暈 (JS 追蹤)
+        // 9. 游標光暈
         // ============================================================
         const glow = document.getElementById('cursor-glow');
         document.addEventListener('mousemove', (e) => {
@@ -1890,14 +1912,14 @@
         });
 
         // ============================================================
-        // 10. 載入完成後啟動
+        // 10. 載入完成
         // ============================================================
         window.onload = function() {
             typeWriter();
             const activePage = document.querySelector('.page.active-page');
             if (activePage && activePage.id === 'skills') setTimeout(animateSkillBars, 600);
             initCarousel();
-            console.log('🚀 深紫羅蘭前衛版網站已啟動！');
+            console.log('🚀 深紫羅蘭前衛版 + 品牌大字入口 已啟動！');
         };
     </script>
 </body>

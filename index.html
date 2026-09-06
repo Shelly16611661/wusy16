@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>吳宣萱 · 個人作品集</title>
+    <title>吳宣萱 · 企劃人實驗室</title>
     <!-- Font Awesome & AOS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         /* ============================================================
-           全域重置與色彩系統
+           全域重置與配色系統（Jacarta 深紫羅蘭調）
            ============================================================ */
         * {
             margin: 0;
@@ -20,32 +20,35 @@
         }
 
         :root {
-            --black: #0a0a0a;
-            --gold: #c9a96e;
-            --gold-light: #e8d5a3;
-            --white: #f8f6f2;
-            --gray: #2c2c2c;
-            --glass: rgba(255, 255, 255, 0.06);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --bg-deep: #0D0613;
+            --jacarta: #3F2A52;
+            --jacarta-light: #5A3F72;
+            --blue-gray: #75619D;
+            --wisteria: #BEAEDB;
+            --bright-gray: #E6EFF7;
+            --black-coffee: #3A2D34;
+            --glass: rgba(63, 42, 82, 0.6);
+            --shadow-glow: 0 0 40px rgba(190, 174, 219, 0.08);
         }
 
         body {
-            background: var(--black);
-            color: var(--white);
+            background: var(--bg-deep);
+            color: var(--bright-gray);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
             line-height: 1.6;
+            cursor: default;
         }
 
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
         ::-webkit-scrollbar-track {
-            background: #1a1a1a;
+            background: var(--bg-deep);
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--gold);
+            background: var(--wisteria);
             border-radius: 10px;
         }
 
@@ -55,25 +58,132 @@
         }
 
         /* ============================================================
-           導航欄
+           游標光暈 (前衛感核心)
+           ============================================================ */
+        #cursor-glow {
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(190, 174, 219, 0.05), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: left 0.08s ease-out, top 0.08s ease-out;
+        }
+
+        /* ============================================================
+           粒子背景 (Canvas)
+           ============================================================ */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ============================================================
+           進入畫面 (Splash Screen)
+           ============================================================ */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 9999;
+            background: var(--bg-deep);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        #splash.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #splash h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            color: var(--wisteria);
+            text-shadow: 0 0 60px rgba(190, 174, 219, 0.3);
+            letter-spacing: 6px;
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+        #splash .sub {
+            color: rgba(190, 174, 219, 0.5);
+            font-size: 1rem;
+            letter-spacing: 4px;
+            margin-top: 12px;
+            font-weight: 300;
+        }
+        #splash .visitor-count {
+            position: absolute;
+            bottom: 40px;
+            right: 50px;
+            color: rgba(190, 174, 219, 0.25);
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        #splash .enter-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(190, 174, 219, 0.3);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            animation: bounceDown 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%,
+            100% {
+                text-shadow: 0 0 40px rgba(190, 174, 219, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 80px rgba(190, 174, 219, 0.5);
+            }
+        }
+        @keyframes bounceDown {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateX(-50%) translateY(8px);
+                opacity: 0.8;
+            }
+        }
+
+        /* ============================================================
+           導航欄 (毛玻璃 + 霓虹底線)
            ============================================================ */
         nav {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(201, 169, 110, 0.15);
-            height: 72px;
+            background: rgba(13, 6, 19, 0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(190, 174, 219, 0.1);
+            height: 68px;
             display: flex;
             align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
         .nav-container {
             width: 100%;
-            max-width: 1440px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 5%;
+            padding: 0 4%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -81,53 +191,57 @@
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: var(--white);
+            color: var(--bright-gray);
             letter-spacing: 1px;
         }
         .logo span {
-            color: var(--gold);
+            color: var(--wisteria);
+            text-shadow: 0 0 20px rgba(190, 174, 219, 0.2);
         }
 
         .nav-links {
             display: flex;
-            gap: 4px;
+            gap: 2px;
             align-items: center;
             flex-wrap: wrap;
         }
         .nav-links a {
-            color: rgba(255, 255, 255, 0.65);
-            font-size: 0.85rem;
+            color: rgba(230, 239, 247, 0.5);
+            font-size: 0.8rem;
             font-weight: 500;
             padding: 6px 14px;
             border-radius: 30px;
             transition: 0.3s;
             border: 1px solid transparent;
             white-space: nowrap;
+            letter-spacing: 0.3px;
         }
         .nav-links a:hover,
         .nav-links a.active-link {
-            background: rgba(201, 169, 110, 0.12);
-            color: var(--gold);
-            border-color: rgba(201, 169, 110, 0.2);
+            color: var(--wisteria);
+            border-color: rgba(190, 174, 219, 0.15);
+            background: rgba(190, 174, 219, 0.06);
+            box-shadow: 0 0 20px rgba(190, 174, 219, 0.05);
         }
 
         .hamburg {
             display: none;
-            font-size: 1.8rem;
-            color: var(--white);
+            font-size: 1.6rem;
+            color: var(--bright-gray);
             cursor: pointer;
         }
 
+        /* 手機下拉選單 */
         .dropdown {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(10, 10, 10, 0.98);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 6, 19, 0.98);
+            backdrop-filter: blur(16px);
             transform: translateY(-110%);
             transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 2000;
@@ -142,26 +256,26 @@
         .dropdown .links {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
             text-align: center;
         }
         .dropdown .links a {
-            color: #fff;
-            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.5rem;
             font-weight: 500;
             padding: 8px 30px;
             border-radius: 40px;
             transition: 0.2s;
         }
         .dropdown .links a:hover {
-            background: rgba(201, 169, 110, 0.15);
-            color: var(--gold);
+            background: rgba(190, 174, 219, 0.1);
+            color: var(--wisteria);
         }
         .dropdown .cancel {
             position: absolute;
             top: 24px;
             right: 30px;
-            font-size: 2.6rem;
+            font-size: 2.4rem;
             color: #fff;
             cursor: pointer;
         }
@@ -175,6 +289,8 @@
             max-width: 1200px;
             margin: 0 auto;
             animation: fadeUp 0.6s ease;
+            position: relative;
+            z-index: 1;
         }
         .page.active-page {
             display: block;
@@ -192,7 +308,7 @@
         }
 
         /* ============================================================
-           首頁
+           首頁 (Hero)
            ============================================================ */
         #home {
             padding-top: 20px;
@@ -206,18 +322,19 @@
             min-height: 70vh;
         }
         .hero-image {
-            flex: 0 0 260px;
-            width: 260px;
-            height: 260px;
+            flex: 0 0 250px;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
             overflow: hidden;
-            border: 3px solid var(--gold);
-            box-shadow: 0 0 60px rgba(201, 169, 110, 0.15);
+            border: 2px solid rgba(190, 174, 219, 0.3);
+            box-shadow: 0 0 60px rgba(190, 174, 219, 0.1);
             transition: 0.4s;
         }
         .hero-image:hover {
             transform: scale(1.02);
-            box-shadow: 0 0 80px rgba(201, 169, 110, 0.25);
+            box-shadow: 0 0 80px rgba(190, 174, 219, 0.2);
+            border-color: var(--wisteria);
         }
         .hero-image img {
             width: 100%;
@@ -234,22 +351,25 @@
             font-size: 3.2rem;
             font-weight: 700;
             line-height: 1.2;
+            color: var(--bright-gray);
         }
         .hero-content h1 span {
-            color: var(--gold);
+            color: var(--wisteria);
+            text-shadow: 0 0 30px rgba(190, 174, 219, 0.2);
         }
         .hero-content .typewriter {
             font-size: 1.8rem;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(230, 239, 247, 0.8);
             margin: 16px 0 20px;
             min-height: 4rem;
         }
         .hero-content .typewriter-text {
-            color: var(--gold);
+            color: var(--wisteria);
         }
         .hero-content .cursor {
             animation: blink 0.8s step-end infinite;
+            color: var(--wisteria);
         }
         @keyframes blink {
             0%,
@@ -263,42 +383,41 @@
 
         .hero-content p {
             font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.55);
+            color: rgba(230, 239, 247, 0.4);
             max-width: 500px;
             margin-bottom: 24px;
         }
 
         .btn-group {
             display: flex;
-            gap: 16px;
+            gap: 14px;
             flex-wrap: wrap;
         }
         .btn {
             padding: 14px 36px;
             border-radius: 50px;
             font-weight: 600;
-            border: 2px solid var(--gold);
+            border: 1px solid var(--wisteria);
             background: transparent;
-            color: var(--gold);
+            color: var(--wisteria);
             transition: 0.3s;
             cursor: pointer;
             font-size: 1rem;
             text-align: center;
         }
         .btn-primary {
-            background: var(--gold);
-            color: #0a0a0a;
-            border-color: var(--gold);
+            background: linear-gradient(135deg, var(--jacarta), var(--blue-gray));
+            color: var(--bright-gray);
+            border-color: transparent;
         }
         .btn-primary:hover {
-            background: transparent;
-            color: var(--gold);
-            box-shadow: 0 0 30px rgba(201, 169, 110, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(190, 174, 219, 0.15);
+            background: linear-gradient(135deg, var(--blue-gray), var(--jacarta-light));
         }
         .btn-outline:hover {
-            background: var(--gold);
-            color: #0a0a0a;
-            box-shadow: 0 0 30px rgba(201, 169, 110, 0.15);
+            background: rgba(190, 174, 219, 0.08);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.05);
         }
 
         .social-links {
@@ -310,29 +429,30 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.4rem;
+            border: 1px solid rgba(190, 174, 219, 0.1);
+            color: rgba(230, 239, 247, 0.4);
+            font-size: 1.3rem;
             transition: 0.3s;
         }
         .social-links a:hover {
-            border-color: var(--gold);
-            color: var(--gold);
+            border-color: var(--wisteria);
+            color: var(--wisteria);
             transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.05);
         }
 
         /* ============================================================
-           通用卡片與標題
+           通用卡片與標題 (Jacarta 基底)
            ============================================================ */
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 2.6rem;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--white);
+            color: var(--bright-gray);
             display: flex;
             align-items: center;
             gap: 16px;
@@ -341,33 +461,35 @@
             content: '';
             flex: 1;
             height: 2px;
-            background: linear-gradient(90deg, var(--gold), transparent);
+            background: linear-gradient(90deg, var(--wisteria), transparent);
+            opacity: 0.3;
         }
         .section-desc {
-            color: rgba(255, 255, 255, 0.45);
+            color: rgba(230, 239, 247, 0.35);
             font-size: 1.05rem;
             margin-bottom: 30px;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: var(--glass);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(190, 174, 219, 0.06);
             border-radius: 20px;
             padding: 28px 32px;
-            transition: 0.3s;
+            transition: 0.4s;
             margin-bottom: 24px;
+            box-shadow: var(--shadow-glow);
         }
         .card:hover {
-            border-color: rgba(201, 169, 110, 0.15);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(190, 174, 219, 0.12);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), var(--shadow-glow);
         }
         .card p,
         .card li {
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(230, 239, 247, 0.75);
         }
         .card h3 {
-            color: var(--gold);
+            color: var(--wisteria);
             font-weight: 600;
             font-size: 1.2rem;
             margin-bottom: 10px;
@@ -377,15 +499,18 @@
             display: inline-block;
             padding: 4px 16px;
             border-radius: 30px;
-            background: rgba(201, 169, 110, 0.1);
-            border: 1px solid rgba(201, 169, 110, 0.15);
-            color: rgba(255, 255, 255, 0.75);
+            background: rgba(63, 42, 82, 0.6);
+            border: 1px solid rgba(190, 174, 219, 0.08);
+            color: rgba(230, 239, 247, 0.7);
             font-size: 0.8rem;
             margin: 4px 4px 0 0;
-            transition: 0.2s;
+            transition: 0.3s;
         }
         .chip:hover {
-            background: rgba(201, 169, 110, 0.2);
+            background: var(--wisteria);
+            color: var(--bg-deep);
+            border-color: var(--wisteria);
+            transform: translateY(-1px);
         }
 
         .flex-wrap {
@@ -398,12 +523,13 @@
         }
 
         /* ============================================================
-           時間軸 (經歷)
+           時間軸 (經歷) — 霓虹紫線
            ============================================================ */
         .timeline {
             position: relative;
             padding-left: 30px;
-            border-left: 2px solid rgba(201, 169, 110, 0.2);
+            border-left: 2px solid rgba(190, 174, 219, 0.15);
+            box-shadow: inset -4px 0 20px rgba(190, 174, 219, 0.02);
         }
         .tl-item {
             position: relative;
@@ -418,14 +544,13 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: var(--gold);
-            border: 3px solid #0a0a0a;
-            box-shadow: 0 0 0 3px var(--gold);
+            background: var(--wisteria);
+            border: 3px solid var(--bg-deep);
+            box-shadow: 0 0 20px rgba(190, 174, 219, 0.3);
         }
         .tl-item.work::before {
-            border-color: #0a0a0a;
-            background: #fff;
-            box-shadow: 0 0 0 3px #fff;
+            background: var(--blue-gray);
+            box-shadow: 0 0 20px rgba(117, 97, 157, 0.3);
         }
         .tl-head {
             display: flex;
@@ -437,24 +562,25 @@
         .tl-title {
             font-size: 1.2rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--bright-gray);
         }
         .tl-tag {
             font-size: 0.7rem;
             padding: 2px 14px;
             border-radius: 30px;
-            background: rgba(201, 169, 110, 0.15);
-            color: var(--gold);
+            background: rgba(190, 174, 219, 0.08);
+            color: var(--wisteria);
             font-weight: 500;
             letter-spacing: 0.5px;
+            border: 1px solid rgba(190, 174, 219, 0.05);
         }
         .tl-tag.work {
-            background: rgba(255, 255, 255, 0.06);
-            color: #aaa;
+            background: rgba(117, 97, 157, 0.12);
+            color: var(--blue-gray);
         }
         .tl-meta {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(230, 239, 247, 0.3);
             margin-bottom: 6px;
         }
         .tl-list {
@@ -465,18 +591,19 @@
             position: relative;
             padding-left: 20px;
             font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(230, 239, 247, 0.6);
             line-height: 1.8;
         }
         .tl-list li::before {
             content: "—";
             position: absolute;
             left: 0;
-            color: var(--gold);
+            color: var(--wisteria);
+            opacity: 0.4;
         }
 
         /* ============================================================
-           技能 (技能)
+           技能 (進度條 — 紫羅蘭漸層)
            ============================================================ */
         .skill-row {
             margin-bottom: 16px;
@@ -485,12 +612,12 @@
             display: flex;
             justify-content: space-between;
             font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(230, 239, 247, 0.7);
         }
         .bar-track {
             width: 100%;
             height: 6px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 10px;
             overflow: hidden;
             margin-top: 4px;
@@ -498,9 +625,10 @@
         .bar-fill {
             height: 100%;
             border-radius: 10px;
-            background: linear-gradient(90deg, var(--gold-light), var(--gold));
+            background: linear-gradient(90deg, var(--jacarta), var(--wisteria));
             width: 0%;
             transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 0 20px rgba(190, 174, 219, 0.1);
         }
 
         /* ============================================================
@@ -510,7 +638,7 @@
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+            border-bottom: 1px solid rgba(190, 174, 219, 0.06);
             padding-bottom: 14px;
             margin-bottom: 30px;
         }
@@ -520,19 +648,20 @@
             font-weight: 500;
             font-size: 0.95rem;
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(190, 174, 219, 0.05);
+            color: rgba(230, 239, 247, 0.4);
             cursor: pointer;
             transition: 0.3s;
         }
         .sub-nav-item:hover {
-            border-color: var(--gold);
-            color: #fff;
+            border-color: var(--wisteria);
+            color: var(--bright-gray);
         }
         .sub-nav-item.active {
-            background: var(--gold);
-            color: #0a0a0a;
-            border-color: var(--gold);
+            background: var(--jacarta);
+            color: var(--wisteria);
+            border-color: var(--wisteria);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.05);
         }
 
         .sub-panel {
@@ -543,7 +672,7 @@
             display: block;
         }
 
-        /* ---- 作品卡片 (PPT / 影像) ---- */
+        /* ---- 作品卡片 ---- */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -551,18 +680,19 @@
         }
 
         .work-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(190, 174, 219, 0.04);
             border-radius: 20px;
             overflow: hidden;
-            transition: 0.3s;
+            transition: 0.4s;
             display: flex;
             flex-direction: column;
+            backdrop-filter: blur(4px);
         }
         .work-card:hover {
             transform: translateY(-6px);
-            border-color: rgba(201, 169, 110, 0.25);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(190, 174, 219, 0.12);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--shadow-glow);
         }
 
         .work-thumb {
@@ -572,8 +702,8 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-            color: rgba(255, 255, 255, 0.6);
+            background: linear-gradient(145deg, var(--jacarta), var(--bg-deep));
+            color: rgba(230, 239, 247, 0.3);
         }
         .work-thumb .thumb-label {
             position: absolute;
@@ -582,13 +712,13 @@
             font-size: 0.7rem;
             padding: 2px 12px;
             border-radius: 30px;
-            background: rgba(0, 0, 0, 0.6);
-            color: var(--gold);
-            border: 1px solid rgba(201, 169, 110, 0.15);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--wisteria);
+            border: 1px solid rgba(190, 174, 219, 0.05);
         }
         .work-thumb .thumb-icon {
             font-size: 2.6rem;
-            opacity: 0.5;
+            opacity: 0.4;
             margin-bottom: 4px;
         }
         .work-thumb .thumb-title {
@@ -596,6 +726,7 @@
             font-weight: 500;
             text-align: center;
             padding: 0 12px;
+            color: rgba(230, 239, 247, 0.6);
         }
 
         .work-body {
@@ -607,18 +738,18 @@
         .work-body h4 {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--bright-gray);
             margin-bottom: 2px;
         }
         .work-body .work-meta {
             font-size: 0.8rem;
-            color: var(--gold);
+            color: var(--wisteria);
             font-weight: 500;
             margin-bottom: 8px;
         }
         .work-body .work-desc {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.55);
+            color: rgba(230, 239, 247, 0.5);
             line-height: 1.7;
             flex: 1;
             margin-bottom: 12px;
@@ -633,34 +764,38 @@
             font-size: 0.7rem;
             padding: 2px 12px;
             border-radius: 30px;
-            background: rgba(201, 169, 110, 0.08);
-            border: 1px solid rgba(201, 169, 110, 0.08);
-            color: rgba(255, 255, 255, 0.5);
+            background: rgba(190, 174, 219, 0.04);
+            border: 1px solid rgba(190, 174, 219, 0.04);
+            color: rgba(230, 239, 247, 0.4);
         }
         .work-body .work-link {
             align-self: flex-start;
             padding: 6px 20px;
             border-radius: 30px;
-            background: var(--gold);
-            color: #0a0a0a;
+            background: var(--jacarta);
+            color: var(--wisteria);
             font-weight: 600;
             font-size: 0.85rem;
             transition: 0.3s;
-            border: 1px solid var(--gold);
+            border: 1px solid rgba(190, 174, 219, 0.05);
         }
         .work-body .work-link:hover {
-            background: transparent;
-            color: var(--gold);
+            background: var(--wisteria);
+            color: var(--bg-deep);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.1);
         }
 
         /* ============================================================
-           視覺實驗室 — 動態廊道 + 3D 翻轉卡片 (預留擴充空間)
+           視覺實驗室 — 動態廊道 + 3D 翻轉 (霓虹紫版)
            ============================================================ */
         .carousel-track-wrapper {
             overflow: hidden;
             position: relative;
             width: 100%;
             padding: 10px 0;
+            border-radius: 16px;
+            background: rgba(13, 6, 19, 0.4);
+            border: 1px solid rgba(190, 174, 219, 0.03);
         }
 
         .carousel-track {
@@ -713,8 +848,8 @@
             border-radius: 16px;
             backface-visibility: hidden;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            background: #1a1a1a;
+            border: 1px solid rgba(190, 174, 219, 0.04);
+            background: var(--jacarta);
         }
 
         .flip-card-front img {
@@ -728,7 +863,7 @@
             position: absolute;
             bottom: 12px;
             right: 12px;
-            color: rgba(255, 255, 255, 0.15);
+            color: rgba(190, 174, 219, 0.12);
             font-size: 0.7rem;
             font-weight: 300;
             letter-spacing: 1px;
@@ -738,63 +873,64 @@
 
         .flip-card-back {
             transform: rotateY(180deg);
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            background: linear-gradient(145deg, var(--jacarta), var(--bg-deep));
             padding: 24px 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            border: 1px solid rgba(201, 169, 110, 0.15);
+            border: 1px solid rgba(190, 174, 219, 0.08);
         }
 
         .flip-card-back .brand {
             font-family: 'Playfair Display', serif;
             font-size: 1.3rem;
             font-weight: 600;
-            color: var(--gold);
+            color: var(--wisteria);
             margin-bottom: 4px;
+            text-shadow: 0 0 20px rgba(190, 174, 219, 0.05);
         }
         .flip-card-back .sub {
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(230, 239, 247, 0.3);
             margin-bottom: 14px;
         }
         .flip-card-back .insight {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(230, 239, 247, 0.6);
             margin-bottom: 10px;
             line-height: 1.5;
         }
         .flip-card-back .insight strong {
-            color: #fff;
+            color: var(--bright-gray);
         }
         .flip-card-back .tools {
             font-size: 0.75rem;
-            color: var(--gold-light);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--blue-gray);
+            border-top: 1px solid rgba(190, 174, 219, 0.04);
             padding-top: 12px;
             margin-top: 8px;
         }
 
-        /* 預留新增素材的提示區塊 */
+        /* 預留擴充提示 */
         .add-more-hint {
             text-align: center;
             padding: 30px 20px;
-            border: 2px dashed rgba(201, 169, 110, 0.2);
+            border: 2px dashed rgba(190, 174, 219, 0.05);
             border-radius: 16px;
             margin-top: 30px;
-            color: rgba(255, 255, 255, 0.25);
-            font-size: 0.95rem;
+            color: rgba(230, 239, 247, 0.15);
+            font-size: 0.9rem;
             transition: 0.3s;
         }
         .add-more-hint:hover {
-            border-color: rgba(201, 169, 110, 0.4);
-            color: rgba(255, 255, 255, 0.4);
+            border-color: rgba(190, 174, 219, 0.12);
+            color: rgba(230, 239, 247, 0.25);
         }
         .add-more-hint i {
             font-size: 2rem;
             display: block;
             margin-bottom: 10px;
-            color: rgba(201, 169, 110, 0.3);
+            color: rgba(190, 174, 219, 0.1);
         }
 
         @media (max-width: 640px) {
@@ -815,10 +951,6 @@
             .flip-card-back .tools {
                 font-size: 0.65rem;
             }
-            .add-more-hint {
-                padding: 20px 16px;
-                font-size: 0.8rem;
-            }
         }
 
         /* ============================================================
@@ -829,11 +961,11 @@
             flex-wrap: wrap;
             gap: 20px 40px;
             font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(230, 239, 247, 0.7);
         }
         .contact-info i {
             width: 30px;
-            color: var(--gold);
+            color: var(--wisteria);
         }
         .social-contact-icons {
             display: flex;
@@ -847,16 +979,17 @@
             width: 52px;
             height: 52px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.5);
+            background: rgba(63, 42, 82, 0.3);
+            border: 1px solid rgba(190, 174, 219, 0.04);
+            color: rgba(230, 239, 247, 0.4);
             font-size: 1.8rem;
             transition: 0.3s;
         }
         .social-contact-icons a:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            transform: scale(1.06);
+            border-color: var(--wisteria);
+            color: var(--wisteria);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(190, 174, 219, 0.05);
         }
 
         /* ============================================================
@@ -884,9 +1017,9 @@
                 justify-content: center;
             }
             .hero-image {
-                flex: 0 0 200px;
-                width: 200px;
-                height: 200px;
+                flex: 0 0 180px;
+                width: 180px;
+                height: 180px;
             }
             .section-title {
                 font-size: 2.2rem;
@@ -894,11 +1027,14 @@
             .page {
                 padding: 30px 4% 50px;
             }
+            #splash h1 {
+                font-size: 3rem;
+            }
         }
 
         @media (max-width: 480px) {
             .logo {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
             .hero-content h1 {
                 font-size: 2.4rem;
@@ -916,19 +1052,41 @@
             .portfolio-grid {
                 grid-template-columns: 1fr;
             }
+            #splash h1 {
+                font-size: 2.2rem;
+                letter-spacing: 3px;
+            }
+            #splash .sub {
+                font-size: 0.8rem;
+            }
         }
 
-        /* 其他 */
-        .text-gold {
-            color: var(--gold);
+        /* 輔助 */
+        .text-wisteria {
+            color: var(--wisteria);
         }
         .text-muted {
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(230, 239, 247, 0.25);
         }
     </style>
 </head>
 
 <body>
+
+    <!-- ============ 游標光暈 ============ -->
+    <div id="cursor-glow"></div>
+
+    <!-- ============ 粒子背景 ============ -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- ============ 進入畫面 (Splash) ============ -->
+    <div id="splash" onclick="dismissSplash()">
+        <h1>ENTER THE LAB</h1>
+        <div class="sub">吳宣萱 · 企劃人實驗室</div>
+        <div class="visitor-count">⚡ Lab Visitors: <span id="splashVisitors">1,024</span></div>
+        <div class="enter-hint">▼ 點擊進入</div>
+    </div>
+
     <!-- ============ 導航 ============ -->
     <nav>
         <div class="nav-container">
@@ -965,7 +1123,7 @@
     <!-- ============ 首頁 ============ -->
     <section class="page active-page" id="home">
         <div class="hero">
-            <div class="hero-image" data-aos="zoom-out" data-aos-duration="1500">
+            <div class="hero-image" data-aos="zoom-out" data-aos-duration="1200">
                 <img src="照片/shelly.JPG" alt="吳宣萱" />
             </div>
             <div class="hero-content">
@@ -974,14 +1132,12 @@
                     <span class="typewriter-text"></span><span class="cursor">|</span>
                 </div>
                 <p data-aos="fade-up" data-aos-delay="600">
-                    人生就是從一無所有到一無所有的過程，<br />開始與結束已定，中間的經歷由你自己決定。
-                </p>
-                <p data-aos="fade-up" data-aos-delay="700" style="font-size:0.9rem; color:rgba(255,255,255,0.35);">
-                    📩 歡迎寫信給我，文字比聲音更長久。
+                    商業邏輯 × AI 視覺轉化 · INTJ 企劃人<br />
+                    從 0 到 1 的建構者，專注於美妝品牌的視覺策略。
                 </p>
                 <div class="btn-group" data-aos="fade-up" data-aos-delay="800">
-                    <a href="#" onclick="navigateTo('about'); return false;" class="btn btn-primary">探索更多</a>
-                    <a href="https://drive.google.com/drive/folders/1yOH_R5OLjpgNuuwgPulSoXWXnp2PIGiZ?usp=sharing" target="_blank" class="btn btn-outline">🎬 AIGC 夏が終わる前に</a>
+                    <a href="#" onclick="navigateTo('about'); return false;" class="btn btn-primary">探索核心</a>
+                    <a href="https://drive.google.com/drive/folders/1yOH_R5OLjpgNuuwgPulSoXWXnp2PIGiZ?usp=sharing" target="_blank" class="btn btn-outline">🎬 夏が終わる前に</a>
                 </div>
                 <div class="social-links" data-aos="fade-up" data-aos-delay="1000">
                     <a href="#"><i class="fa-regular fa-face-laugh-wink"></i></a>
@@ -1210,7 +1366,7 @@
         </div>
         <div class="card">
             <h3>競賽榮譽</h3>
-            <ul style="list-style:none; padding-left:0; color:rgba(255,255,255,0.7);">
+            <ul style="list-style:none; padding-left:0; color:rgba(230,239,247,0.7);">
                 <li>✦ 第13屆 TBSA 全國大專創新企劃競賽 － 全國優等獎</li>
                 <li>✦ 六項全國性商業／永續／科技競賽 組長或項目統籌經驗</li>
             </ul>
@@ -1230,7 +1386,6 @@
         <h2 class="section-title">作品集</h2>
         <p class="section-desc">展示我在簡報設計、AI 生成圖像與 AI 生成影像的創作成果。</p>
 
-        <!-- 子分類導航 -->
         <div class="sub-nav">
             <button class="sub-nav-item active" data-subtab="ppt">📊 PPT WORD PDF</button>
             <button class="sub-nav-item" data-subtab="ai-img">🖼️ AI 生成圖片</button>
@@ -1240,9 +1395,8 @@
         <!-- ===== 子面板：PPT ===== -->
         <div class="sub-panel active" id="sub-ppt">
             <div class="portfolio-grid">
-                <!-- 華山咖啡 -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #6B4E31, #3E2C1B);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #3F2A52, #1A0F24);">
                         <span class="thumb-label">PPT</span>
                         <span class="thumb-icon">☕</span>
                         <span class="thumb-title">華山商圈連鎖咖啡行銷研究</span>
@@ -1256,9 +1410,8 @@
                     </div>
                 </div>
 
-                <!-- 訂閱經濟 -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #2C3E50, #1A252F);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #3F2A52, #1A0F24);">
                         <span class="thumb-label">PPT</span>
                         <span class="thumb-icon">📺</span>
                         <span class="thumb-title">『閱』陷『閱』深！訂閱經濟研究</span>
@@ -1272,9 +1425,8 @@
                     </div>
                 </div>
 
-                <!-- TBSA 夜市 -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #4A6FA5, #2C4A7A);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #3F2A52, #1A0F24);">
                         <span class="thumb-label">WORD</span>
                         <span class="thumb-icon">🏙️</span>
                         <span class="thumb-title">TBSA 夜市改革企劃</span>
@@ -1288,9 +1440,8 @@
                     </div>
                 </div>
 
-                <!-- 拉美西斯 -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #8B5A2B, #4A2E1A);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #3F2A52, #1A0F24);">
                         <span class="thumb-label">PPT</span>
                         <span class="thumb-icon">🏛️</span>
                         <span class="thumb-title">AI 文物修復與 AR 體驗</span>
@@ -1303,73 +1454,25 @@
                         <a href="照片/rebuilding glory in the unreachable distance.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
                     </div>
                 </div>
-
-                <!-- 環保集點 -->
-                <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #2E7D32, #1B5E20);">
-                        <span class="thumb-label">PPT</span>
-                        <span class="thumb-icon">🌿</span>
-                        <span class="thumb-title">環保集點行銷企劃</span>
-                    </div>
-                    <div class="work-body">
-                        <h4>環保集點 · 綠點驅動未來</h4>
-                        <div class="work-meta">2024 · 行銷策略專題</div>
-                        <div class="work-desc">以「環保行動有價化」為核心，規劃 App 行銷企劃與綠色消費生態圈。</div>
-                        <div class="work-tags"><span>行銷企劃</span><span>永續創新</span><span>活動設計</span></div>
-                        <a href="照片/greenpoint_marketing.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
-                    </div>
-                </div>
-
-                <!-- 五福臨門 -->
-                <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #C62828, #8E0000);">
-                        <span class="thumb-label">PPT</span>
-                        <span class="thumb-icon">🏮</span>
-                        <span class="thumb-title">五福臨門文化策展</span>
-                    </div>
-                    <div class="work-body">
-                        <h4>五福臨門 · 北宋文化與非遺工藝</h4>
-                        <div class="work-meta">2024 · 文化研究報告</div>
-                        <div class="work-desc">考據北宋市井風貌、宋制服飾與點茶文化，將傳統元素轉化為現代視覺敘事。</div>
-                        <div class="work-tags"><span>文化研究</span><span>歷史考據</span><span>非遺傳承</span></div>
-                        <a href="照片/five_fortune_culture.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
-                    </div>
-                </div>
-
-                <!-- 連鎖超市 -->
-                <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #1565C0, #0D47A1);">
-                        <span class="thumb-label">PPT</span>
-                        <span class="thumb-icon">🛒</span>
-                        <span class="thumb-title">超市品牌經營策略研究</span>
-                    </div>
-                    <div class="work-body">
-                        <h4>連鎖超市品牌經營與消費者行為研究</h4>
-                        <div class="work-meta">2024 · 市場調查專題</div>
-                        <div class="work-desc">針對全聯、家樂福、里仁設計問卷，分析品牌差異化與消費者需求。</div>
-                        <div class="work-tags"><span>市場調查</span><span>品牌分析</span><span>問卷設計</span></div>
-                        <a href="照片/supermarket_research.pdf" class="work-link" target="_blank">📄 查看 PDF</a>
-                    </div>
-                </div>
             </div>
-            <!-- 其他完整報告列表 -->
-            <div style="margin-top:40px; border-top:1px dashed rgba(201,169,110,0.15); padding-top:24px;">
-                <h3 style="font-size:1.1rem; font-weight:600; color:var(--gold); margin-bottom:16px;">📁 其他完整報告（PDF）</h3>
+
+            <div style="margin-top:40px; border-top:1px dashed rgba(190,174,219,0.04); padding-top:24px;">
+                <h3 style="font-size:1.1rem; font-weight:600; color:var(--wisteria); margin-bottom:16px;">📁 其他完整報告（PDF）</h3>
                 <ul style="list-style:none; padding-left:0; display:flex; flex-direction:column; gap:8px;">
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); padding:10px 16px; border-radius:12px;">
-                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.1rem;"></i>
-                        <span style="flex:1; color:rgba(255,255,255,0.7);">丹青映衣裳：宋畫中的宋代女子服飾</span>
-                        <a href="照片/song dynasty clothing.pdf" target="_blank" style="background:rgba(201,169,110,0.15); color:var(--gold); padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.02); padding:10px 16px; border-radius:12px; border:1px solid rgba(190,174,219,0.02);">
+                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1.1rem;"></i>
+                        <span style="flex:1; color:rgba(230,239,247,0.6);">丹青映衣裳：宋畫中的宋代女子服飾</span>
+                        <a href="照片/song dynasty clothing.pdf" target="_blank" style="background:rgba(190,174,219,0.04); color:var(--wisteria); padding:4px 14px; border-radius:30px; font-size:0.8rem;">查看</a>
                     </li>
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); padding:10px 16px; border-radius:12px;">
-                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.1rem;"></i>
-                        <span style="flex:1; color:rgba(255,255,255,0.7);">時光唱片行-Café 主題菜單</span>
-                        <a href="照片/Café Theme Menu.pdf" target="_blank" style="background:rgba(201,169,110,0.15); color:var(--gold); padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.02); padding:10px 16px; border-radius:12px; border:1px solid rgba(190,174,219,0.02);">
+                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1.1rem;"></i>
+                        <span style="flex:1; color:rgba(230,239,247,0.6);">時光唱片行-Café 主題菜單</span>
+                        <a href="照片/Café Theme Menu.pdf" target="_blank" style="background:rgba(190,174,219,0.04); color:var(--wisteria); padding:4px 14px; border-radius:30px; font-size:0.8rem;">查看</a>
                     </li>
-                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); padding:10px 16px; border-radius:12px;">
-                        <i class="fas fa-file-pdf" style="color:#c0392b; font-size:1.1rem;"></i>
-                        <span style="flex:1; color:rgba(255,255,255,0.7);">印鈴好味盒設計</span>
-                        <a href="照片/yinling_delicious_box.pdf" target="_blank" style="background:rgba(201,169,110,0.15); color:var(--gold); padding:4px 14px; border-radius:30px; text-decoration:none; font-size:0.8rem;">查看</a>
+                    <li style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.02); padding:10px 16px; border-radius:12px; border:1px solid rgba(190,174,219,0.02);">
+                        <i class="fas fa-file-pdf" style="color:#BEAEDB; font-size:1.1rem;"></i>
+                        <span style="flex:1; color:rgba(230,239,247,0.6);">印鈴好味盒設計</span>
+                        <a href="照片/yinling_delicious_box.pdf" target="_blank" style="background:rgba(190,174,219,0.04); color:var(--wisteria); padding:4px 14px; border-radius:30px; font-size:0.8rem;">查看</a>
                     </li>
                 </ul>
             </div>
@@ -1377,30 +1480,27 @@
 
         <!-- ===== 子面板：AI 生成圖片（視覺實驗室） ===== -->
         <div class="sub-panel" id="sub-ai-img">
-            <!-- 動態廊道 -->
             <div class="carousel-track-wrapper" id="carouselWrapper">
                 <div class="carousel-track" id="carouselTrack">
-                    <!-- 由 JavaScript 動態生成 -->
+                    <!-- JavaScript 動態生成 -->
                 </div>
             </div>
-            <p style="text-align:center; color:rgba(255,255,255,0.25); font-size:0.85rem; margin-top:12px;">
-                🖱️ 懸停圖片暫停滾動 · 再次懸停翻轉查看策略
+            <p style="text-align:center; color:rgba(230,239,247,0.15); font-size:0.85rem; margin-top:12px;">
+                🖱️ 懸停暫停滾動 · 再次懸停翻轉查看策略
             </p>
 
-            <!-- ✅ 預留擴充空間：方便你隨時加入更多 AI 廣告照片 -->
             <div class="add-more-hint">
                 <i class="fas fa-plus-circle"></i>
                 預留擴充空間 —— 未來可在此繼續加入更多 AI 生成的廣告照片<br />
-                <span style="font-size:0.8rem; color:rgba(255,255,255,0.2);">只需在下方 JavaScript 的 imageList 陣列中新增物件即可</span>
+                <span style="font-size:0.8rem; color:rgba(230,239,247,0.08);">只需在 JavaScript 的 imageList 陣列中新增物件即可</span>
             </div>
         </div>
 
         <!-- ===== 子面板：AI 生成影像 ===== -->
         <div class="sub-panel" id="sub-ai-vid">
             <div class="portfolio-grid">
-                <!-- 夏が終わる前に -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #FFB7B2, #E8847A);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #3F2A52, #1A0F24);">
                         <span class="thumb-label">AI 影像</span>
                         <span class="thumb-icon">☀️</span>
                         <span class="thumb-title">夏が終わる前に</span>
@@ -1414,9 +1514,8 @@
                     </div>
                 </div>
 
-                <!-- 訂閱品牌吉祥物 -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #E50914, #B20710);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #3F2A52, #1A0F24);">
                         <span class="thumb-label">AI 影像</span>
                         <span class="thumb-icon">🤖</span>
                         <span class="thumb-title">訂閱品牌吉祥物揮手動畫</span>
@@ -1430,9 +1529,8 @@
                     </div>
                 </div>
 
-                <!-- 埃及壁畫 -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #D4A373, #8B5A2B);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #3F2A52, #1A0F24);">
                         <span class="thumb-label">影像紀錄</span>
                         <span class="thumb-icon">🏛️</span>
                         <span class="thumb-title">拉美西斯二世壁畫與博物館</span>
@@ -1446,9 +1544,8 @@
                     </div>
                 </div>
 
-                <!-- 埃及全景 -->
                 <div class="work-card">
-                    <div class="work-thumb" style="background: linear-gradient(145deg, #C29B6A, #7A5230);">
+                    <div class="work-thumb" style="background: linear-gradient(145deg, #3F2A52, #1A0F24);">
                         <span class="thumb-label">全景影像</span>
                         <span class="thumb-icon">🎥</span>
                         <span class="thumb-title">阿布辛貝神殿全景導覽</span>
@@ -1484,10 +1581,32 @@
     <!-- ============ JavaScript ============ -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // ---------- AOS ----------
+        // ============================================================
+        // 1. 初始化 AOS
+        // ============================================================
         AOS.init({ offset: 0, duration: 1000, once: false });
 
-        // ---------- 頁面切換 ----------
+        // ============================================================
+        // 2. 進入畫面 (Splash)
+        // ============================================================
+        function dismissSplash() {
+            document.getElementById('splash').classList.add('hidden');
+        }
+
+        // 訪客數字動態（模擬）
+        function randomVisitor() {
+            const el = document.getElementById('splashVisitors');
+            if (el) {
+                const base = 1024;
+                const offset = Math.floor(Math.random() * 40) - 20;
+                el.textContent = (base + offset).toString();
+            }
+        }
+        setInterval(randomVisitor, 3000);
+
+        // ============================================================
+        // 3. 頁面切換
+        // ============================================================
         const navLinks = document.querySelectorAll('.nav-links a, .dropdown .links a');
         const pages = document.querySelectorAll('.page');
 
@@ -1529,7 +1648,9 @@
             closeMenu();
         }
 
-        // ---------- 打字機 ----------
+        // ============================================================
+        // 4. 打字機
+        // ============================================================
         const texts = ["INTJ 企劃人", "AI 內容賦能", "從 0 到 1 的建構者"];
         let speed = 100;
         const textElement = document.querySelector(".typewriter-text");
@@ -1557,14 +1678,9 @@
             }
         }
 
-        window.onload = function() {
-            typeWriter();
-            const activePage = document.querySelector('.page.active-page');
-            if (activePage && activePage.id === 'skills') setTimeout(animateSkillBars, 600);
-            initCarousel();
-        };
-
-        // ---------- 技能進度條 ----------
+        // ============================================================
+        // 5. 技能進度條
+        // ============================================================
         function animateSkillBars() {
             document.querySelectorAll('.bar-fill').forEach(bar => {
                 const w = bar.getAttribute('data-width');
@@ -1573,7 +1689,9 @@
             });
         }
 
-        // ---------- 作品集子分類切換 ----------
+        // ============================================================
+        // 6. 作品集子分類切換
+        // ============================================================
         const subNavItems = document.querySelectorAll('.sub-nav-item');
         const subPanels = {
             ppt: document.getElementById('sub-ppt'),
@@ -1595,13 +1713,13 @@
         });
 
         // ============================================================
-        // 視覺實驗室 — 動態廊道 + 3D 翻轉卡片
-        // ✅ 此處為圖片資料庫，未來新增廣告照片請在此陣列中加入物件
+        // 7. 視覺實驗室 — 動態廊道 + 3D 翻轉 (深紫羅蘭版)
         // ============================================================
+        // ✅ 圖片資料庫：在此加入你的 AI 廣告照片
         const imageList = [
-            // ----- 既有圖片（保留你原有的） -----
+            // ----- 既有圖片 -----
             { src: '照片/imags/11.png', brand: '咖啡廳', sub: '建築外觀', insight: '以溫暖木質與柔和光影，營造舒適的咖啡廳氛圍。',
-            tools: 'Midjourney v6' },
+                tools: 'Midjourney v6' },
             { src: '照片/imags/12.png', brand: '咖啡廳', sub: '吧檯設計', insight: '吧檯區以開放式設計拉近顧客與咖啡師的距離。',
                 tools: 'Midjourney v6' },
             { src: '照片/imags/13.png', brand: '咖啡廳', sub: '內部空間', insight: '採用復古磁帶與音樂元素，打造沉浸式主題空間。',
@@ -1619,7 +1737,7 @@
             { src: '照片/imags/20.jpeg', brand: '咖啡廳', sub: '磁帶主題內部', insight: '以卡帶牆為視覺焦點，復刻 80 年代音樂記憶。',
                 tools: 'Midjourney v6' },
             { src: '照片/imags/21.PNG', brand: '烘焙', sub: '餅乾細節', insight: '細膩呈現手工餅乾的天然食材顆粒感。',
-            tools: 'Midjourney v6' },
+                tools: 'Midjourney v6' },
             { src: '照片/imags/22.png', brand: '咖啡廳', sub: '吧檯設計', insight: '吧檯結合黑膠唱片元素，讓音樂與咖啡交融。',
                 tools: 'Midjourney v6' },
             { src: '照片/imags/23.png', brand: '印尼鳳梨酥', sub: '宣傳故事版分鏡', insight: '以精靈角色貫穿品牌故事，強化產品記憶點。',
@@ -1627,9 +1745,9 @@
             { src: '照片/imags/24.png', brand: '印尼鳳梨酥', sub: '精靈角色', insight: '可愛精靈形象傳達「來自印尼的熱情與美味」。',
                 tools: 'Midjourney v6' },
             { src: '照片/imags/25.png', brand: '烘焙', sub: '餅乾細節', insight: '手工餅乾的樸實美感，適合溫馨送禮場景。',
-            tools: 'Midjourney v6' },
+                tools: 'Midjourney v6' },
             { src: '照片/imags/26.png', brand: '烘焙', sub: '餅乾細節', insight: '每一片餅乾都是獨一無二的掌心溫度。',
-            tools: 'Midjourney v6' },
+                tools: 'Midjourney v6' },
             { src: '照片/imags/27.png', brand: '人物創作', sub: '復古風格女生', insight: '復古穿搭與柔和色調，傳達懷舊優雅氛圍。',
                 tools: 'Midjourney v6' },
             { src: '照片/imags/28.png', brand: '人物創作', sub: '油畫風格女性肖像', insight: '以油畫筆觸呈現女性的溫柔與堅毅。',
@@ -1641,16 +1759,14 @@
             { src: '照片/imags/31.png', brand: '人物創作', sub: '古代風格女生', insight: '細膩的髮飾與服裝細節，重現古代仕女風采。',
                 tools: 'Midjourney v6' },
             { src: '照片/imags/32.png', brand: '人物創作', sub: '古代風格女生', insight: '水墨風格背景與古典人物相得益彰。',
-            tools: 'Midjourney v6' },
+                tools: 'Midjourney v6' },
             { src: '照片/imags/33.png', brand: '人物創作', sub: '古代風格女生', insight: '以淡雅色調呈現古代女子的寧靜與從容。',
                 tools: 'Midjourney v6' },
 
             // ============================================================
-            // ✅ 請在此下方加入你新增的 AI 廣告照片（美妝保養品牌）
-            // ============================================================
-            // 範例格式：
-            // { src: '照片/imags/你的新圖片.png', brand: '品牌名稱', sub: '品項名稱', insight: '你的視覺策略說明', tools: '使用的工具' },
-            // 複製上方格式，將路徑與文字替換為你的內容即可。
+            // ✅ 在此加入你新增的 AI 廣告照片（美妝保養品牌）
+            // 範例：
+            // { src: '照片/imags/你的圖片.png', brand: '品牌名稱', sub: '品項名稱', insight: '視覺策略說明', tools: '使用工具' },
             // ============================================================
         ];
 
@@ -1658,7 +1774,6 @@
             const track = document.getElementById('carouselTrack');
             if (!track) return;
             track.innerHTML = '';
-            // 複製兩次以實現無縫滾動
             const items = [...imageList, ...imageList];
             items.forEach((item) => {
                 const card = document.createElement('div');
@@ -1680,7 +1795,6 @@
                 track.appendChild(card);
             });
 
-            // 懸停暫停 / 繼續
             const wrapper = document.getElementById('carouselWrapper');
             wrapper.addEventListener('mouseenter', () => {
                 track.classList.add('paused');
@@ -1689,16 +1803,102 @@
                 track.classList.remove('paused');
             });
 
-            // 禁用右鍵（全站）
             document.addEventListener('contextmenu', e => e.preventDefault());
-
-            // 禁止圖片拖曳
             document.querySelectorAll('.flip-card-front img').forEach(img => {
                 img.setAttribute('draggable', 'false');
             });
         }
 
-        console.log('✅ 網站已更新，頁面命名保留原有方式，視覺實驗室預留擴充空間！');
+        // ============================================================
+        // 8. 粒子背景 (Canvas)
+        // ============================================================
+        (function initParticles() {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+            const particles = [];
+            const count = 50;
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * w;
+                    this.y = Math.random() * h;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.3;
+                    this.speedY = (Math.random() - 0.5) * 0.3;
+                    this.opacity = Math.random() * 0.3 + 0.1;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > w) this.speedX *= -1;
+                    if (this.y < 0 || this.y > h) this.speedY *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(190, 174, 219, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                // 畫連線
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 160) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(190, 174, 219, ${0.04 * (1 - dist / 160)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        })();
+
+        // ============================================================
+        // 9. 游標光暈 (JS 追蹤)
+        // ============================================================
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // ============================================================
+        // 10. 載入完成後啟動
+        // ============================================================
+        window.onload = function() {
+            typeWriter();
+            const activePage = document.querySelector('.page.active-page');
+            if (activePage && activePage.id === 'skills') setTimeout(animateSkillBars, 600);
+            initCarousel();
+            console.log('🚀 深紫羅蘭前衛版網站已啟動！');
+        };
     </script>
 </body>
 </html>
